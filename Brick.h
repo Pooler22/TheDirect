@@ -16,7 +16,7 @@ enum BRICK_BEHAVIOR
 class Brick
 {
 public:
-	Brick(ID3D11ShaderResourceView* playerSpriteSheet, DirectX::XMFLOAT2 positionIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
+	Brick(ID3D11ShaderResourceView* playerSpriteSheet, DirectX::XMFLOAT2 positionIn, int screenWidth, int screenHeight) : framesOfAnimation(4), framesToBeShownPerSecond(4)
 	{
 		float rotation = 0.f;
 		float scale = 1.f;
@@ -30,7 +30,7 @@ public:
 		dimensions.y = textureRectangle.Height = animation->getFrameHeight()/3;
 		updateBoundingRect();
 		
-		behavior = BRICK_BEHAVIOR_NONE;
+		behavior = BRICK_BEHAVIOR_BLOCK;
 	}
 
 	void setPosition(DirectX::XMFLOAT2 positionIn)

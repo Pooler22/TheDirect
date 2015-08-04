@@ -417,7 +417,7 @@ void DirectXTK3DSceneRenderer::Render()
 
 	if ((centerPosition.x != logicalSize.Width / 2) || (centerPosition.y != logicalSize.Height / 2))
 	{
-		screenManager->updatePosition((logicalSize.Width/2) / centerPosition.x , (logicalSize.Height/2) / centerPosition.y);
+		screenManager->updateAfterResize((logicalSize.Width/2) / centerPosition.x , (logicalSize.Height/2) / centerPosition.y);
 		centerPosition.y = logicalSize.Height/2;
 		centerPosition.x = logicalSize.Width/2;
 	}
@@ -560,7 +560,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		baehaviorTestureVector->push_back(BRICK_BEHAVIOR_BLOCK);
 	}
 	
-	screenManager->setMapLevel(XMFLOAT2(10,10),numberTestureVector, baehaviorTestureVector);
+	screenManager->setMapLevel(XMFLOAT2(10,10),numberTestureVector, baehaviorTestureVector, logicalSize.Width, logicalSize.Height);
 
 	screenManager->setName(L"Main");
 
