@@ -22,7 +22,7 @@ public:
 		float scale = 1.f;
 
 		texture = playerSpriteSheet;
-		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, 1, 0.5f));
+		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scale, 0.5f));
 		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
 
 		position = positionIn;
@@ -32,8 +32,6 @@ public:
 		
 		behavior = BRICK_BEHAVIOR_NONE;
 	}
-
-
 
 	void setPosition(DirectX::XMFLOAT2 positionIn)
 	{
@@ -73,7 +71,6 @@ public:
 		animation->Draw(batch, position);
 	}
 
-
 	Windows::Foundation::Rect getBoundingRectangle()
 	{
 		return boundingRectangle;
@@ -88,7 +85,15 @@ public:
 		return behavior;
 	}
 
+	void updateAfterResize(float x, float y)
+	{
+		position.x *= x;
+		position.y *= y;
+		updateBoundingRect();
+	}
+
 private:
+
 	void updateBoundingRect()
 	{
 		//TODO: proper updating when rotating player object

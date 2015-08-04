@@ -41,6 +41,15 @@ public:
 	{
 		map->Update(elapsed);
 		player->Update(elapsed);
+		checkColision();
+	}
+
+	void checkColision()
+	{
+		/*if (map->isColision(player->position.x, player->position.y) == BRICK_BEHAVIOR_NONE)
+		{
+			player->speed = 0;
+		}*/
 	}
 
 	void Draw(DirectX::SpriteBatch* batch)

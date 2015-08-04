@@ -15,13 +15,10 @@
 
 #include "pch.h"
 #include "DirectXTK3DSceneRenderer.h"
-
 #include "DDSTextureLoader.h"
-
 #include "..\Common\DirectXHelper.h"	// For ThrowIfFailed and ReadDataAsync
 
 using namespace SimpleSample;
-
 using namespace DirectX;
 using namespace Windows::Foundation;
 
@@ -39,15 +36,11 @@ void DirectXTK3DSceneRenderer::CreateWindowSizeDependentResources()
     Size outputSize = m_deviceResources->GetOutputSize(); 
     float aspectRatio = outputSize.Width / outputSize.Height; // If aspectRatio < 1.0f app is usually in snapped view (mode). Act accordingly
 
-
-
 	// MUST BE DONE FOR EVERY SPRITEBATCH
 	m_sprites->SetRotation( m_deviceResources->ComputeDisplayRotation() ); // necessary for the sprites to be in correct rotation when the
 																			//screen rotation changes (portrait/landscape)
-
 	spriteBatchT1->SetRotation(m_deviceResources->ComputeDisplayRotation());
 	spriteBatchT2->SetRotation(m_deviceResources->ComputeDisplayRotation());
-
 }
 
 void DirectXTK3DSceneRenderer::CreateAudioResources()
@@ -73,10 +66,8 @@ void DirectXTK3DSceneRenderer::CreateAudioResources()
     //m_effect2->Play();
 }
 
-//This is the UPDATE Function
 void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer)
 {
-
     m_audioTimerAcc -= (float)timer.GetElapsedSeconds();
     if (m_audioTimerAcc < 0)
     {
@@ -142,7 +133,6 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer)
 
 	//auto test = timer.GetElapsedSeconds();
 
-
 	//update the animation
 	//animation->Update((float)timer.GetElapsedSeconds());
 	//player->Update((float)timer.GetElapsedSeconds());
@@ -169,7 +159,6 @@ std::vector<std::future<DirectX::XMFLOAT2>> futures;
 for (auto &future : futures)
 {
 	//TODO:get results
-
 	//auto enemiesIterator = enemiesVector.begin();
 
 	DirectX::XMFLOAT2 tempPos;
@@ -220,8 +209,6 @@ void DirectXTK3DSceneRenderer::Update(std::vector<PlayerInputData>* playerInputs
 		for (unsigned int j = 0; j < playerInputs->size(); j++)
 		{
 			PlayerInputData playerAction = (*playerInputs)[j];
-
-			
 
 			if (playerAction.ID != i) continue;
 			switch (playerAction.PlayerAction)
@@ -461,8 +448,6 @@ void DirectXTK3DSceneRenderer::Render()
 	//m_font->DrawString(m_sprites.get(), collisionString.c_str(), XMFLOAT2(100, 10), Colors::Yellow);
 	
 	m_sprites->End();
-
-
 }
 
 //this is the LOAD function
@@ -473,10 +458,8 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 
 	auto context = m_deviceResources->GetD3DDeviceContext();
 
-
 	auto windowSize = m_deviceResources->GetOutputSize(); // physical screen resolution
 	auto logicalSize = m_deviceResources->GetLogicalSize(); //DPI dependent resolution
-
 
 	m_sprites.reset(new SpriteBatch(context));
 	spriteBatchT1.reset(new SpriteBatch(context));
@@ -484,7 +467,6 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 
 	m_font.reset(new SpriteFont(device, L"assets\\italic.spritefont"));
 
-	
 	//player.reset(new Player(m_texture.Get()));
 
 	/*DX::ThrowIfFailed(
@@ -587,10 +569,6 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 
 	screenManager->setName(L"Main");
 
-
-	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\enemyanimated.dds", nullptr, enemyTexture.ReleaseAndGetAddressOf())
-		);
 	screenManager->game->addPlayer(m_texture.Get(), XMFLOAT2(centerPosition.x, centerPosition.y));
 
 	//set windows size for drawing the background
@@ -610,6 +588,6 @@ void DirectXTK3DSceneRenderer::ReleaseDeviceDependentResources()
 	//backgroundTexture.Reset();
 	//cloudsTexture.Reset();
 	//cloudsTexture2.Reset();
-	pipeTexture.Reset();
-	enemyTexture.Reset();
+	//pipeTexture.Reset();
+	//enemyTexture.Reset();
 }

@@ -57,7 +57,7 @@ public:
 		}
 		if (name.compare(L"Play") == 0)
 		{
-			game ->Draw(batch);
+			game->Draw(batch);
 		}
 	}
 
@@ -86,7 +86,7 @@ public:
 	{
 		for (auto &screen : screens)
 		{
-			screen->updatePosition(x, y);
+			screen->updateAfterResize(x, y);
 		}
 	}
 

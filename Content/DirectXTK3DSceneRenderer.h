@@ -14,12 +14,9 @@
 //--------------------------------------------------------------------------------------
 
 #pragma once
-
 #include <future>
-
 #include "..\Common\DeviceResources.h"
 #include "..\Common\StepTimer.h"
-
 #include "Audio.h"
 //#include "CommonStates.h"
 //#include "Effects.h"
@@ -39,14 +36,12 @@
 #include "Common/StepTimer.h"
 #include "Common/InputManager.h"
 #include "Common/OverlayManager.h"
-
 #include "DirectXTK\Inc\SimpleMath.h"
 #include "ScreenManager.h"
 #include "Game.h"
 
 namespace SimpleSample
 {
-    // This class renders a scene using DirectXTK
 	class DirectXTK3DSceneRenderer
 	{
 	public:
@@ -58,10 +53,11 @@ namespace SimpleSample
 		void Update(DX::StepTimer const& timer);
 		void Update(std::vector<PlayerInputData>* playerInput, unsigned int playersAttached);
 		void Render();
+		// Signals a new audio device is available
+		void NewAudioDevice();
+		
 		XMFLOAT2																centerPosition;
-        // Signals a new audio device is available
-        void NewAudioDevice();
-
+                
 	private:
 
 		// Cached player metadata.
@@ -87,37 +83,31 @@ namespace SimpleSample
         std::unique_ptr<DirectX::SoundEffectInstance>                           m_effect2;
 
         Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>                        m_texture;
-		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>						enemyTexture;
-		std::unique_ptr<AnimatedTexture>										animation;
+		//Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>						enemyTexture;
+		//std::unique_ptr<AnimatedTexture>										animation;
 
-		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>                        pipeTexture;
+		//Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>                        pipeTexture;
+		//Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>						backgroundTexture;
 		
-		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>						backgroundTexture;
 		//std::unique_ptr<ScrollingBackground>									background;
 		//Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>						cloudsTexture;
 		//std::unique_ptr<ScrollingBackground>									clouds;
-
 		//Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>						cloudsTexture2;
 		//std::unique_ptr<ScrollingBackground>									clouds2;
 		//std::unique_ptr<Player>												player;
 		//std::vector<std::unique_ptr<Button>>									buttons;
 		//std::wstring															startButtonString;
-
 		//std::unique_ptr<EnginePad>											GamePad;
 		//std::vector<Wall>														wallsVector;
 		//std::vector<Enemy>													enemiesVector;
-
 		//std::wstring															collisionString;
 
 		// Variables used with the rendering loop.
         uint32_t                                                                m_audioEvent;
         float                                                                   m_audioTimerAcc;
-
         bool                                                                    m_retryDefault;
 		
-		//std::unique_ptr<Screen>													screen;
 		std::unique_ptr<ScreenManager>											screenManager;
-		
 	};
 }
 

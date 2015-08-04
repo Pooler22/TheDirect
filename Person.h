@@ -23,6 +23,7 @@ public:
 		dimensions.x = textureRectangle.Width = animation->getFrameWidth() / 3;
 		dimensions.y = textureRectangle.Height = animation->getFrameHeight() / 3;
 		updateBoundingRect();
+		speed = 10;
 	}
 
 
@@ -72,9 +73,8 @@ public:
 	}
 	void move(float x, float y)
 	{
-		speed = 10;
 		position.x = position.x + (x * speed);
-		position.y = position.y + (y * speed);
+		position.y = position.y - (y * speed);
 		updateBoundingRect();
 	}
 

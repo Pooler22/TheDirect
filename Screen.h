@@ -52,7 +52,7 @@ public:
 	{
 		for (auto &button : buttons)
 		{
-			if (button->isClicked(x, y))
+			if (button->isOver(x, y))
 			{
 				return button->getId();
 			}
@@ -60,11 +60,11 @@ public:
 		return L"false";
 	}
 
-	void updatePosition(float x, float y) 
+	void updateAfterResize(float x, float y)
 	{
 		for (auto &button : buttons) 
 		{
-			button->updatePosition(x, y);
+			button->updateAfterResize(x, y);
 		}
 	}
 

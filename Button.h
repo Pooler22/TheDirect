@@ -26,12 +26,14 @@ public:
 		color = Colors::Black;
 		m_font.reset(spriteFont);
 
-		width = textureWidth = animation->getFrameWidth();
-		height = textureHeight = animation->getFrameHeight();
-		position.x -= width/2;
-		position.y -= height/2;
+		diemnsions.x = animation->getFrameWidth();
+		diemnsions.y = animation->getFrameHeight();
+		position.x -= (diemnsions.x / 2);
+		position.y -= (diemnsions.y / 2);
 		updateBoundingRect();
 
+		colorNormal = Colors::Black;
+		colorOver = Colors::Blue;
 	}
 
 	void setPosition(DirectX::XMFLOAT2 newPosition)
@@ -54,19 +56,19 @@ public:
 
 	DirectX::XMFLOAT2 getDimension()
 	{
-		return DirectX::XMFLOAT2(width, height);
+		return diemnsions;
 	}
 
-	bool isClicked(float x, float y) 
+	bool isOver(float x, float y) 
 	{
 		if (x > (boundingRectangle.X) && y > (boundingRectangle.Y) && x < (boundingRectangle.X + boundingRectangle.Width) && y < (boundingRectangle.Y + boundingRectangle.Height))
 		{
-			color = Colors::Blue;
+			color = colorOver;
 			return true;
 		}
 		else
 		{
-			color = Colors::Black;
+			color = colorNormal;
 			return false;
 		}
 	}
@@ -107,7 +109,7 @@ public:
 		return boundingRectangle;
 	}
 
-	void updatePosition(float x, float y)
+	void updateAfterResize(float x, float y)
 	{
 		position.x *= x;
 		position.y *= y;
@@ -115,34 +117,31 @@ public:
 	}
 
 private:
+
 	void updateBoundingRect()
 	{
 		//TODO: proper updating when rotating player object
 		boundingRectangle.X = position.x;
 		boundingRectangle.Y = position.y;
-		boundingRectangle.Height = height;
-		boundingRectangle.Width = width;
+		boundingRectangle.Width = diemnsions.x;
+		boundingRectangle.Height = diemnsions.y;
 	}
 
 public:
-	
-	int													width;
-	int													height;
-	int													textureWidth;
-	int													textureHeight;
+
 	int													framesOfAnimation;
 	int													framesToBeShownPerSecond;
 	Windows::Foundation::Rect							boundingRectangle;
 	DirectX::XMFLOAT2									position;
-	
-	std::wstring										string;
-	std::wstring										id;
+	DirectX::XMFLOAT2									diemnsions;
 	
 	std::unique_ptr<DirectX::SpriteFont>				m_font;
 	DirectX::XMVECTOR									color;
+	DirectX::XMVECTOR									colorNormal;
+	DirectX::XMVECTOR									colorOver;
+	std::wstring										string;
+	std::wstring										id;
 	
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	texture;
 	std::unique_ptr<AnimatedTexture>					animation;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	pressTexture;
-	std::unique_ptr<AnimatedTexture>					presAnimation;
 };
