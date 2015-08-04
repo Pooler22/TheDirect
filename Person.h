@@ -26,8 +26,6 @@ public:
 		speed = 10;
 	}
 
-
-
 	void setPosition(DirectX::XMFLOAT2 positionIn)
 	{
 		position = positionIn;
@@ -66,7 +64,6 @@ public:
 		animation->Draw(batch, position);
 	}
 
-
 	Windows::Foundation::Rect getBoundingRectangle()
 	{
 		return boundingRectangle;
@@ -79,6 +76,7 @@ public:
 	}
 
 private:
+
 	void updateBoundingRect()
 	{
 		//TODO: proper updating when rotating player object
@@ -90,6 +88,7 @@ private:
 
 public:
 
+	int													speed;
 	int													framesOfAnimation;
 	int													framesToBeShownPerSecond;
 	DirectX::XMFLOAT2									position;
@@ -99,5 +98,4 @@ public:
 
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	texture;
 	std::unique_ptr<AnimatedTexture>					animation;
-	int													speed;
 };

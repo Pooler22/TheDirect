@@ -11,7 +11,6 @@
 
 using namespace SimpleSample;
 
-
 // Initializes D2D resources used for rendering.
 SampleVirtualControllerRenderer::SampleVirtualControllerRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources) :
 Overlay(deviceResources), m_buttonFadeTimer(9.f), m_stickFadeTimer(1.f)
@@ -19,7 +18,6 @@ Overlay(deviceResources), m_buttonFadeTimer(9.f), m_stickFadeTimer(1.f)
     DX::ThrowIfFailed(
         m_deviceResources->GetD2DFactory()->CreateDrawingStateBlock(&m_stateBlock)
         );
-
     CreateDeviceDependentResources();
 }
 

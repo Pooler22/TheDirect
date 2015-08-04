@@ -9,21 +9,27 @@
 #include "SpriteFont.h"
 #include "Screen.h"
 #include "Game.h"
-//#include "..\Common\DirectXHelper.h"	// For ThrowIfaFailed and ReadDataAsync
 
 class ScreenManager
 {
+
 public:
-	ScreenManager()
+	ScreenManager(ID3D11ShaderResourceView* playerSpriteSheetIn, SpriteFont* spriteFontIn)
 	{
+		playerSpriteSheet = playerSpriteSheetIn;
+		spriteFont = spriteFontIn;
+
 		screens = std::vector<std::shared_ptr<Screen>>();
 		game = std::unique_ptr<Game>(new Game());
 	};
+
 	~ScreenManager() {};
+
 	void addScreen(Screen* screen)
 	{
 		screens.push_back(std::shared_ptr<Screen>(screen));
 	}
+
 
 	void addBrickTexture(ID3D11ShaderResourceView* playerSpriteSheet)
 	{
@@ -43,9 +49,7 @@ public:
 				screen->Update(elapsed);
 		}
 		if (name.compare(L"Play") == 0)
-		{
 			game->Update(elapsed);
-		}
 	}
 
 	void Draw(DirectX::SpriteBatch* batch)
@@ -56,9 +60,7 @@ public:
 				screen->Draw(batch);
 		}
 		if (name.compare(L"Play") == 0)
-		{
 			game->Draw(batch);
-		}
 	}
 
 	void setName(std::wstring stringIn)
@@ -76,9 +78,7 @@ public:
 		for (auto &screen : screens)
 		{
 			if (screen->getName() == name)
-			{
 				return screen->isClicked(x, y);
-			}
 		}
 		return L"false";
 	}
@@ -91,6 +91,9 @@ public:
 	}
 
 public:
+	ID3D11ShaderResourceView*					playerSpriteSheet;
+	SpriteFont*									spriteFont;
+
 	std::wstring								name;
 	std::vector<std::shared_ptr<Screen>>		screens;
 	std::unique_ptr<Game>						game;

@@ -13,56 +13,54 @@
 class Game
 {
 public:
-	Game()
+	Game::Game()
 	{
 		map = std::unique_ptr<Map>(new Map());
 		enemies = std::unique_ptr<std::vector<Person>>(new std::vector<Person>());
 		bonus = std::unique_ptr<std::vector<Person>>(new std::vector<Person>());
 		score = 0;
 	};
-	~Game() {};
+	Game::~Game() {};
 
-	void addBrickTexture(ID3D11ShaderResourceView* playerSpriteSheet)
+	void Game::addBrickTexture(ID3D11ShaderResourceView* playerSpriteSheet)
 	{
 		map->addBrickTexture(playerSpriteSheet);
 	}
 
-	void setMapLevel(XMFLOAT2 sizeIn, std::shared_ptr<std::vector<int>> numberTestureVectorIn, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVectorIn)
+	void Game::setMapLevel(DirectX::XMFLOAT2 sizeIn, std::shared_ptr<std::vector<int>> numberTestureVectorIn, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVectorIn)
 	{
 		map->setMapLevel(sizeIn, numberTestureVectorIn, baehaviorTestureVectorIn);
 	}
 	
-	void addPlayer(ID3D11ShaderResourceView* playerSpriteSheet, DirectX::XMFLOAT2 positionIn)
+	void Game::addPlayer(ID3D11ShaderResourceView* playerSpriteSheet, DirectX::XMFLOAT2 positionIn)
 	{
 		player = std::unique_ptr<Person>(new Person(playerSpriteSheet,positionIn));
 	}
 
-	void Update(float elapsed)
+	void Game::Update(float elapsed)
 	{
 		map->Update(elapsed);
 		player->Update(elapsed);
-		checkColision();
+		isColision();
 	}
 
-	void checkColision()
+	void Game::isColision()
 	{
-		/*if (map->isColision(player->position.x, player->position.y) == BRICK_BEHAVIOR_NONE)
+		if (map->isColision(player->position.x, player->position.y) == BRICK_BEHAVIOR_BLOCK)
 		{
 			player->speed = 0;
-		}*/
+		}
 	}
 
-	void Draw(DirectX::SpriteBatch* batch)
+	void Game::Draw(DirectX::SpriteBatch* batch)
 	{
 		map->Draw(batch);
 		player->Draw(batch);
 	}
 
-public:
 	std::unique_ptr<Map>					map;
 	std::unique_ptr<Person>					player;
 	std::unique_ptr<std::vector<Person>>	enemies;
 	std::unique_ptr<std::vector<Person>>	bonus;
 	std::unique_ptr<int>					score;
-	
 };

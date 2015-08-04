@@ -19,13 +19,9 @@
 #include "Common\DeviceResources.h"
 #include "Common\InputManager.h"
 #include "Common\OverlayManager.h"
-
-
 #include "Content\DirectXTK3DSceneRenderer.h"
 #include "Content\SampleDebugTextRenderer.h"
 #include "Content\SampleVirtualControllerRenderer.h"
-
-
 
 // Renders Direct2D and 3D content on the screen.
 namespace SimpleSample
@@ -71,8 +67,5 @@ namespace SimpleSample
 		// Tracks the touch region ID, allowing you to enable/disable touch regions.
 		// Note to developer: Expand this array if you add more touch regions, e.g. for a menu.
 		unsigned int m_touchRegionIDs[3];
-
-
-
 	};
 }

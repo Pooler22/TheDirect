@@ -63,11 +63,11 @@ public:
 
 	BRICK_BEHAVIOR isColision(float x, float y)
 	{
-		for (auto &button : bricks)
+		for (auto &brick : bricks)
 		{
-			if (button->isColision(x, y))
+			if (brick->isColision(x, y))
 			{
-				return button->getBehavior();
+				return brick->getBehavior();
 			}
 		}
 		return BRICK_BEHAVIOR_NONE;
@@ -92,8 +92,8 @@ public:
 		}
 	}
 
-
 private:
+
 	XMFLOAT2													size;
 	std::shared_ptr<std::vector<int>>							numberTestureVector;
 	std::shared_ptr<std::vector<BRICK_BEHAVIOR>>				baehaviorTestureVector;
@@ -102,5 +102,4 @@ private:
 	std::vector<std::shared_ptr<Brick>>							bricks;
 	std::shared_ptr<std::vector<ID3D11ShaderResourceView>>		textureVector;
 	ID3D11ShaderResourceView*									texture;
-
 };

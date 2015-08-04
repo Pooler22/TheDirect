@@ -13,7 +13,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 //--------------------------------------------------------------------------------------
 
-
 #include "pch.h"
 #include "SimpleSampleMain.h"
 
@@ -26,7 +25,6 @@ using namespace SimpleSample;
 using namespace Windows::Foundation;
 using namespace Windows::System::Threading;
 using namespace Concurrency;
-
 
 // Loads and initializes application assets when the application is loaded.
 SimpleSampleMain::SimpleSampleMain(const std::shared_ptr<DX::DeviceResources>& deviceResources) :
@@ -65,8 +63,6 @@ SimpleSampleMain::SimpleSampleMain(const std::shared_ptr<DX::DeviceResources>& d
 	// This template supports all control types by default.
 	m_inputManager->SetFilter(INPUT_DEVICE_ALL);
 	m_inputManager->Initialize(CoreWindow::GetForCurrentThread());
-
-
 
 	// Setting render target to 30 FPS !!!!!!!!!!!!!!
 
@@ -158,7 +154,6 @@ void SimpleSampleMain::InitializeTouchRegions()
 	}
 }
 
-
 SimpleSampleMain::~SimpleSampleMain()
 {
     // Deregister device notification
@@ -181,8 +176,6 @@ void SimpleSampleMain::CreateWindowSizeDependentResources()
 		// Touch regions are dependent on window size and shape.
 		InitializeTouchRegions();
 	}
-
-
 }
 
 // Updates the application state once per frame.
@@ -206,7 +199,6 @@ void SimpleSampleMain::Update()
 		{
 			m_virtualControllerRenderer->Update(&playerActions);
 		}
-
 	});
 }
 
@@ -236,9 +228,7 @@ void SimpleSampleMain::ProcessInput(std::vector<PlayerInputData>* playerActions)
 				break;
 		}
 	}
-
 }
-
 
 //// This is the main Render function, all other objects go here
 //// Remember to use <vector> for all elements that need rendering - better memory access pattern
@@ -272,7 +262,6 @@ bool SimpleSampleMain::Render()
 
 	return true;
 }
-
 
 // Signals a new audio device is available
 void SimpleSampleMain::NewAudioDevice()

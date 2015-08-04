@@ -11,7 +11,6 @@
 
 using namespace SimpleSample;
 
-// Initializes D2D resources used for text rendering.
 SampleDebugTextRenderer::SampleDebugTextRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources) :
 Overlay(deviceResources)
 {

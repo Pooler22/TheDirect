@@ -5,10 +5,8 @@
 
 #include <wrl.h>
 #include <SpriteBatch.h>
-
 #include <DirectXMath.h>
 #include <DirectXTK\Inc\SimpleMath.h>
-
 #include <random>
 
 using namespace DirectX;
@@ -24,7 +22,6 @@ public:
 		gapMinHeight(256),
 		moveSpeed(10)
 	{
-
 		m_mainTexture = pipeTexture;
 
 		Microsoft::WRL::ComPtr<ID3D11Resource> res;
@@ -43,9 +40,7 @@ public:
 
 		//Initialize randomness
 		randomizeGap();
-
 	}
-
 
 	void Update(float elapsedTime)
 	{
@@ -56,12 +51,10 @@ public:
 			randomizeGap();
 			wallRect.X = screenSize.Width;
 		}
-
 	}
 
 	void Draw(DirectX::SpriteBatch *batch)
 	{
-
 		XMVECTOR origin = XMLoadFloat2(&m_origin);
 
 		//Draw upper part of the wall
@@ -71,7 +64,6 @@ public:
 		//Draw lower part of the wall
 		batch->Draw(m_mainTexture.Get(), XMLoadFloat2(&XMFLOAT2(lower.X, lower.Y)), nullptr,
 		Colors::White, 0.f, origin, XMLoadFloat2(&lowerScalingFactor), SpriteEffects_None, 0.f);
-
 	}
 
 	bool isCollidingWith(Windows::Foundation::Rect rect)
@@ -98,8 +90,7 @@ private:
 	{
 		//set up the rectangle for gap
 		//RANDOMIZE, DO NOT USE rand() !!!!!!!!!
-		
-		
+			
 		std::random_device rd;
 		std::mt19937 mt;
 		mt.seed(rd());
@@ -125,9 +116,6 @@ private:
 		lower.Height = screenSize.Height - (upper.Height + gap.Height);
 		lowerScalingFactor.x = 1;
 		lowerScalingFactor.y = lower.Height / mainTextureDescription.Height;
-
-
-
 	}
 
 
@@ -143,7 +131,6 @@ private:
 	Windows::Foundation::Size							screenSize;
 
 	int													gapMinHeight;
-
 
 	float												moveSpeed;
 

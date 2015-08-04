@@ -13,14 +13,24 @@
 class Screen
 {
 public:
-	Screen() 
+
+	Screen(ID3D11ShaderResourceView* playerSpriteSheetIn, SpriteFont* spriteFontIn)
 	{
+		playerSpriteSheet = playerSpriteSheetIn;
+		spriteFont = spriteFontIn;
+
 		buttons = std::vector<std::shared_ptr<Button>>();
 	};
 	~Screen() {};
+
 	void addElement(Button* button)
 	{
 		buttons.push_back(std::shared_ptr<Button>(button));
+	}
+
+	void addElement(std::wstring s1, std::wstring s2, XMFLOAT2 position)
+	{
+		buttons.push_back(std::shared_ptr<Button>(new Button(playerSpriteSheet, spriteFont, s1, s2, position)));
 	}
 
 	void Update(float elapsed)
@@ -69,6 +79,9 @@ public:
 	}
 
 private:
+	ID3D11ShaderResourceView*					playerSpriteSheet;
+	SpriteFont*									spriteFont;
+
 	std::wstring								name;
 	std::vector<std::shared_ptr<Button>>		buttons;
 };

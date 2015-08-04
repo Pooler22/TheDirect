@@ -507,52 +507,47 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		CreateDDSTextureFromFile(device, L"assets\\shipanimated.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 
-	screenManager = std::unique_ptr<ScreenManager>(new ScreenManager());
+	screenManager = std::unique_ptr<ScreenManager>(new ScreenManager(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont")));
 
 	centerPosition.x = logicalSize.Width / 2.0;
 	centerPosition.y = logicalSize.Height / 2.0;
 	float oneUnitHeight = logicalSize.Height / 7.0;
-	Screen* screen = new Screen();
+	Screen* screen = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"));
 	screen->setName(L"Main");
-	screen->addElement(new Button(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Start", L"StartMain", XMFLOAT2(centerPosition.x, centerPosition.y- oneUnitHeight)));
-	screen->addElement(new Button(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Options", L"OptionsMain", XMFLOAT2(centerPosition.x, centerPosition.y)));
-	screen->addElement(new Button(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Exit", L"ExitMain", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight)));
+	screen->addElement(L"Start", L"StartMain", XMFLOAT2(centerPosition.x, centerPosition.y- oneUnitHeight));
+	screen->addElement(L"Options", L"OptionsMain", XMFLOAT2(centerPosition.x, centerPosition.y));
+	screen->addElement(L"Exit", L"ExitMain", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
 	screenManager->addScreen(screen);
 
-	Screen* screen1 = new Screen();
-	screen1 = new Screen();
+	Screen* screen1 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"));
 	screen1->setName(L"Options");
-	screen1->addElement(new Button(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Music", L"MusicOptions", XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight)));
-	screen1->addElement(new Button(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Author", L"AuthorOptions", XMFLOAT2(centerPosition.x, centerPosition.y)));
-	screen1->addElement(new Button(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Back", L"BackOptions", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight)));
+	screen1->addElement(L"Music", L"MusicOptions", XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight));
+	screen1->addElement(L"Author", L"AuthorOptions", XMFLOAT2(centerPosition.x, centerPosition.y));
+	screen1->addElement(L"Back", L"BackOptions", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
 	screenManager->addScreen(screen1);
 
-	Screen* screen2 = new Screen();
-	screen2 = new Screen();
+	Screen* screen2 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"));
 	screen2->setName(L"Level");
-	screen2->addElement(new Button(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Offline", L"OfflineLevel", XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight)));
-	screen2->addElement(new Button(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Online", L"OnlineLevel", XMFLOAT2(centerPosition.x, centerPosition.y)));
-	screen2->addElement(new Button(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Back", L"BackLevel", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight)));
+	screen2->addElement(L"Offline", L"OfflineLevel", XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight));
+	screen2->addElement(L"Online", L"OnlineLevel", XMFLOAT2(centerPosition.x, centerPosition.y));
+	screen2->addElement(L"Back", L"BackLevel", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
 	screenManager->addScreen(screen2);
 
-	Screen* screen4 = new Screen();
-	screen4 = new Screen();
+	Screen* screen4 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"));
 	screen4->setName(L"Pause");
-	screen4->addElement(new Button(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Return", L"ReturnPause", XMFLOAT2(centerPosition.x, centerPosition.y)));
-	screen4->addElement(new Button(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Exit", L"ExitPause", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight)));
+	screen4->addElement(L"Return", L"ReturnPause", XMFLOAT2(centerPosition.x, centerPosition.y));
+	screen4->addElement(L"Exit", L"ExitPause", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
 	screenManager->addScreen(screen4);
 
-	Screen* screen5= new Screen();
-	screen5 = new Screen();
+	Screen* screen5= new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"));
 	screen5->setName(L"Author");
-	screen5->addElement(new Button(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"It's me ;)", L"DescriptionAuthor", XMFLOAT2(centerPosition.x, centerPosition.y)));
-	screen5->addElement(new Button(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Back", L"BackAuthor", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight)));
+	screen5->addElement(L"It's me ;)", L"DescriptionAuthor", XMFLOAT2(centerPosition.x, centerPosition.y));
+	screen5->addElement(L"Back", L"BackAuthor", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
 	screenManager->addScreen(screen5);
 
-	Screen* screen3 = new Screen();
-	screen3 = new Screen();
+	Screen* screen3 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"));
 	screen3->setName(L"Play");	
-	screen3->addElement(new Button(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Pause", L"PausePlay", XMFLOAT2(centerPosition.x, oneUnitHeight)));
+	screen3->addElement(L"Pause", L"PausePlay", XMFLOAT2(centerPosition.x, oneUnitHeight));
 	screenManager->addScreen(screen3);
 
 	screenManager->addBrickTexture(m_texture.Get());
@@ -562,7 +557,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	for (int i = 0; i < 100; i++)
 	{
 		numberTestureVector->push_back(1);
-		baehaviorTestureVector->push_back(BRICK_BEHAVIOR_NONE);
+		baehaviorTestureVector->push_back(BRICK_BEHAVIOR_BLOCK);
 	}
 	
 	screenManager->setMapLevel(XMFLOAT2(10,10),numberTestureVector, baehaviorTestureVector);

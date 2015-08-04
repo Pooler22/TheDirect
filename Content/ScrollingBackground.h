@@ -98,19 +98,17 @@ public:
         XMVECTOR origin = XMLoadFloat2( &mOrigin );
 		XMVECTOR scale = XMLoadFloat2(&scalingFactor);
 
-
             batch->Draw( mTexture.Get(), screenPos, nullptr,
                          Colors::White, 0.f, origin, scale, SpriteEffects_None, 0.f );
-
 
         XMVECTOR textureSize = XMLoadFloat2( &mTextureSize ); //TODO:edit the vector to zero one dimmension, but not lose data
 		
         batch->Draw( mTexture.Get(), XMLoadFloat2(&XMFLOAT2(mScreenPos.x+((float)mTextureWidth*scalingFactor.x),0)), nullptr,
                      Colors::White, 0.f, origin, scale, SpriteEffects_None, 0.f );
-
     }
 
 private:
+
     int                                                 mScreenHeight;
 	int													mScreenWidth;
     int                                                 mTextureWidth;

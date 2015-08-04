@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="test" Publisher="CN=Pooler" Version="0.0.1.0" />
+  <Identity Name="TheDirect" Publisher="CN=Pooler" Version="0.0.2.0" />
   <mp:PhoneIdentity PhoneProductId="e6474f54-46cd-411a-bc9e-a51cb0a1d217" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>test</DisplayName>
+    <DisplayName>The Direct</DisplayName>
     <PublisherDisplayName>Pooler22</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -15,7 +15,7 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Template10.App">
-      <uap:VisualElements DisplayName="Template10" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="Template10" BackgroundColor="#464646">
+      <uap:VisualElements DisplayName="The Direct" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="The Direct" BackgroundColor="#464646">
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
     </Application>
