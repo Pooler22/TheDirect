@@ -311,8 +311,9 @@ void DirectXTK3DSceneRenderer::Update(std::vector<PlayerInputData>* playerInputs
 				break;
 
 			case PLAYER_ACTION_TYPES::INPUT_MOVE:
-				inputText += L"\n MoveX(" + std::to_wstring(playerAction.PointerThrowX) + L") ";
-				inputText += L"\n MoveY(" + std::to_wstring(playerAction.Y) + L") ";
+				inputText += L"\n MoveX:(" + std::to_wstring(playerAction.PointerThrowX) + L") ";
+				inputText += L"\n MoveY:(" + std::to_wstring(playerAction.Y) + L") ";
+				screenManager->game->player->move(playerAction.X, playerAction.Y);
 				break;
 			case PLAYER_ACTION_TYPES::INPUT_AIM:
 				inputText += L"\n AimX(" + std::to_wstring(playerAction.PointerThrowX) + L") ";
@@ -520,10 +521,6 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	//wallsVector.push_back(Wall(logicalSize, XMFLOAT2(300, 0), pipeTexture.Get()));
 	//wallsVector.emplace_back(Wall(logicalSize, XMFLOAT2(logicalSize.Width, 0), pipeTexture.Get()));
 	
-	/*DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\enemyanimated.dds", nullptr, enemyTexture.ReleaseAndGetAddressOf())
-		);*/
-
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\shipanimated.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
@@ -579,18 +576,22 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	screenManager->addBrickTexture(m_texture.Get());
 	
 	std::shared_ptr<std::vector<int>> numberTestureVector = std::shared_ptr<std::vector<int>>(new std::vector<int>());
-	numberTestureVector->push_back(1);
-	numberTestureVector->push_back(1);
-	numberTestureVector->push_back(1);
-	numberTestureVector->push_back(1);
 	std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVector = std::shared_ptr<std::vector<BRICK_BEHAVIOR>>(new std::vector<BRICK_BEHAVIOR>());
-	baehaviorTestureVector->push_back(BRICK_BEHAVIOR_NONE);
-	baehaviorTestureVector->push_back(BRICK_BEHAVIOR_NONE);
-	baehaviorTestureVector->push_back(BRICK_BEHAVIOR_NONE);
-	baehaviorTestureVector->push_back(BRICK_BEHAVIOR_NONE);
-	screenManager->setMapLevel(XMFLOAT2(2,2),numberTestureVector, baehaviorTestureVector);
+	for (int i = 0; i < 100; i++)
+	{
+		numberTestureVector->push_back(1);
+		baehaviorTestureVector->push_back(BRICK_BEHAVIOR_NONE);
+	}
+	
+	screenManager->setMapLevel(XMFLOAT2(10,10),numberTestureVector, baehaviorTestureVector);
 
 	screenManager->setName(L"Main");
+
+
+	DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\enemyanimated.dds", nullptr, enemyTexture.ReleaseAndGetAddressOf())
+		);
+	screenManager->game->addPlayer(m_texture.Get(), XMFLOAT2(centerPosition.x, centerPosition.y));
 
 	//set windows size for drawing the background
 	//background->SetWindow(logicalSize.Width, logicalSize.Height);
@@ -603,7 +604,6 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 
 void DirectXTK3DSceneRenderer::ReleaseDeviceDependentResources()
 {
-	//TODO:
     m_sprites.reset();
     m_font.reset();
     m_texture.Reset();

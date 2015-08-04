@@ -87,7 +87,7 @@ public:
 		{
 			for (int y = 0; y < size.y; y++)
 			{
-				bricks.push_back(std::shared_ptr<Brick>(new Brick(texture,XMFLOAT2(x*100.0,y*100.0))));
+				bricks.push_back(std::shared_ptr<Brick>(new Brick(texture,XMFLOAT2(x * 40,y * 30))));
 			}
 		}
 	}
@@ -101,6 +101,6 @@ private:
 	std::wstring												name;
 	std::vector<std::shared_ptr<Brick>>							bricks;
 	std::shared_ptr<std::vector<ID3D11ShaderResourceView>>		textureVector;
-	ID3D11ShaderResourceView*			texture;
+	ID3D11ShaderResourceView*									texture;
 
 };

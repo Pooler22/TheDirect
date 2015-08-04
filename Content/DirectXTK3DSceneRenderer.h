@@ -31,9 +31,7 @@
 //#include "VertexTypes.h"
 #include "AnimatedTexture.h"
 #include "ScrollingBackground.h"
-#include "Player.h"
 #include "Wall.h"
-#include "Enemy.h"
 #include "GamePad.h"
 #include "Button.h"
 #include "Screen.h"
@@ -105,7 +103,7 @@ namespace SimpleSample
 		//std::vector<std::unique_ptr<Button>>									buttons;
 		//std::wstring															startButtonString;
 
-		//std::unique_ptr<EnginePad>												EnginePad;
+		//std::unique_ptr<EnginePad>											GamePad;
 		//std::vector<Wall>														wallsVector;
 		//std::vector<Enemy>													enemiesVector;
 

@@ -44,7 +44,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="App.h" />
     <ClInclude Include="SimpleSampleMain.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Content\DirectXTK3DSceneRenderer.h">
@@ -59,13 +58,7 @@
     <ClInclude Include="Content\ScrollingBackground.h">
       <Filter>Content</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Content</Filter>
-    </ClInclude>
     <ClInclude Include="Wall.h">
-      <Filter>Content</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
       <Filter>Content</Filter>
     </ClInclude>
     <ClInclude Include="Common\InputManager.h">
@@ -90,10 +83,19 @@
     <ClInclude Include="ScreenManager.h">
       <Filter>Content</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="Menu.h" />
-    <ClInclude Include="Brick.h" />
+    <ClInclude Include="Brick.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="App.h" />
+    <ClInclude Include="Map.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Person.h">
+      <Filter>Content</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

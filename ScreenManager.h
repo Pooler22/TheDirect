@@ -90,7 +90,7 @@ public:
 		}
 	}
 
-private:
+public:
 	std::wstring								name;
 	std::vector<std::shared_ptr<Screen>>		screens;
 	std::unique_ptr<Game>						game;

@@ -7,16 +7,10 @@
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
 
-enum BRICK_BEHAVIOR
-{
-	BRICK_BEHAVIOR_NONE,
-	BRICK_BEHAVIOR_BLOCK
-};
-
-class Brick
+class Person
 {
 public:
-	Brick(ID3D11ShaderResourceView* playerSpriteSheet, DirectX::XMFLOAT2 positionIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
+	Person(ID3D11ShaderResourceView* playerSpriteSheet, DirectX::XMFLOAT2 positionIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
 	{
 		float rotation = 0.f;
 		float scale = 1.f;
@@ -26,11 +20,9 @@ public:
 		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
 
 		position = positionIn;
-		dimensions.x = textureRectangle.Width = animation->getFrameWidth()/3;
-		dimensions.y = textureRectangle.Height = animation->getFrameHeight()/3;
+		dimensions.x = textureRectangle.Width = animation->getFrameWidth() / 3;
+		dimensions.y = textureRectangle.Height = animation->getFrameHeight() / 3;
 		updateBoundingRect();
-		
-		behavior = BRICK_BEHAVIOR_NONE;
 	}
 
 
@@ -78,14 +70,12 @@ public:
 	{
 		return boundingRectangle;
 	}
-	void setBehavior(BRICK_BEHAVIOR behaviorIn) 
+	void move(float x, float y)
 	{
-		behavior = behaviorIn;
-	}
-
-	BRICK_BEHAVIOR getBehavior()
-	{
-		return behavior;
+		speed = 10;
+		position.x = position.x + (x * speed);
+		position.y = position.y + (y * speed);
+		updateBoundingRect();
 	}
 
 private:
@@ -109,6 +99,5 @@ public:
 
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	texture;
 	std::unique_ptr<AnimatedTexture>					animation;
-
-	BRICK_BEHAVIOR										behavior;
+	int													speed;
 };
