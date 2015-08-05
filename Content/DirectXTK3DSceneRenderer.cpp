@@ -417,16 +417,36 @@ void DirectXTK3DSceneRenderer::Render()
 
 	if ((centerPosition.x != logicalSize.Width / 2) || (centerPosition.y != logicalSize.Height / 2))
 	{
-		screenManager->resize((logicalSize.Height/2) / centerPosition.y);
+		screenManager->updateAfterResize((logicalSize.Width/2) / centerPosition.x , (logicalSize.Height/2) / centerPosition.y);
 		centerPosition.y = logicalSize.Height/2;
 		centerPosition.x = logicalSize.Width/2;
 	}
 
 	// Draw sprites
 	m_sprites->Begin();
+
+	//background->Draw(m_sprites.get());
+	//clouds->Draw(m_sprites.get());
+
+	//Drawing walls
+
+	/*for (auto wall : wallsVector)
+	{
+		wall.Draw(m_sprites.get());
+	}*/
+
+	//screen->Draw(m_sprites.get());
+	//buttons[0]->Draw(m_sprites.get());
 	screenManager->Draw(m_sprites.get());
+
+	//wall->Draw(m_sprites.get());
+	//wall2->Draw(m_sprites.get());
+	//player->Draw(m_sprites.get());
 	//m_font->DrawString(m_sprites.get(), startButtonString.c_str(), XMFLOAT2(300, 200), Colors::Black);
+	//clouds2->Draw(m_sprites.get());
+
 	//m_font->DrawString(m_sprites.get(), collisionString.c_str(), XMFLOAT2(100, 10), Colors::Yellow);
+	
 	m_sprites->End();
 }
 
@@ -435,12 +455,11 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 {
 	// Create DirectXTK objects
 	auto device = m_deviceResources->GetD3DDevice();
+
 	auto context = m_deviceResources->GetD3DDeviceContext();
+
 	auto windowSize = m_deviceResources->GetOutputSize(); // physical screen resolution
 	auto logicalSize = m_deviceResources->GetLogicalSize(); //DPI dependent resolution
-	centerPosition.x = logicalSize.Width / 2.0;
-	centerPosition.y = logicalSize.Height / 2.0;
-	float oneUnitHeight = logicalSize.Height / 7.0;
 
 	m_sprites.reset(new SpriteBatch(context));
 	spriteBatchT1.reset(new SpriteBatch(context));
@@ -448,48 +467,84 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 
 	m_font.reset(new SpriteFont(device, L"assets\\italic.spritefont"));
 
+	//player.reset(new Player(m_texture.Get()));
+
 	/*DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\background.dds", nullptr, backgroundTexture.ReleaseAndGetAddressOf())
 		);
 	background.reset(new ScrollingBackground);
 	background->Load(backgroundTexture.Get());*/
 
+
+	/*DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\clouds.dds", nullptr, cloudsTexture.ReleaseAndGetAddressOf())
+		);
+	clouds.reset(new ScrollingBackground);
+	clouds->Load(cloudsTexture.Get());
+
+	DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\clouds2.dds", nullptr, cloudsTexture2.ReleaseAndGetAddressOf())
+		);
+	clouds2.reset(new ScrollingBackground);
+	clouds2->Load(cloudsTexture2.Get());*/
+
+	/*DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\enemyanimated.dds", nullptr, enemyTexture.ReleaseAndGetAddressOf())
+		);*/
+	//TODO: Instatiate enemies here
+	/*Enemy enemyTemp(enemyTexture.Get());
+	enemiesVector.push_back(enemyTemp);
+
+	*/
+	
+	//Adding walls to vector
+	//wallsVector.push_back(Wall(logicalSize, XMFLOAT2(300, 0), pipeTexture.Get()));
+	//wallsVector.emplace_back(Wall(logicalSize, XMFLOAT2(logicalSize.Width, 0), pipeTexture.Get()));
 	screenManager = std::unique_ptr<ScreenManager>(new ScreenManager());
 
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\button.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 
-	Screen* screen = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Main");
-	screen->addButton(L"Start", L"StartMain", XMFLOAT2(centerPosition.x, centerPosition.y- oneUnitHeight));
-	screen->addButton(L"Options", L"OptionsMain", XMFLOAT2(centerPosition.x, centerPosition.y));
-	screen->addButton(L"Exit", L"ExitMain", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
+	centerPosition.x = logicalSize.Width / 2.0;
+	centerPosition.y = logicalSize.Height / 2.0;
+	float oneUnitHeight = logicalSize.Height / 7.0;
+	Screen* screen = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"));
+	screen->setName(L"Main");
+	screen->addElement(L"Start", L"StartMain", XMFLOAT2(centerPosition.x, centerPosition.y- oneUnitHeight));
+	screen->addElement(L"Options", L"OptionsMain", XMFLOAT2(centerPosition.x, centerPosition.y));
+	screen->addElement(L"Exit", L"ExitMain", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
 	screenManager->addScreen(screen);
 
-	Screen* screen1 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Options");
-	screen1->addButton(L"Music", L"MusicOptions", XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight));
-	screen1->addButton(L"Author", L"AuthorOptions", XMFLOAT2(centerPosition.x, centerPosition.y));
-	screen1->addButton(L"Back", L"BackOptions", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
+	Screen* screen1 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"));
+	screen1->setName(L"Options");
+	screen1->addElement(L"Music", L"MusicOptions", XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight));
+	screen1->addElement(L"Author", L"AuthorOptions", XMFLOAT2(centerPosition.x, centerPosition.y));
+	screen1->addElement(L"Back", L"BackOptions", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
 	screenManager->addScreen(screen1);
 
-	Screen* screen2 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Level");
-	screen2->addButton(L"Offline", L"OfflineLevel", XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight));
-	screen2->addButton(L"Online", L"OnlineLevel", XMFLOAT2(centerPosition.x, centerPosition.y));
-	screen2->addButton(L"Back", L"BackLevel", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
+	Screen* screen2 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"));
+	screen2->setName(L"Level");
+	screen2->addElement(L"Offline", L"OfflineLevel", XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight));
+	screen2->addElement(L"Online", L"OnlineLevel", XMFLOAT2(centerPosition.x, centerPosition.y));
+	screen2->addElement(L"Back", L"BackLevel", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
 	screenManager->addScreen(screen2);
 
-	Screen* screen4 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Pause");
-	screen4->addButton(L"Return", L"ReturnPause", XMFLOAT2(centerPosition.x, centerPosition.y));
-	screen4->addButton(L"Exit", L"ExitPause", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
+	Screen* screen4 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"));
+	screen4->setName(L"Pause");
+	screen4->addElement(L"Return", L"ReturnPause", XMFLOAT2(centerPosition.x, centerPosition.y));
+	screen4->addElement(L"Exit", L"ExitPause", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
 	screenManager->addScreen(screen4);
 
-	Screen* screen5= new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Author");
-	screen5->addButton(L"It's me ;)", L"DescriptionAuthor", XMFLOAT2(centerPosition.x, centerPosition.y));
-	screen5->addButton(L"Back", L"BackAuthor", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
+	Screen* screen5= new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"));
+	screen5->setName(L"Author");
+	screen5->addElement(L"It's me ;)", L"DescriptionAuthor", XMFLOAT2(centerPosition.x, centerPosition.y));
+	screen5->addElement(L"Back", L"BackAuthor", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
 	screenManager->addScreen(screen5);
 
-	Screen* screen3 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Play");
-	screen3->addButton(L"Pause", L"PausePlay", XMFLOAT2(centerPosition.x, oneUnitHeight));
+	Screen* screen3 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"));
+	screen3->setName(L"Play");	
+	screen3->addElement(L"Pause", L"PausePlay", XMFLOAT2(centerPosition.x, oneUnitHeight));
 	screenManager->addScreen(screen3);
 
 	screenManager->addBrickTexture(m_texture.Get());
@@ -544,13 +599,19 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	//background->SetWindow(logicalSize.Width, logicalSize.Height);
 	//clouds->SetWindow(logicalSize.Width, logicalSize.Height);
 	//clouds2->SetWindow(logicalSize.Width, logicalSize.Height);
-	//GamePad.reset(new GamePad);
+
+	//Enginepad
+	//EnginePad.reset(new EnginePad);
 }
 
 void DirectXTK3DSceneRenderer::ReleaseDeviceDependentResources()
 {
-	//remember reset() all texture
     m_sprites.reset();
     m_font.reset();
     m_texture.Reset();
+	//backgroundTexture.Reset();
+	//cloudsTexture.Reset();
+	//cloudsTexture2.Reset();
+	//pipeTexture.Reset();
+	//enemyTexture.Reset();
 }
