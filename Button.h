@@ -15,8 +15,8 @@ public:
 
 	Button(ID3D11ShaderResourceView* playerSpriteSheet, DirectX::XMFLOAT2 positionIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
 	{
-		float rotation = 0.0f;
-		float scale = 1.f;
+		rotation = 0.0f;
+		scale = 1.f;
 
 		texture = playerSpriteSheet;
 		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scale, 0.0f));
@@ -39,21 +39,19 @@ public:
 		return position;
 	}
 
+	void setDiemnstion(DirectX::XMFLOAT2 dimensionIn)
+	{
+		dimensions = dimensionIn;
+	}
+
 	DirectX::XMFLOAT2 getDimension()
 	{
 		return dimensions;
 	}
 
-	bool isColision(float x, float y)
+	Windows::Foundation::Rect getBoundingRectangle()
 	{
-		if (x >= (boundingRectangle.X) && y >= (boundingRectangle.Y) && x <= (boundingRectangle.X + boundingRectangle.Width) && y <= (boundingRectangle.Y + boundingRectangle.Height))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+		return boundingRectangle;
 	}
 
 	void Update(float elapsed)
@@ -66,12 +64,19 @@ public:
 		animation->Draw(batch, position);
 	}
 
-	Windows::Foundation::Rect getBoundingRectangle()
+	bool isColision(float x, float y)
 	{
-		return boundingRectangle;
+		if (x > (boundingRectangle.X) && y > (boundingRectangle.Y) && x < (boundingRectangle.X + boundingRectangle.Width) && y < (boundingRectangle.Y + boundingRectangle.Height))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
-	void updateAfterResize(float scale)
+	void resize(float scale)
 	{
 		position.x *= scale;
 		position.y *= scale;
@@ -93,7 +98,10 @@ public:
 
 	int													framesOfAnimation;
 	int													framesToBeShownPerSecond;
-	
+
+	float												rotation;
+	float												scale;
+
 	DirectX::XMFLOAT2									position;
 	DirectX::XMFLOAT2									dimensions;
 	

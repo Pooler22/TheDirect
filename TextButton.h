@@ -6,7 +6,7 @@
 #include <DirectXMath.h>
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
-#include "Figure.h"
+#include "Button.h"
 
 class TextButton : public Button
 {
@@ -39,7 +39,7 @@ public:
 
 	bool isOver(float x, float y) 
 	{
-		if (x > (boundingRectangle.X) && y > (boundingRectangle.Y) && x < (boundingRectangle.X + boundingRectangle.Width) && y < (boundingRectangle.Y + boundingRectangle.Height))
+		if (isColision(x,y))
 		{
 			color = colorOver;
 			return true;
@@ -50,13 +50,7 @@ public:
 			return false;
 		}
 	}
-
-	void Draw(DirectX::SpriteBatch* batch)
-	{
-		animation->Draw(batch, position);
-		m_font->DrawString(batch, string.c_str(), position, color);
-	}
-
+	
 	void setString(std::wstring in)
 	{
 		string = in;
@@ -82,11 +76,10 @@ public:
 		return boundingRectangle;
 	}
 
-	void updateAfterResize(float x, float y)
+	void Draw(DirectX::SpriteBatch* batch)
 	{
-		position.x *= x;
-		position.y *= y;
-		updateBoundingRect();
+		animation->Draw(batch, position);
+		m_font->DrawString(batch, string.c_str(), position, color);
 	}
 
 public:

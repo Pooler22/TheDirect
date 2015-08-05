@@ -295,7 +295,7 @@
     <ClInclude Include="Content\SampleDebugTextRenderer.h" />
     <ClInclude Include="Content\SampleVirtualControllerRenderer.h" />
     <ClInclude Include="Content\ScrollingBackground.h" />
-    <ClInclude Include="Figure.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Person.h" />

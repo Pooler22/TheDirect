@@ -20,7 +20,6 @@ public:
 		bonus = std::unique_ptr<std::vector<Person>>(new std::vector<Person>());
 		score = 0;
 	};
-	Game::~Game() {};
 
 	void Game::addBrickTexture(ID3D11ShaderResourceView* playerSpriteSheet)
 	{
@@ -57,11 +56,10 @@ public:
 		}
 	}
 
-	void updateAfterResize(float x, float y)
+	void resize(float scale)
 	{
-		/*position.x *= x;
-		position.y *= y;
-		updateBoundingRect();*/
+		map->resize(scale);
+		player->resize(scale);
 	}
 
 	void Game::Draw(DirectX::SpriteBatch* batch)

@@ -8,29 +8,41 @@
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
 #include "Map.h"
-//#include "..\Common\DirectXHelper.h"	// For ThrowIfaFailed and ReadDataAsync
+#include "TextButton.h"
 
 class Screen
 {
 public:
 
-	Screen(ID3D11ShaderResourceView* playerSpriteSheetIn, SpriteFont* spriteFontIn)
+	Screen(ID3D11ShaderResourceView* buttonSpriteSheetIn, SpriteFont* spriteFontIn, std::wstring nameIn)
 	{
-		playerSpriteSheet = playerSpriteSheetIn;
+		buttonSpriteSheet = buttonSpriteSheetIn;
 		spriteFont = spriteFontIn;
-
 		buttons = std::vector<std::shared_ptr<TextButton>>();
+		name = nameIn;
 	};
-	~Screen() {};
 
-	void addElement(TextButton* button)
+	void addButton(std::wstring screen, std::wstring id, XMFLOAT2 position)
 	{
-		buttons.push_back(std::shared_ptr<TextButton>(button));
+		buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet, spriteFont, screen, id, position)));
 	}
 
-	void addElement(std::wstring s1, std::wstring s2, XMFLOAT2 position)
+	void addMenu(std::wstring* screen, std::wstring* id, XMFLOAT2* position, int count)
 	{
-		buttons.push_back(std::shared_ptr<TextButton>(new TextButton(playerSpriteSheet, spriteFont, s1, s2, position)));
+		for (int i = 0; i < count; i++)
+		{
+			buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet, spriteFont, screen[i], id[i], position[i])));
+		}
+	}
+
+	void setName(std::wstring stringIn)
+	{
+		name = stringIn;
+	}
+
+	std::wstring getName()
+	{
+		return name;
 	}
 
 	void Update(float elapsed)
@@ -48,15 +60,6 @@ public:
 			button->Draw(batch);
 		}
 	}
-	void setName(std::wstring stringIn)
-	{
-		name = stringIn;
-	}
-
-	std::wstring getName()
-	{
-		return name;
-	}
 
 	std::wstring isClicked(float x, float y)
 	{
@@ -70,18 +73,17 @@ public:
 		return L"false";
 	}
 
-	void updateAfterResize(float x, float y)
+	void resize(float scale)
 	{
 		for (auto &button : buttons) 
 		{
-			button->updateAfterResize(x, y);
+			button->resize(scale);
 		}
 	}
 
 private:
-	ID3D11ShaderResourceView*					playerSpriteSheet;
+	ID3D11ShaderResourceView*					buttonSpriteSheet;
 	SpriteFont*									spriteFont;
-
 	std::wstring								name;
-	std::vector<std::shared_ptr<TextButton>>		buttons;
+	std::vector<std::shared_ptr<TextButton>>	buttons;
 };

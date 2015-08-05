@@ -18,7 +18,6 @@ public:
 		bricks = std::vector<std::shared_ptr<Brick>>();
 		textureVector = std::shared_ptr<std::vector<std::shared_ptr<ID3D11ShaderResourceView>>>();
 	};
-	~Map() {};
 
 	void addBrickTexture(ID3D11ShaderResourceView* playerSpriteSheet)
 	{
@@ -101,13 +100,20 @@ public:
 		}
 	}
 
+	void resize(float scale)
+	{
+		for (auto &brick : bricks)
+		{
+			brick->resize(scale);
+		}
+	}
+
 private:
 
 	XMFLOAT2													size;
 	int*														numberTestureVector;
-	std::shared_ptr<std::vector<BRICK_BEHAVIOR>>				baehaviorTestureVector;
-
 	std::wstring												name;
+	std::shared_ptr<std::vector<BRICK_BEHAVIOR>>				baehaviorTestureVector;
 	std::vector<std::shared_ptr<Brick>>							bricks;
 	std::shared_ptr<std::vector<std::shared_ptr<ID3D11ShaderResourceView>>>	textureVector;
 	ID3D11ShaderResourceView*									texture;

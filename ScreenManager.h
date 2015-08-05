@@ -19,10 +19,6 @@ public:
 		game = std::unique_ptr<Game>(new Game());
 	}
 
-	~ScreenManager() 
-	{
-	}
-
 	void addScreen(Screen* screen)
 	{
 		screens.push_back(std::shared_ptr<Screen>(screen));
@@ -43,28 +39,6 @@ public:
 		game->setMapLevel(size, numberTestureVector, baehaviorTestureVector,  screenWidth, screenHeight);
 	}
 
-	void Update(float elapsed)
-	{
-		for (auto &screen : screens)
-		{
-			if (screen->getName().compare(nameCurrentScreen) == 0)
-				screen->Update(elapsed);
-		}
-		if (nameCurrentScreen.compare(L"Play") == 0)
-			game->Update(elapsed);
-	}
-
-	void Draw(DirectX::SpriteBatch* batch)
-	{
-		for (auto &screen : screens)
-		{
-			if(screen->getName().compare(nameCurrentScreen) == 0)
-				screen->Draw(batch);
-		}
-		if (nameCurrentScreen.compare(L"Play") == 0)
-			game->Draw(batch);
-	}
-
 	void setName(std::wstring stringIn)
 	{
 		nameCurrentScreen = stringIn;
@@ -73,6 +47,34 @@ public:
 	std::wstring getName()
 	{
 		return nameCurrentScreen;
+	}
+
+	void Update(float elapsed)
+	{
+		if (nameCurrentScreen.compare(L"Play") == 0)
+			game->Update(elapsed);
+		for (auto &screen : screens)
+		{
+			if (screen->getName().compare(nameCurrentScreen) == 0)
+			{
+				screen->Update(elapsed);
+				break;
+			}
+		}
+	}
+
+	void Draw(DirectX::SpriteBatch* batch)
+	{
+		if (nameCurrentScreen.compare(L"Play") == 0)
+			game->Draw(batch);
+		for (auto &screen : screens)
+		{
+			if (screen->getName().compare(nameCurrentScreen) == 0)
+			{
+				screen->Draw(batch);
+				break;
+			}
+		}
 	}
 
 	std::wstring isClicked(float x, float y)
@@ -84,17 +86,18 @@ public:
 		}
 		return L"false";
 	}
-	void updateAfterResize(float x, float y)
+	void resize(float scale)
 	{
+		if (nameCurrentScreen.compare(L"Play") == 0)
+			game->resize(scale);
 		for (auto &screen : screens)
 		{
-			screen->updateAfterResize(x, y);
+			screen->resize(scale);
 		}
-		game->updateAfterResize(x, y);
 	}
 
 public:
 	std::wstring								nameCurrentScreen;
-	std::vector<std::shared_ptr<Screen>>		screens;
 	std::unique_ptr<Game>						game;
+	std::vector<std::shared_ptr<Screen>>		screens;
 };
