@@ -93,10 +93,10 @@
     <ClInclude Include="Person.h">
       <Filter>Content</Filter>
     </ClInclude>
-    <ClInclude Include="TextButton.h">
+    <ClInclude Include="Figure.h">
       <Filter>Content</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
+    <ClInclude Include="TextButton.h">
       <Filter>Content</Filter>
     </ClInclude>
   </ItemGroup>
