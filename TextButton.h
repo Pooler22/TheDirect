@@ -82,10 +82,10 @@ public:
 		return boundingRectangle;
 	}
 
-	void updateAfterResize(float x, float y)
+	void resize(float scale)
 	{
-		position.x *= x;
-		position.y *= y;
+		position.x *= scale;
+		position.y *= scale;
 		updateBoundingRect();
 	}
 

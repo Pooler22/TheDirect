@@ -65,10 +65,10 @@ public:
 		return behavior;
 	}
 
-	void updateAfterResize(float x, float y)
+	void resize(float size)
 	{
-		position.x *= x;
-		position.y *= y;
+		position.x *= size;
+		position.y *= size;
 		updateBoundingRect();
 	}
 

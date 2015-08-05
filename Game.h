@@ -57,7 +57,7 @@ public:
 		}
 	}
 
-	void updateAfterResize(float x, float y)
+	void resize(float size)
 	{
 		/*position.x *= x;
 		position.y *= y;

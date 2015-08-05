@@ -84,13 +84,13 @@ public:
 		}
 		return L"false";
 	}
-	void updateAfterResize(float x, float y)
+	void resize(float scale)
 	{
 		for (auto &screen : screens)
 		{
-			screen->updateAfterResize(x, y);
+			screen->resize(scale);
 		}
-		game->updateAfterResize(x, y);
+		game->resize(scale);
 	}
 
 public:
