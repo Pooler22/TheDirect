@@ -73,9 +73,6 @@
     <ClInclude Include="Content\SampleVirtualControllerRenderer.h">
       <Filter>Content</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Content</Filter>
-    </ClInclude>
     <ClInclude Include="ToDo.h" />
     <ClInclude Include="Screen.h">
       <Filter>Content</Filter>
@@ -94,6 +91,12 @@
       <Filter>Content</Filter>
     </ClInclude>
     <ClInclude Include="Person.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Figure.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="TextButton.h">
       <Filter>Content</Filter>
     </ClInclude>
   </ItemGroup>
@@ -143,9 +146,6 @@
     <Image Include="Assets\pipe.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\shipanimated — kopia (2).dds">
-      <Filter>Assets</Filter>
-    </Image>
     <Image Include="Assets\shipanimated.dds">
       <Filter>Assets</Filter>
     </Image>
@@ -168,6 +168,9 @@
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\Logo.scale-100.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\button.dds">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>

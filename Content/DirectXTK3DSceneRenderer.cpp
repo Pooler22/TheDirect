@@ -495,19 +495,16 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	/*Enemy enemyTemp(enemyTexture.Get());
 	enemiesVector.push_back(enemyTemp);
 
-	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\pipe.dds", nullptr, pipeTexture.ReleaseAndGetAddressOf())
-		);*/
+	*/
 	
 	//Adding walls to vector
 	//wallsVector.push_back(Wall(logicalSize, XMFLOAT2(300, 0), pipeTexture.Get()));
 	//wallsVector.emplace_back(Wall(logicalSize, XMFLOAT2(logicalSize.Width, 0), pipeTexture.Get()));
-	
-	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\shipanimated.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
-		);
+	screenManager = std::unique_ptr<ScreenManager>(new ScreenManager());
 
-	screenManager = std::unique_ptr<ScreenManager>(new ScreenManager(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont")));
+	DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\button.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
 
 	centerPosition.x = logicalSize.Width / 2.0;
 	centerPosition.y = logicalSize.Height / 2.0;
@@ -552,18 +549,50 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 
 	screenManager->addBrickTexture(m_texture.Get());
 	
-	std::shared_ptr<std::vector<int>> numberTestureVector = std::shared_ptr<std::vector<int>>(new std::vector<int>());
+	DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\shipanimated.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
+
+	screenManager->addBrickTexture2(m_texture.Get());
+
+	std::vector<int> numberTestureVector = std::vector<int>();
 	std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVector = std::shared_ptr<std::vector<BRICK_BEHAVIOR>>(new std::vector<BRICK_BEHAVIOR>());
-	for (int i = 0; i < 100; i++)
+	
+	int tab[] = {	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+					1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+
+	for (int i = 0; i < 32 * 18; i++)
 	{
-		numberTestureVector->push_back(1);
-		baehaviorTestureVector->push_back(BRICK_BEHAVIOR_BLOCK);
+		
+		if (tab[i] == 1)
+			baehaviorTestureVector->push_back(BRICK_BEHAVIOR_NONE);
+		else
+			baehaviorTestureVector->push_back(BRICK_BEHAVIOR_BLOCK);
 	}
 	
-	screenManager->setMapLevel(XMFLOAT2(10,10),numberTestureVector, baehaviorTestureVector, logicalSize.Width, logicalSize.Height);
+	screenManager->setMapLevel(XMFLOAT2(32,18), tab, baehaviorTestureVector, logicalSize.Width, logicalSize.Height);
 
 	screenManager->setName(L"Main");
 
+	DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\shipanimated.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
 	screenManager->game->addPlayer(m_texture.Get(), XMFLOAT2(centerPosition.x, centerPosition.y));
 
 	//set windows size for drawing the background

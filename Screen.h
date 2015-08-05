@@ -19,18 +19,18 @@ public:
 		playerSpriteSheet = playerSpriteSheetIn;
 		spriteFont = spriteFontIn;
 
-		buttons = std::vector<std::shared_ptr<Button>>();
+		buttons = std::vector<std::shared_ptr<TextButton>>();
 	};
 	~Screen() {};
 
-	void addElement(Button* button)
+	void addElement(TextButton* button)
 	{
-		buttons.push_back(std::shared_ptr<Button>(button));
+		buttons.push_back(std::shared_ptr<TextButton>(button));
 	}
 
 	void addElement(std::wstring s1, std::wstring s2, XMFLOAT2 position)
 	{
-		buttons.push_back(std::shared_ptr<Button>(new Button(playerSpriteSheet, spriteFont, s1, s2, position)));
+		buttons.push_back(std::shared_ptr<TextButton>(new TextButton(playerSpriteSheet, spriteFont, s1, s2, position)));
 	}
 
 	void Update(float elapsed)
@@ -83,5 +83,5 @@ private:
 	SpriteFont*									spriteFont;
 
 	std::wstring								name;
-	std::vector<std::shared_ptr<Button>>		buttons;
+	std::vector<std::shared_ptr<TextButton>>		buttons;
 };

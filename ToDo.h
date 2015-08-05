@@ -6,7 +6,7 @@ ref class ToDo sealed
 	//TODO: obs³uga klikania padem
 	//TODO: grawitacja
 	//TODO: œrodkowanie
-	//TODO: rozci¹ganie
-	//TODO: grafika przycisków i postaci
+	//TODO: rozci¹ganie przycisków
+	//TODO: grafika przycisków
 };
 

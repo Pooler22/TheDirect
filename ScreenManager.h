@@ -2,7 +2,6 @@
 
 #include <wrl.h>
 #include <future>
-#include <Content\AnimatedTexture.h>
 #include <SpriteBatch.h>
 #include <DirectXMath.h>
 #include <DirectXTK\Inc\SimpleMath.h>
@@ -14,29 +13,32 @@ class ScreenManager
 {
 
 public:
-	ScreenManager(ID3D11ShaderResourceView* playerSpriteSheetIn, SpriteFont* spriteFontIn)
+	ScreenManager()
 	{
-		playerSpriteSheet = playerSpriteSheetIn;
-		spriteFont = spriteFontIn;
-
 		screens = std::vector<std::shared_ptr<Screen>>();
 		game = std::unique_ptr<Game>(new Game());
-	};
+	}
 
-	~ScreenManager() {};
+	~ScreenManager() 
+	{
+	}
 
 	void addScreen(Screen* screen)
 	{
 		screens.push_back(std::shared_ptr<Screen>(screen));
 	}
 
-
-	void addBrickTexture(ID3D11ShaderResourceView* playerSpriteSheet)
+	void addBrickTexture(ID3D11ShaderResourceView* spriteSheet)
 	{
-		game->addBrickTexture(playerSpriteSheet);
+		game->addBrickTexture(spriteSheet);
 	}
 
-	void setMapLevel(XMFLOAT2 size, std::shared_ptr<std::vector<int>> numberTestureVector, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVector, int screenWidth, int screenHeight)
+	void addBrickTexture2(ID3D11ShaderResourceView* spriteSheet)
+	{
+		game->addBrickTexture2(spriteSheet);
+	}
+
+	void setMapLevel(XMFLOAT2 size, int* numberTestureVector, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVector, int screenWidth, int screenHeight)
 	{
 		game->setMapLevel(size, numberTestureVector, baehaviorTestureVector,  screenWidth, screenHeight);
 	}
@@ -45,10 +47,10 @@ public:
 	{
 		for (auto &screen : screens)
 		{
-			if (screen->getName().compare(name) == 0)
+			if (screen->getName().compare(nameCurrentScreen) == 0)
 				screen->Update(elapsed);
 		}
-		if (name.compare(L"Play") == 0)
+		if (nameCurrentScreen.compare(L"Play") == 0)
 			game->Update(elapsed);
 	}
 
@@ -56,28 +58,28 @@ public:
 	{
 		for (auto &screen : screens)
 		{
-			if(screen->getName().compare(name) == 0)
+			if(screen->getName().compare(nameCurrentScreen) == 0)
 				screen->Draw(batch);
 		}
-		if (name.compare(L"Play") == 0)
+		if (nameCurrentScreen.compare(L"Play") == 0)
 			game->Draw(batch);
 	}
 
 	void setName(std::wstring stringIn)
 	{
-		name = stringIn;
+		nameCurrentScreen = stringIn;
 	}
 
 	std::wstring getName()
 	{
-		return name;
+		return nameCurrentScreen;
 	}
 
 	std::wstring isClicked(float x, float y)
 	{
 		for (auto &screen : screens)
 		{
-			if (screen->getName() == name)
+			if (screen->getName() == nameCurrentScreen)
 				return screen->isClicked(x, y);
 		}
 		return L"false";
@@ -92,10 +94,7 @@ public:
 	}
 
 public:
-	ID3D11ShaderResourceView*					playerSpriteSheet;
-	SpriteFont*									spriteFont;
-
-	std::wstring								name;
+	std::wstring								nameCurrentScreen;
 	std::vector<std::shared_ptr<Screen>>		screens;
 	std::unique_ptr<Game>						game;
 };

@@ -13,17 +13,23 @@ class Map
 public:
 	Map()
 	{
-		numberTestureVector = std::shared_ptr<std::vector<int>>();
+		//numberTestureVector = std::vector<int>();
 		baehaviorTestureVector = std::shared_ptr<std::vector<BRICK_BEHAVIOR>>();
 		bricks = std::vector<std::shared_ptr<Brick>>();
-		textureVector = std::shared_ptr<std::vector<ID3D11ShaderResourceView>>();
+		textureVector = std::shared_ptr<std::vector<std::shared_ptr<ID3D11ShaderResourceView>>>();
 	};
 	~Map() {};
 
 	void addBrickTexture(ID3D11ShaderResourceView* playerSpriteSheet)
 	{
-		//textureVector->push_back(*playerSpriteSheet);
+		//textureVector->push_back((std::shared_ptr<ID3D11ShaderResourceView>(playerSpriteSheet)));
 		texture = playerSpriteSheet;
+	}
+
+	void addBrickTexture2(ID3D11ShaderResourceView* playerSpriteSheet)
+	{
+		//textureVector->push_back((std::shared_ptr<ID3D11ShaderResourceView>(playerSpriteSheet)));
+		texture2 = playerSpriteSheet;
 	}
 
 	void Update(float elapsed)
@@ -73,7 +79,7 @@ public:
 		return BRICK_BEHAVIOR_NONE;
 	}
 
-	void setMapLevel(XMFLOAT2 sizeIn, std::shared_ptr<std::vector<int>> numberTestureVectorIn, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVectorIn, int screenWidth, int screenHeight)
+	void setMapLevel(XMFLOAT2 sizeIn, int* numberTestureVectorIn, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVectorIn, int screenWidth, int screenHeight)
 	{
 		size = sizeIn;
 		numberTestureVector = numberTestureVectorIn;
@@ -87,7 +93,10 @@ public:
 		{
 			for (int y = 0; y < size.y; y++)
 			{
-				bricks.push_back(std::shared_ptr<Brick>(new Brick(texture,XMFLOAT2(x * 40,y * 30), screenWidth, screenHeight)));
+				if(numberTestureVector[x*y]== 0)
+					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture, XMFLOAT2(x * (screenWidth/size.x),y * (screenHeight/ size.y)), screenWidth, screenHeight,size)));
+				else
+					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture2, XMFLOAT2(x * (screenWidth / size.x), y * (screenHeight / size.y)), screenWidth, screenHeight, size)));
 			}
 		}
 	}
@@ -95,11 +104,12 @@ public:
 private:
 
 	XMFLOAT2													size;
-	std::shared_ptr<std::vector<int>>							numberTestureVector;
+	int*														numberTestureVector;
 	std::shared_ptr<std::vector<BRICK_BEHAVIOR>>				baehaviorTestureVector;
 
 	std::wstring												name;
 	std::vector<std::shared_ptr<Brick>>							bricks;
-	std::shared_ptr<std::vector<ID3D11ShaderResourceView>>		textureVector;
+	std::shared_ptr<std::vector<std::shared_ptr<ID3D11ShaderResourceView>>>	textureVector;
 	ID3D11ShaderResourceView*									texture;
+	ID3D11ShaderResourceView*									texture2;
 };

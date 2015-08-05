@@ -30,7 +30,7 @@
 #include "ScrollingBackground.h"
 #include "Wall.h"
 #include "GamePad.h"
-#include "Button.h"
+#include "TextButton.h"
 #include "Screen.h"
 #include "Common/DeviceResources.h"
 #include "Common/StepTimer.h"
@@ -95,7 +95,7 @@ namespace SimpleSample
 		//Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>						cloudsTexture2;
 		//std::unique_ptr<ScrollingBackground>									clouds2;
 		//std::unique_ptr<Player>												player;
-		//std::vector<std::unique_ptr<Button>>									buttons;
+		//std::vector<std::unique_ptr<TextButton>>									buttons;
 		//std::wstring															startButtonString;
 		//std::unique_ptr<EnginePad>											GamePad;
 		//std::vector<Wall>														wallsVector;

@@ -255,6 +255,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Image Include="Assets\background.dds" />
+    <Image Include="Assets\button.dds" />
     <Image Include="Assets\cloud.dds" />
     <Image Include="Assets\cloud2.dds" />
     <Image Include="Assets\clouds.dds" />
@@ -266,7 +267,6 @@
     <Image Include="Assets\pipe.dds" />
     <Image Include="Assets\pipe.png" />
     <Image Include="Assets\seafloor.dds" />
-    <Image Include="Assets\shipanimated — kopia (2).dds" />
     <Image Include="Assets\shipanimated1.dds" />
     <Image Include="Assets\shipanimated.dds" />
     <Image Include="Assets\SmallLogo.dds" />
@@ -286,7 +286,7 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="Brick.h" />
-    <ClInclude Include="Button.h" />
+    <ClInclude Include="TextButton.h" />
     <ClInclude Include="Common\DeviceResources.h" />
     <ClInclude Include="Common\InputManager.h" />
     <ClInclude Include="Common\OverlayManager.h" />
@@ -295,6 +295,7 @@
     <ClInclude Include="Content\SampleDebugTextRenderer.h" />
     <ClInclude Include="Content\SampleVirtualControllerRenderer.h" />
     <ClInclude Include="Content\ScrollingBackground.h" />
+    <ClInclude Include="Figure.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Person.h" />
