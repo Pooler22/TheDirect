@@ -405,6 +405,7 @@ void DirectXTK3DSceneRenderer::Render()
 
 	//2.) -----------------
 	m_texture->GetResource(res.GetAddressOf());
+	m_texture2->GetResource(res.GetAddressOf());
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> text2D;
 	res.As(&text2D);
 	text2D->GetDesc(&pDesc);
@@ -547,46 +548,44 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	screen3->addElement(L"Pause", L"PausePlay", XMFLOAT2(centerPosition.x, oneUnitHeight));
 	screenManager->addScreen(screen3);
 
-	screenManager->addBrickTexture(m_texture.Get());
-	
 	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\shipanimated.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		CreateDDSTextureFromFile(device, L"assets\\brick2.dds", nullptr, m_texture2.ReleaseAndGetAddressOf())
 		);
 
-	screenManager->addBrickTexture2(m_texture.Get());
+	screenManager->addBrickTexture(m_texture2.Get());
+	DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\brick.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
+	
 
 	std::vector<int> numberTestureVector = std::vector<int>();
 	std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVector = std::shared_ptr<std::vector<BRICK_BEHAVIOR>>(new std::vector<BRICK_BEHAVIOR>());
 	
-	int tab[] = {	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-					1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-
-	for (int i = 0; i < 32 * 18; i++)
-	{
-		
-		if (tab[i] == 1)
-			baehaviorTestureVector->push_back(BRICK_BEHAVIOR_NONE);
-		else
-			baehaviorTestureVector->push_back(BRICK_BEHAVIOR_BLOCK);
-	}
+	int tab1[] = {	
+		1,1,1,1,1,1,1,1,1,0,1,1,1,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+		};
 	
-	screenManager->setMapLevel(XMFLOAT2(32,18), tab, baehaviorTestureVector, logicalSize.Width, logicalSize.Height);
+	for (int i = 0; i < 16; i++) 
+	{
+		for (int j = 0; j < 9; j++)
+		{
+			if (tab1[i*16+j] == 1)
+				baehaviorTestureVector->push_back(BRICK_BEHAVIOR_NONE);
+			else if (tab1[i * 16 + j] == 0)
+				baehaviorTestureVector->push_back(BRICK_BEHAVIOR_BLOCK);
+		}
+	}
+		
+	screenManager->addBrickTexture2(m_texture.Get());
+	screenManager->setMapLevel(XMFLOAT2(16,9), tab1, baehaviorTestureVector, logicalSize.Width, logicalSize.Height);
 
 	screenManager->setName(L"Main");
 

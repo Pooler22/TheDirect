@@ -81,7 +81,8 @@ public:
 
 	void setMapLevel(XMFLOAT2 sizeIn, int* numberTestureVectorIn, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVectorIn, int screenWidth, int screenHeight)
 	{
-		size = sizeIn;
+		size.x = sizeIn.x;
+		size.y = sizeIn.y;
 		numberTestureVector = numberTestureVectorIn;
 		baehaviorTestureVector = baehaviorTestureVectorIn;
 		generateMap(screenWidth, screenHeight);
@@ -89,13 +90,13 @@ public:
 
 	void generateMap(int screenWidth, int screenHeight)
 	{
-		for (int x = 0; x < size.x; x++) 
+		for (int y = 0; y < size.y; y++)
 		{
-			for (int y = 0; y < size.y; y++)
+			for (int x = 0; x < size.x; x++)
 			{
-				if(numberTestureVector[x*y]== 0)
+				if(numberTestureVector[(int)((y * size.y) + x)]== 0)
 					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture, XMFLOAT2(x * (screenWidth/size.x),y * (screenHeight/ size.y)), screenWidth, screenHeight,size)));
-				else
+				else if (numberTestureVector[(int)((y * size.y) + x)] == 1)
 					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture2, XMFLOAT2(x * (screenWidth / size.x), y * (screenHeight / size.y)), screenWidth, screenHeight, size)));
 			}
 		}

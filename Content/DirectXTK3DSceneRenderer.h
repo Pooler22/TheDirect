@@ -87,6 +87,7 @@ namespace SimpleSample
         bool                                                                    m_retryDefault;
 		std::unique_ptr<ScreenManager>											screenManager;
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>                        m_texture;
+		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>                        m_texture2;
 		//std::unique_ptr<GamePad>												GamePad;
 	};
 }

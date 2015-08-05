@@ -255,6 +255,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Image Include="Assets\background.dds" />
+    <Image Include="Assets\brick.dds" />
+    <Image Include="Assets\brick2.dds" />
     <Image Include="Assets\button.dds" />
     <Image Include="Assets\cloud.dds" />
     <Image Include="Assets\cloud2.dds" />
