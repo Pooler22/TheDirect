@@ -36,7 +36,7 @@ public:
     {
     }
 
-    void Load(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> texture )
+    void Load(ID3D11ShaderResourceView* texture )
     {
         mTexture = texture;
 

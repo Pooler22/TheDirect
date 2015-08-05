@@ -14,7 +14,7 @@ class Screen
 {
 public:
 
-	Screen(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> buttonSpriteSheetIn, Microsoft::WRL::ComPtr<SpriteFont> spriteFontIn, std::wstring nameIn)
+	Screen(ID3D11ShaderResourceView* buttonSpriteSheetIn, Microsoft::WRL::ComPtr<SpriteFont> spriteFontIn, std::wstring nameIn)
 	{
 		buttonSpriteSheet = buttonSpriteSheetIn;
 		spriteFont = spriteFontIn;

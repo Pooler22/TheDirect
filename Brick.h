@@ -18,7 +18,7 @@ class Brick : public Button
 {
 public:
 
-	Brick::Brick(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> playerSpriteSheet, DirectX::XMFLOAT2 positionIn, int screenWidth, int screenHeight, XMFLOAT2 sizeIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
+	Brick::Brick(ID3D11ShaderResourceView* playerSpriteSheet, DirectX::XMFLOAT2 positionIn, int screenWidth, int screenHeight, XMFLOAT2 sizeIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
 	{
 		float rotation = 0.0f;
 		float scale = 1.f;

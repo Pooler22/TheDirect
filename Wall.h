@@ -16,7 +16,7 @@ class Wall
 
 public:
 
-	Wall(Windows::Foundation::Size screenResolution, XMFLOAT2 position, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> pipeTexture)
+	Wall(Windows::Foundation::Size screenResolution, XMFLOAT2 position, ID3D11ShaderResourceView* pipeTexture)
 		: screenSize(screenResolution),
 		m_origin(0, 0),
 		gapMinHeight(256),

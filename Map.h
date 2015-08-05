@@ -19,13 +19,13 @@ public:
 		textureVector = std::shared_ptr<std::vector<std::shared_ptr<ID3D11ShaderResourceView>>>();
 	};
 
-	void addBrickTexture(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> playerSpriteSheet)
+	void addBrickTexture(ID3D11ShaderResourceView* playerSpriteSheet)
 	{
 		//textureVector->push_back((std::shared_ptr<ID3D11ShaderResourceView>(playerSpriteSheet)));
 		texture = playerSpriteSheet;
 	}
 
-	void addBrickTexture2(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> playerSpriteSheet)
+	void addBrickTexture2(ID3D11ShaderResourceView*playerSpriteSheet)
 	{
 		//textureVector->push_back((std::shared_ptr<ID3D11ShaderResourceView>(playerSpriteSheet)));
 		texture2 = playerSpriteSheet;

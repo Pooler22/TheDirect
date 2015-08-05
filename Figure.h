@@ -13,7 +13,7 @@ public:
 	{
 	};
 
-	Button(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> playerSpriteSheet, DirectX::XMFLOAT2 positionIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
+	Button(ID3D11ShaderResourceView* playerSpriteSheet, DirectX::XMFLOAT2 positionIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
 	{
 		float rotation = 0.0f;
 		float scale = 1.f;

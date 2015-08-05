@@ -22,12 +22,12 @@ public:
 	};
 	Game::~Game() {};
 
-	void Game::addBrickTexture(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> playerSpriteSheet)
+	void Game::addBrickTexture(ID3D11ShaderResourceView* playerSpriteSheet)
 	{
 		map->addBrickTexture(playerSpriteSheet);
 	}
 
-	void Game::addBrickTexture2(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> playerSpriteSheet)
+	void Game::addBrickTexture2(ID3D11ShaderResourceView* playerSpriteSheet)
 	{
 		map->addBrickTexture2(playerSpriteSheet);
 	}
@@ -37,7 +37,7 @@ public:
 		map->setMapLevel(sizeIn, numberTestureVectorIn, baehaviorTestureVectorIn, screenWidth, screenHeight);
 	}
 	
-	void Game::addPlayer(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> playerSpriteSheet, DirectX::XMFLOAT2 positionIn)
+	void Game::addPlayer(ID3D11ShaderResourceView* playerSpriteSheet, DirectX::XMFLOAT2 positionIn)
 	{
 		player = std::unique_ptr<Person>(new Person(playerSpriteSheet,positionIn));
 	}

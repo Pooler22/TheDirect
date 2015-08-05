@@ -38,7 +38,7 @@ public:
     {
     }
 
-    void Load(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> texture, int frameCount, int framesPerSecond )
+    void Load(ID3D11ShaderResourceView* texture, int frameCount, int framesPerSecond )
     {
         if ( frameCount < 0 || framesPerSecond <= 0 )
             throw std::invalid_argument( "AnimatedTexture" );
