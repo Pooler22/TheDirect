@@ -72,7 +72,6 @@ namespace SimpleSample
         std::unique_ptr<DirectX::SpriteBatch>                                   m_sprites;
 		std::unique_ptr<DirectX::SpriteBatch>                                   spriteBatchT1;
 		std::unique_ptr<DirectX::SpriteBatch>                                   spriteBatchT2;
-
         std::unique_ptr<DirectX::SpriteFont>                                    m_font;
 
 		//Sound
@@ -81,33 +80,14 @@ namespace SimpleSample
         std::unique_ptr<DirectX::SoundEffect>                                   m_soundEffect;
         std::unique_ptr<DirectX::SoundEffectInstance>                           m_effect1;
         std::unique_ptr<DirectX::SoundEffectInstance>                           m_effect2;
-
-        Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>                        m_texture;
-		//Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>						enemyTexture;
-		//std::unique_ptr<AnimatedTexture>										animation;
-
-		//Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>                        pipeTexture;
-		//Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>						backgroundTexture;
 		
-		//std::unique_ptr<ScrollingBackground>									background;
-		//Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>						cloudsTexture;
-		//std::unique_ptr<ScrollingBackground>									clouds;
-		//Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>						cloudsTexture2;
-		//std::unique_ptr<ScrollingBackground>									clouds2;
-		//std::unique_ptr<Player>												player;
-		//std::vector<std::unique_ptr<TextButton>>									buttons;
-		//std::wstring															startButtonString;
-		//std::unique_ptr<EnginePad>											GamePad;
-		//std::vector<Wall>														wallsVector;
-		//std::vector<Enemy>													enemiesVector;
-		//std::wstring															collisionString;
-
 		// Variables used with the rendering loop.
         uint32_t                                                                m_audioEvent;
         float                                                                   m_audioTimerAcc;
         bool                                                                    m_retryDefault;
-		
 		std::unique_ptr<ScreenManager>											screenManager;
+		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>                        m_texture;
+		//std::unique_ptr<GamePad>												GamePad;
 	};
 }
 

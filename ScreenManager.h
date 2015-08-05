@@ -24,12 +24,12 @@ public:
 		screens.push_back(std::shared_ptr<Screen>(screen));
 	}
 
-	void addBrickTexture(ID3D11ShaderResourceView* spriteSheet)
+	void addBrickTexture(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> spriteSheet)
 	{
 		game->addBrickTexture(spriteSheet);
 	}
 
-	void addBrickTexture2(ID3D11ShaderResourceView* spriteSheet)
+	void addBrickTexture2(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> spriteSheet)
 	{
 		game->addBrickTexture2(spriteSheet);
 	}

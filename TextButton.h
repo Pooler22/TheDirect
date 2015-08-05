@@ -11,7 +11,7 @@
 class TextButton : public Button
 {
 public:
-	TextButton(ID3D11ShaderResourceView* playerSpriteSheet, SpriteFont *spriteFont, std::wstring inString, std::wstring inId, XMFLOAT2 inPosition) : framesOfAnimation(4), framesToBeShownPerSecond(4)
+	TextButton(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> playerSpriteSheet, SpriteFont *spriteFont, std::wstring inString, std::wstring inId, XMFLOAT2 inPosition) : framesOfAnimation(4), framesToBeShownPerSecond(4)
 	{
 		float rotation = 0.f;
 		float scale = 3.f;

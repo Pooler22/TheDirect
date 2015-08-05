@@ -417,7 +417,7 @@ void DirectXTK3DSceneRenderer::Render()
 
 	if ((centerPosition.x != logicalSize.Width / 2) || (centerPosition.y != logicalSize.Height / 2))
 	{
-		screenManager->resize((logicalSize.Width/2) / centerPosition.x);
+		screenManager->resize((logicalSize.Height/2) / centerPosition.y);
 		centerPosition.y = logicalSize.Height/2;
 		centerPosition.x = logicalSize.Width/2;
 	}
@@ -436,7 +436,6 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	// Create DirectXTK objects
 	auto device = m_deviceResources->GetD3DDevice();
 	auto context = m_deviceResources->GetD3DDeviceContext();
-
 	auto windowSize = m_deviceResources->GetOutputSize(); // physical screen resolution
 	auto logicalSize = m_deviceResources->GetLogicalSize(); //DPI dependent resolution
 	centerPosition.x = logicalSize.Width / 2.0;
@@ -449,33 +448,11 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 
 	m_font.reset(new SpriteFont(device, L"assets\\italic.spritefont"));
 
-	//player.reset(new Player(m_texture.Get()));
-
 	/*DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\background.dds", nullptr, backgroundTexture.ReleaseAndGetAddressOf())
 		);
 	background.reset(new ScrollingBackground);
 	background->Load(backgroundTexture.Get());*/
-
-
-	/*DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\clouds.dds", nullptr, cloudsTexture.ReleaseAndGetAddressOf())
-		);
-	clouds.reset(new ScrollingBackground);
-	clouds->Load(cloudsTexture.Get());
-
-	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\clouds2.dds", nullptr, cloudsTexture2.ReleaseAndGetAddressOf())
-		);
-	clouds2.reset(new ScrollingBackground);
-	clouds2->Load(cloudsTexture2.Get());*/
-
-	/*DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\enemyanimated.dds", nullptr, enemyTexture.ReleaseAndGetAddressOf())
-		);*/
-	/*Enemy enemyTemp(enemyTexture.Get());
-	enemiesVector.push_back(enemyTemp);
-	*/
 
 	screenManager = std::unique_ptr<ScreenManager>(new ScreenManager());
 

@@ -14,7 +14,7 @@ class Screen
 {
 public:
 
-	Screen(ID3D11ShaderResourceView* buttonSpriteSheetIn, SpriteFont* spriteFontIn, std::wstring nameIn)
+	Screen(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> buttonSpriteSheetIn, Microsoft::WRL::ComPtr<SpriteFont> spriteFontIn, std::wstring nameIn)
 	{
 		buttonSpriteSheet = buttonSpriteSheetIn;
 		spriteFont = spriteFontIn;
@@ -24,14 +24,14 @@ public:
 
 	void addButton(std::wstring screen, std::wstring id, XMFLOAT2 position)
 	{
-		buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet, spriteFont, screen, id, position)));
+		buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet.Get(), spriteFont.Get(), screen, id, position)));
 	}
 
 	void addMenu(std::wstring* screen, std::wstring* id, XMFLOAT2* position, int count)
 	{
 		for (int i = 0; i < count; i++)
 		{
-			buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet, spriteFont, screen[i], id[i], position[i])));
+			buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet.Get(), spriteFont.Get(), screen[i], id[i], position[i])));
 		}
 	}
 
@@ -82,8 +82,8 @@ public:
 	}
 
 private:
-	ID3D11ShaderResourceView*					buttonSpriteSheet;
-	SpriteFont*									spriteFont;
-	std::wstring								name;
-	std::vector<std::shared_ptr<TextButton>>	buttons;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	buttonSpriteSheet;
+	Microsoft::WRL::ComPtr<SpriteFont>					spriteFont;
+	std::wstring										name;
+	std::vector<std::shared_ptr<TextButton>>			buttons;
 };

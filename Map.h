@@ -19,13 +19,13 @@ public:
 		textureVector = std::shared_ptr<std::vector<std::shared_ptr<ID3D11ShaderResourceView>>>();
 	};
 
-	void addBrickTexture(ID3D11ShaderResourceView* playerSpriteSheet)
+	void addBrickTexture(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> playerSpriteSheet)
 	{
 		//textureVector->push_back((std::shared_ptr<ID3D11ShaderResourceView>(playerSpriteSheet)));
 		texture = playerSpriteSheet;
 	}
 
-	void addBrickTexture2(ID3D11ShaderResourceView* playerSpriteSheet)
+	void addBrickTexture2(Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> playerSpriteSheet)
 	{
 		//textureVector->push_back((std::shared_ptr<ID3D11ShaderResourceView>(playerSpriteSheet)));
 		texture2 = playerSpriteSheet;
@@ -93,9 +93,9 @@ public:
 			for (int y = 0; y < size.y; y++)
 			{
 				if(numberTestureVector[x*y]== 0)
-					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture, XMFLOAT2(x * (screenWidth/size.x),y * (screenHeight/ size.y)), screenWidth, screenHeight,size)));
+					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture.Get(), XMFLOAT2(x * (screenWidth/size.x),y * (screenHeight/ size.y)), screenWidth, screenHeight,size)));
 				else
-					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture2, XMFLOAT2(x * (screenWidth / size.x), y * (screenHeight / size.y)), screenWidth, screenHeight, size)));
+					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture2.Get(), XMFLOAT2(x * (screenWidth / size.x), y * (screenHeight / size.y)), screenWidth, screenHeight, size)));
 			}
 		}
 	}
@@ -110,12 +110,12 @@ public:
 
 private:
 
-	XMFLOAT2													size;
-	int*														numberTestureVector;
-	std::wstring												name;
-	std::shared_ptr<std::vector<BRICK_BEHAVIOR>>				baehaviorTestureVector;
-	std::vector<std::shared_ptr<Brick>>							bricks;
+	XMFLOAT2																size;
+	int*																	numberTestureVector;
+	std::wstring															name;
+	std::shared_ptr<std::vector<BRICK_BEHAVIOR>>							baehaviorTestureVector;
+	std::vector<std::shared_ptr<Brick>>										bricks;
 	std::shared_ptr<std::vector<std::shared_ptr<ID3D11ShaderResourceView>>>	textureVector;
-	ID3D11ShaderResourceView*									texture;
-	ID3D11ShaderResourceView*									texture2;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>						texture;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>						texture2;
 };
