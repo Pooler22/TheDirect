@@ -20,16 +20,16 @@ public:
 	};
 	~Map() {};
 
-	void addBrickTexture(ID3D11ShaderResourceView* playerSpriteSheet)
+	void addBrickTexture(ID3D11ShaderResourceView* buttonSpriteSheet)
 	{
 		//textureVector->push_back((std::shared_ptr<ID3D11ShaderResourceView>(playerSpriteSheet)));
-		texture = playerSpriteSheet;
+		texture = buttonSpriteSheet;
 	}
 
-	void addBrickTexture2(ID3D11ShaderResourceView* playerSpriteSheet)
+	void addBrickTexture2(ID3D11ShaderResourceView* buttonSpriteSheet)
 	{
 		//textureVector->push_back((std::shared_ptr<ID3D11ShaderResourceView>(playerSpriteSheet)));
-		texture2 = playerSpriteSheet;
+		texture2 = buttonSpriteSheet;
 	}
 
 	void Update(float elapsed)
@@ -67,16 +67,22 @@ public:
 		return size;
 	}
 
-	BRICK_BEHAVIOR isColision(float x, float y)
+	COLISION_TYPE isColision(float x, float y)
 	{
+		COLISION_TYPE decision = COLISION_TYPE::COLISION_TYPE_FALSE;
 		for (auto &brick : bricks)
 		{
-			if (brick->isColision(x, y))
+			if (brick->isColision(x, y) == COLISION_TYPE::COLISION_TYPE_TRUE)
 			{
-				return brick->getBehavior();
+				COLISION_TYPE::COLISION_TYPE_TRUE;
 			}
+			else if (brick->isColision(x, y) == COLISION_TYPE::COLISION_TYPE_STAND)
+			{
+				standingPlatformHeight = brick->boundingRectangle.Y;
+				return decision =  COLISION_TYPE::COLISION_TYPE_STAND;
+			} 
 		}
-		return BRICK_BEHAVIOR_NONE;
+		return decision;
 	}
 
 	void setMapLevel(int x, int y, int* numberTestureVectorIn, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVectorIn, int screenWidth, int screenHeight)
@@ -124,8 +130,9 @@ public:
 		}
 	}
 
+	float														standingPlatformHeight;
 private:
-
+	
 	XMFLOAT2													size;
 	int*														numberTestureVector;
 	std::shared_ptr<std::vector<BRICK_BEHAVIOR>>				baehaviorTestureVector;

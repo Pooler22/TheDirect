@@ -83,9 +83,7 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer)
         else
         {
             m_audioTimerAcc = 4.f;
-
             m_waveBank->Play(m_audioEvent++);
-
             if (m_audioEvent >= 11)
                 m_audioEvent = 0;
         }
@@ -98,11 +96,9 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer)
         m_retryDefault = true;
     }
 
-	//startButtonString = L"Start";
-
-//#pragma region Enginepad
-//	//EnginePad
-//	auto statePlayerOne = EnginePad->GetState(0);
+//#pragma region Gamepad
+//	//GamePad
+//	auto statePlayerOne = GameePad->GetState(0);
 //	if (statePlayerOne.IsConnected())
 //	{
 //		XMFLOAT2 tempPos = player->getPosition();
@@ -123,13 +119,6 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer)
 //		player->setPosition(tempPos);	
 //	}
 //#pragma endregion Handling the Enginepad Input
-
-#pragma region Paralaxing background
-	//Update Background
-	//background->Update((float)timer.GetElapsedSeconds() * 100);
-	//clouds->Update((float)timer.GetElapsedSeconds() * 300);
-	//clouds2->Update((float)timer.GetElapsedSeconds() * 900);
-#pragma endregion Handling the paralaxing backgrounds
 
 	//auto test = timer.GetElapsedSeconds();
 
@@ -425,29 +414,7 @@ void DirectXTK3DSceneRenderer::Render()
 
 	// Draw sprites
 	m_sprites->Begin();
-
-	//background->Draw(m_sprites.get());
-	//clouds->Draw(m_sprites.get());
-
-	//Drawing walls
-
-	/*for (auto wall : wallsVector)
-	{
-		wall.Draw(m_sprites.get());
-	}*/
-
-	//screen->Draw(m_sprites.get());
-	//buttons[0]->Draw(m_sprites.get());
 	screenManager->Draw(m_sprites.get());
-
-	//wall->Draw(m_sprites.get());
-	//wall2->Draw(m_sprites.get());
-	//player->Draw(m_sprites.get());
-	//m_font->DrawString(m_sprites.get(), startButtonString.c_str(), XMFLOAT2(300, 200), Colors::Black);
-	//clouds2->Draw(m_sprites.get());
-
-	//m_font->DrawString(m_sprites.get(), collisionString.c_str(), XMFLOAT2(100, 10), Colors::Yellow);
-	
 	m_sprites->End();
 }
 
@@ -467,6 +434,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	spriteBatchT2.reset(new SpriteBatch(context));
 
 	m_font.reset(new SpriteFont(device, L"assets\\italic.spritefont"));
+	
 
 	//player.reset(new Player(m_texture.Get()));
 
@@ -475,33 +443,11 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		);
 	background.reset(new ScrollingBackground);
 	background->Load(backgroundTexture.Get());*/
-
-
-	/*DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\clouds.dds", nullptr, cloudsTexture.ReleaseAndGetAddressOf())
-		);
-	clouds.reset(new ScrollingBackground);
-	clouds->Load(cloudsTexture.Get());
-
-	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\clouds2.dds", nullptr, cloudsTexture2.ReleaseAndGetAddressOf())
-		);
-	clouds2.reset(new ScrollingBackground);
-	clouds2->Load(cloudsTexture2.Get());*/
-
-	/*DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\enemyanimated.dds", nullptr, enemyTexture.ReleaseAndGetAddressOf())
-		);*/
-	//TODO: Instatiate enemies here
-	/*Enemy enemyTemp(enemyTexture.Get());
-	enemiesVector.push_back(enemyTemp);
-
-	*/
 	
 	//Adding walls to vector
 	//wallsVector.push_back(Wall(logicalSize, XMFLOAT2(300, 0), pipeTexture.Get()));
 	//wallsVector.emplace_back(Wall(logicalSize, XMFLOAT2(logicalSize.Width, 0), pipeTexture.Get()));
-	screenManager = std::unique_ptr<ScreenManager>(new ScreenManager());
+	screenManager.reset(new ScreenManager(L"Main"));
 
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\button.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
@@ -557,13 +503,14 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		);
 
 	screenManager->addBrickTexture(m_texture2.Get());
+
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\brick.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 	
 
-	std::vector<int> numberTestureVector = std::vector<int>();
-	std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVector = std::shared_ptr<std::vector<BRICK_BEHAVIOR>>(new std::vector<BRICK_BEHAVIOR>());
+	std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVector;
+	baehaviorTestureVector.reset(new std::vector<BRICK_BEHAVIOR>());
 	
 	int x1 = 16;
 	int y1 = 9;
@@ -582,7 +529,6 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	for (int y = 0; y < y1; y++)
 	{
 		for (int x = 0; x < x1; x++)
-		
 		{
 			if (tab1[(x*x1)+y] == 1)
 				baehaviorTestureVector->push_back(BRICK_BEHAVIOR_NONE);
@@ -594,20 +540,16 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	screenManager->addBrickTexture2(m_texture.Get());
 	screenManager->setMapLevel(x1,y1, tab1, baehaviorTestureVector, logicalSize.Width, logicalSize.Height);
 
-	screenManager->setName(L"Main");
-
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\shipanimated.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 	screenManager->game->addPlayer(m_texture.Get(), XMFLOAT2(centerPosition.x, centerPosition.y));
 
 	//set windows size for drawing the background
-	//background->SetWindow(logicalSize.Width, logicalSize.Height);
-	//clouds->SetWindow(logicalSize.Width, logicalSize.Height);
 	//clouds2->SetWindow(logicalSize.Width, logicalSize.Height);
 
-	//Enginepad
-	//EnginePad.reset(new EnginePad);
+	//Gamepad
+	//GamePad.reset(new GamePad);
 }
 
 void DirectXTK3DSceneRenderer::ReleaseDeviceDependentResources()

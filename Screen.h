@@ -8,7 +8,6 @@
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
 #include "Map.h"
-//#include "..\Common\DirectXHelper.h"	// For ThrowIfaFailed and ReadDataAsync
 
 class Screen
 {
@@ -16,29 +15,27 @@ public:
 
 	Screen(ID3D11ShaderResourceView* playerSpriteSheetIn, SpriteFont* spriteFontIn, std::wstring nameIn)
 	{
-		playerSpriteSheet = playerSpriteSheetIn;
+		buttonSpriteSheet = playerSpriteSheetIn;
 		spriteFont = spriteFontIn;
-
-		buttons = std::vector<std::shared_ptr<TextButton>>();
 		name = nameIn;
+		buttons = std::vector<std::shared_ptr<TextButton>>();
 	};
-	~Screen() {};
 
-	void addElement(TextButton* button)
+	void addButton(TextButton* button)
 	{
 		buttons.push_back(std::shared_ptr<TextButton>(button));
 	}
 
-	void addElement(std::wstring s1, std::wstring s2, XMFLOAT2 position)
+	void addButton(std::wstring name, std::wstring id, XMFLOAT2 position)
 	{
-		buttons.push_back(std::shared_ptr<TextButton>(new TextButton(playerSpriteSheet, spriteFont, s1, s2, position)));
+		buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet, spriteFont, name, id, position)));
 	}
 
-	void addMenu(std::wstring* s1, std::wstring* s2, XMFLOAT2* position, int size)
+	void addMenu(std::wstring* names, std::wstring* ids, XMFLOAT2* position, int size)
 	{
 		for (int i = 0; i < size; i++)
 		{
-			buttons.push_back(std::shared_ptr<TextButton>(new TextButton(playerSpriteSheet, spriteFont, s1[i], s2[i], position[i])));
+			buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet, spriteFont, names[i], ids[i], position[i])));
 		}
 	}
 
@@ -88,9 +85,8 @@ public:
 	}
 
 private:
-	ID3D11ShaderResourceView*					playerSpriteSheet;
+	ID3D11ShaderResourceView*					buttonSpriteSheet;
 	SpriteFont*									spriteFont;
-
 	std::wstring								name;
-	std::vector<std::shared_ptr<TextButton>>		buttons;
+	std::vector<std::shared_ptr<TextButton>>	buttons;
 };

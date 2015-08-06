@@ -6,13 +6,6 @@
 #include <DirectXMath.h>
 #include <DirectXTK\Inc\SimpleMath.h>
 
-enum COLISION_TYPE
-{
-	COLISION_TYPE_TRUE,
-	COLISION_TYPE_FALSE,
-	COLISION_TYPE_STAND
-};
-
 class Button
 {
 public:
@@ -20,12 +13,12 @@ public:
 	{
 	};
 
-	Button(ID3D11ShaderResourceView* playerSpriteSheet, DirectX::XMFLOAT2 positionIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
+	Button(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
 	{
 		float rotation = 0.0f;
 		float scale = 1.f;
 
-		texture = playerSpriteSheet;
+		texture = buttonSpriteSheet;
 		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scale, 0.0f));
 		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
 

@@ -13,14 +13,11 @@ class ScreenManager
 {
 
 public:
-	ScreenManager()
+	ScreenManager(std::wstring nameIn)
 	{
 		screens = std::vector<std::shared_ptr<Screen>>();
-		game = std::unique_ptr<Game>(new Game());
-	}
-
-	~ScreenManager() 
-	{
+		game.reset(new Game());
+		nameCurrentScreen = nameIn;
 	}
 
 	void addScreen(Screen* screen)

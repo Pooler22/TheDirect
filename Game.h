@@ -22,14 +22,14 @@ public:
 	};
 	Game::~Game() {};
 
-	void Game::addBrickTexture(ID3D11ShaderResourceView* playerSpriteSheet)
+	void Game::addBrickTexture(ID3D11ShaderResourceView* buttonSpriteSheet)
 	{
-		map->addBrickTexture(playerSpriteSheet);
+		map->addBrickTexture(buttonSpriteSheet);
 	}
 
-	void Game::addBrickTexture2(ID3D11ShaderResourceView* playerSpriteSheet)
+	void Game::addBrickTexture2(ID3D11ShaderResourceView* buttonSpriteSheet)
 	{
-		map->addBrickTexture2(playerSpriteSheet);
+		map->addBrickTexture2(buttonSpriteSheet);
 	}
 
 	void Game::setMapLevel(int x, int y, int* numberTestureVectorIn, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVectorIn, int screenWidthIn, int screenHeightIn)
@@ -39,17 +39,17 @@ public:
 		map->setMapLevel(x,y, numberTestureVectorIn, baehaviorTestureVectorIn, screenWidthIn, screenHeightIn);
 	}
 	
-	void Game::addPlayer(ID3D11ShaderResourceView* playerSpriteSheet, DirectX::XMFLOAT2 positionIn)
+	void Game::addPlayer(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn)
 	{
-		player = std::unique_ptr<Person>(new Person(playerSpriteSheet,positionIn));
+		player = std::unique_ptr<Person>(new Person(buttonSpriteSheet,positionIn));
 	}
 
 	void Game::Update(float elapsed)
 	{
+		isColision();
 		correctPlayerPosition();
 		map->Update(elapsed);
 		player->Update(elapsed);
-		isColision();
 	}
 
 	void correctPlayerPosition()
@@ -74,16 +74,21 @@ public:
 
 	void Game::isColision()
 	{
-		if ((map->isColision(player->getBoundingRectangle().X + player->getBoundingRectangle().Width, player->getBoundingRectangle().Y + player->getBoundingRectangle().Height) == BRICK_BEHAVIOR_BLOCK)
-			|| (map->isColision(player->getBoundingRectangle().X, player->getBoundingRectangle().Y + player->getBoundingRectangle().Height) == BRICK_BEHAVIOR_BLOCK))
+		if ((map->isColision(player->getBoundingRectangle().X + player->getBoundingRectangle().Width, player->getBoundingRectangle().Y + player->getBoundingRectangle().Height) == COLISION_TYPE::COLISION_TYPE_STAND)
+			|| (map->isColision(player->getBoundingRectangle().X, player->getBoundingRectangle().Y + player->getBoundingRectangle().Height) == COLISION_TYPE::COLISION_TYPE_STAND))
 		{
-		
-			player->setPosition(XMFLOAT2(player->position.x, player->position.y-1));
+			player->setPosition(XMFLOAT2(0, 0));
+			player->setStand(true);
+		}
+		else if ((map->isColision(player->getBoundingRectangle().X + player->getBoundingRectangle().Width, player->getBoundingRectangle().Y + player->getBoundingRectangle().Height) == COLISION_TYPE::COLISION_TYPE_TRUE)
+			|| (map->isColision(player->getBoundingRectangle().X, player->getBoundingRectangle().Y + player->getBoundingRectangle().Height) == COLISION_TYPE::COLISION_TYPE_TRUE))
+		{
+			player->setPosition(XMFLOAT2(0, 0));
 			player->setStand(true);
 		}
 		else 
 		{
-			player->setStand(false);
+			//player->setStand(false);
 		}
 	}
 

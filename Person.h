@@ -10,12 +10,12 @@
 class Person
 {
 public:
-	Person(ID3D11ShaderResourceView* playerSpriteSheet, DirectX::XMFLOAT2 positionIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
+	Person(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
 	{
 		float rotation = 0.f;
 		float scale = 1.f;
 
-		texture = playerSpriteSheet;
+		texture = buttonSpriteSheet;
 		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, 1, 0.5f));
 		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
 		
@@ -44,21 +44,6 @@ public:
 		return dimensions;
 	}
 
-	COLISION_TYPE isColision(float x, float y)
-	{
-		if (x > (boundingRectangle.X) && y > (boundingRectangle.Y) && x < (boundingRectangle.X + boundingRectangle.Width) && y < (boundingRectangle.Y + boundingRectangle.Height))
-		{
-			return COLISION_TYPE_TRUE;
-		}
-		else if (x >(boundingRectangle.X) && y == (boundingRectangle.Y) && x < (boundingRectangle.X + boundingRectangle.Width) && y == (boundingRectangle.Y + boundingRectangle.Height))
-		{
-			return COLISION_TYPE_STAND;
-		}
-		else
-		{
-			return COLISION_TYPE_FALSE;
-		}
-	}
 
 	void Update(float elapsed)
 	{
