@@ -38,9 +38,9 @@ public:
 		game->addBrickTexture2(spriteSheet);
 	}
 
-	void setMapLevel(XMFLOAT2 size, int* numberTestureVector, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVector, int screenWidth, int screenHeight)
+	void setMapLevel(int x, int y, int* numberTestureVector, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVector, int screenWidth, int screenHeight)
 	{
-		game->setMapLevel(size, numberTestureVector, baehaviorTestureVector,  screenWidth, screenHeight);
+		game->setMapLevel(x,y, numberTestureVector, baehaviorTestureVector,  screenWidth, screenHeight);
 	}
 
 	void Update(float elapsed)
@@ -84,13 +84,13 @@ public:
 		}
 		return L"false";
 	}
-	void updateAfterResize(float x, float y)
+	void resize(float x, float y)
 	{
 		for (auto &screen : screens)
 		{
-			screen->updateAfterResize(x, y);
+			screen->resize(x, y);
 		}
-		game->updateAfterResize(x, y);
+		game->resize(x, y);
 	}
 
 public:

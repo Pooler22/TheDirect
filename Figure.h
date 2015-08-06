@@ -71,7 +71,7 @@ public:
 		return boundingRectangle;
 	}
 
-	void updateAfterResize(float scale)
+	void resize(float scale)
 	{
 		position.x *= scale;
 		position.y *= scale;

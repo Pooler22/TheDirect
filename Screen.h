@@ -70,11 +70,11 @@ public:
 		return L"false";
 	}
 
-	void updateAfterResize(float x, float y)
+	void resize(float x, float y)
 	{
 		for (auto &button : buttons) 
 		{
-			button->updateAfterResize(x, y);
+			button->resize(x, y);
 		}
 	}
 

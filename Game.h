@@ -32,9 +32,9 @@ public:
 		map->addBrickTexture2(playerSpriteSheet);
 	}
 
-	void Game::setMapLevel(DirectX::XMFLOAT2 sizeIn, int* numberTestureVectorIn, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVectorIn, int screenWidth, int screenHeight)
+	void Game::setMapLevel(int x, int y, int* numberTestureVectorIn, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVectorIn, int screenWidth, int screenHeight)
 	{
-		map->setMapLevel(sizeIn, numberTestureVectorIn, baehaviorTestureVectorIn, screenWidth, screenHeight);
+		map->setMapLevel(x,y, numberTestureVectorIn, baehaviorTestureVectorIn, screenWidth, screenHeight);
 	}
 	
 	void Game::addPlayer(ID3D11ShaderResourceView* playerSpriteSheet, DirectX::XMFLOAT2 positionIn)
@@ -57,11 +57,10 @@ public:
 		}
 	}
 
-	void updateAfterResize(float x, float y)
+	void resize(float x, float y)
 	{
-		/*position.x *= x;
-		position.y *= y;
-		updateBoundingRect();*/
+		map->resize(x, y);
+		player->resize(x, y);
 	}
 
 	void Game::Draw(DirectX::SpriteBatch* batch)

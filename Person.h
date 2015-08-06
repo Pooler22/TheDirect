@@ -75,6 +75,13 @@ public:
 		updateBoundingRect();
 	}
 
+	void resize(float x, float y)
+	{
+		position.x *= x;
+		position.y *= y;
+		updateBoundingRect();
+	}
+
 private:
 
 	void updateBoundingRect()

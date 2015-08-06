@@ -65,7 +65,7 @@ public:
 		return behavior;
 	}
 
-	void updateAfterResize(float x, float y)
+	void resize(float x, float y)
 	{
 		position.x *= x;
 		position.y *= y;

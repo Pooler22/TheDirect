@@ -418,7 +418,7 @@ void DirectXTK3DSceneRenderer::Render()
 
 	if ((centerPosition.x != logicalSize.Width / 2) || (centerPosition.y != logicalSize.Height / 2))
 	{
-		screenManager->updateAfterResize((logicalSize.Width/2) / centerPosition.x , (logicalSize.Height/2) / centerPosition.y);
+		screenManager->resize((logicalSize.Width/2) / centerPosition.x , (logicalSize.Height/2) / centerPosition.y);
 		centerPosition.y = logicalSize.Height/2;
 		centerPosition.x = logicalSize.Width/2;
 	}
@@ -561,31 +561,34 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	std::vector<int> numberTestureVector = std::vector<int>();
 	std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVector = std::shared_ptr<std::vector<BRICK_BEHAVIOR>>(new std::vector<BRICK_BEHAVIOR>());
 	
-	int tab1[] = {	
-		1,1,1,1,1,1,1,1,1,0,1,1,1,0,0,0,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-		};
-	
-	for (int i = 0; i < 16; i++) 
+	int x1 = 16;
+	int y1 = 9;
+	int tab1[] = {
+		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+	};
+
+	for (int y = 0; y < y1; y++)
 	{
-		for (int j = 0; j < 9; j++)
+		for (int x = 0; x < x1; x++)
+		
 		{
-			if (tab1[i*16+j] == 1)
+			if (tab1[(x*x1)+y] == 1)
 				baehaviorTestureVector->push_back(BRICK_BEHAVIOR_NONE);
-			else if (tab1[i * 16 + j] == 0)
+			else 
 				baehaviorTestureVector->push_back(BRICK_BEHAVIOR_BLOCK);
 		}
 	}
 		
 	screenManager->addBrickTexture2(m_texture.Get());
-	screenManager->setMapLevel(XMFLOAT2(16,9), tab1, baehaviorTestureVector, logicalSize.Width, logicalSize.Height);
+	screenManager->setMapLevel(x1,y1, tab1, baehaviorTestureVector, logicalSize.Width, logicalSize.Height);
 
 	screenManager->setName(L"Main");
 
