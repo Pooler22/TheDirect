@@ -51,6 +51,7 @@ namespace SimpleSample
         void CreateAudioResources();
 		void ReleaseDeviceDependentResources();
 		void Update(DX::StepTimer const& timer);
+		void Update(DX::StepTimer const& timer, std::vector<PlayerInputData>* playerInput, unsigned int playersAttached);
 		void Update(std::vector<PlayerInputData>* playerInput, unsigned int playersAttached);
 		void Render();
 		// Signals a new audio device is available
@@ -70,8 +71,6 @@ namespace SimpleSample
 		//void XM_CALLCONV DrawGrid(DirectX::FXMVECTOR xAxis, DirectX::FXMVECTOR yAxis, DirectX::FXMVECTOR origin, size_t xdivs, size_t ydivs, DirectX::GXMVECTOR color);
 		
         std::unique_ptr<DirectX::SpriteBatch>                                   m_sprites;
-		std::unique_ptr<DirectX::SpriteBatch>                                   spriteBatchT1;
-		std::unique_ptr<DirectX::SpriteBatch>                                   spriteBatchT2;
         std::unique_ptr<DirectX::SpriteFont>                                    m_font;
 
 		//Sound

@@ -39,8 +39,6 @@ void DirectXTK3DSceneRenderer::CreateWindowSizeDependentResources()
 	// MUST BE DONE FOR EVERY SPRITEBATCH
 	m_sprites->SetRotation( m_deviceResources->ComputeDisplayRotation() ); // necessary for the sprites to be in correct rotation when the
 																			//screen rotation changes (portrait/landscape)
-	spriteBatchT1->SetRotation(m_deviceResources->ComputeDisplayRotation());
-	spriteBatchT2->SetRotation(m_deviceResources->ComputeDisplayRotation());
 }
 
 void DirectXTK3DSceneRenderer::CreateAudioResources()
@@ -66,59 +64,60 @@ void DirectXTK3DSceneRenderer::CreateAudioResources()
     //m_effect2->Play();
 }
 
-void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer)
+// Updates the scene to be displayed.
+void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<PlayerInputData>* playerInputs, unsigned int playersAttached)
 {
-    m_audioTimerAcc -= (float)timer.GetElapsedSeconds();
-    if (m_audioTimerAcc < 0)
-    {
-        if (m_retryDefault)
-        {
-            m_retryDefault = false;
-            if (m_audEngine->Reset())
-            {
-                // Restart looping audio
-                m_effect1->Play(true);
-            }
-        }
-        else
-        {
-            m_audioTimerAcc = 4.f;
-            m_waveBank->Play(m_audioEvent++);
-            if (m_audioEvent >= 11)
-                m_audioEvent = 0;
-        }
-    }
+	m_audioTimerAcc -= (float)timer.GetElapsedSeconds();
+	if (m_audioTimerAcc < 0)
+	{
+		if (m_retryDefault)
+		{
+			m_retryDefault = false;
+			if (m_audEngine->Reset())
+			{
+				// Restart looping audio
+				m_effect1->Play(true);
+			}
+		}
+		else
+		{
+			m_audioTimerAcc = 4.f;
+			m_waveBank->Play(m_audioEvent++);
+			if (m_audioEvent >= 11)
+				m_audioEvent = 0;
+		}
+	}
 
-    if (!m_audEngine->IsCriticalError() && m_audEngine->Update())
-    {
-        // Setup a retry in 1 second
-        m_audioTimerAcc = 1.f;
-        m_retryDefault = true;
-    }
+	if (!m_audEngine->IsCriticalError() && m_audEngine->Update())
+	{
+		// Setup a retry in 1 second
+		m_audioTimerAcc = 1.f;
+		m_retryDefault = true;
+	}
 
-//#pragma region Gamepad
-//	//GamePad
-//	auto statePlayerOne = GameePad->GetState(0);
-//	if (statePlayerOne.IsConnected())
-//	{
-//		XMFLOAT2 tempPos = player->getPosition();
-//		if (statePlayerOne.IsDPadUpPressed()){
-//			tempPos.y -= 10; //CHANGE TO PROPER OFFSET CALCULATION - USING TIME 
-//		}
-//
-//		if (statePlayerOne.IsDPadDownPressed()){
-//			tempPos.y += 10; ////CHANGE TO PROPER OFFSET CALCULATION - USING TIME 
-//		}
-//		
-//		if (statePlayerOne.IsDPadLeftPressed()){
-//			tempPos.x -= 10; //CHANGE TO PROPER OFFSET CALCULATION - USING TIME 
-//		}
-//		if (statePlayerOne.IsDPadRightPressed()){
-//			tempPos.x += 10; //CHANGE TO PROPER OFFSET CALCULATION - USING TIME 	
-//		}
-//		player->setPosition(tempPos);	
-//	}
-//#pragma endregion Handling the Enginepad Input
+	//#pragma region Gamepad
+	//	//GamePad
+	//	auto statePlayerOne = GameePad->GetState(0);
+	//	if (statePlayerOne.IsConnected())
+	//	{
+	//		XMFLOAT2 tempPos = player->getPosition();
+	//		if (statePlayerOne.IsDPadUpPressed()){
+	//			tempPos.y -= 10; //CHANGE TO PROPER OFFSET CALCULATION - USING TIME 
+	//		}
+	//
+	//		if (statePlayerOne.IsDPadDownPressed()){
+	//			tempPos.y += 10; ////CHANGE TO PROPER OFFSET CALCULATION - USING TIME 
+	//		}
+	//		
+	//		if (statePlayerOne.IsDPadLeftPressed()){
+	//			tempPos.x -= 10; //CHANGE TO PROPER OFFSET CALCULATION - USING TIME 
+	//		}
+	//		if (statePlayerOne.IsDPadRightPressed()){
+	//			tempPos.x += 10; //CHANGE TO PROPER OFFSET CALCULATION - USING TIME 	
+	//		}
+	//		player->setPosition(tempPos);	
+	//	}
+	//#pragma endregion Handling the Enginepad Input
 
 	//auto test = timer.GetElapsedSeconds();
 
@@ -126,51 +125,47 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer)
 	//animation->Update((float)timer.GetElapsedSeconds());
 	//player->Update((float)timer.GetElapsedSeconds());
 
-
 #pragma region Enemy AI
 	// TODO: handle enemy AI using promises and Lambdas
-std::vector<std::future<DirectX::XMFLOAT2>> futures;
+	std::vector<std::future<DirectX::XMFLOAT2>> futures;
 
-//for (auto enemy : enemiesVector)
-//{
-//	futures.push_back( std::async(std::launch::async,
-//		[]()
-//	{
-//		DirectX::XMFLOAT2 tempPos;
-//		//TODO: Write code for very complicated AI here
-//		
-//		
-//		return tempPos;
+	//for (auto enemy : enemiesVector)
+	//{
+	//	futures.push_back( std::async(std::launch::async,
+	//		[]()
+	//	{
+	//		DirectX::XMFLOAT2 tempPos;
+	//		//TODO: Write code for very complicated AI here
+	//		return tempPos;
+	//	}) );
+	//}
 
-//	}) );
-//}
+	for (auto &future : futures)
+	{
+		//TODO:get results
+		//auto enemiesIterator = enemiesVector.begin();
 
-for (auto &future : futures)
-{
-	//TODO:get results
-	//auto enemiesIterator = enemiesVector.begin();
-
-	DirectX::XMFLOAT2 tempPos;
-	tempPos = future.get();
-	//(*enemiesIterator).setPosition(tempPos);
-	//enemiesIterator++;
-}
+		DirectX::XMFLOAT2 tempPos;
+		tempPos = future.get();
+		//(*enemiesIterator).setPosition(tempPos);
+		//enemiesIterator++;
+	}
 
 #pragma endregion Handling Enemy AI using std::async and std::Future. Also using C++11 Lambdas
 
 #pragma region Collisions
-//collisionString = L"There is no collision";
-//EnginePad->SetVibration(0, 0.f, 0.f);
-/*for (auto wallsIterator = wallsVector.begin(); wallsIterator < wallsVector.end(); wallsIterator++)
-{
+	//collisionString = L"There is no collision";
+	//EnginePad->SetVibration(0, 0.f, 0.f);
+	/*for (auto wallsIterator = wallsVector.begin(); wallsIterator < wallsVector.end(); wallsIterator++)
+	{
 
 	(*wallsIterator).Update((float)timer.GetElapsedSeconds());
 	if ((*wallsIterator).isCollidingWith(player->rectangle)){
-		collisionString = L"There is a collision with the wall";
+	collisionString = L"There is a collision with the wall";
 
-		EnginePad->SetVibration(0, 0.75f, 0.75f);
+	EnginePad->SetVibration(0, 0.75f, 0.75f);
 	}
-}*/
+	}*/
 
 	//screen->Update((float)timer.GetElapsedSeconds());
 	//buttons[0]->Update((float)timer.GetElapsedSeconds());
@@ -178,11 +173,6 @@ for (auto &future : futures)
 
 #pragma endregion Handling collision detection + simple EnginePad rumble on crash
 
-}
-
-// Updates the scene to be displayed.
-void DirectXTK3DSceneRenderer::Update(std::vector<PlayerInputData>* playerInputs, unsigned int playersAttached)
-{
 	bool flagFromPressToRelasedClick = true;
 	m_playersAttached = playersAttached;
 
@@ -290,6 +280,8 @@ void DirectXTK3DSceneRenderer::Update(std::vector<PlayerInputData>* playerInputs
 				inputText += L"\n MoveX:(" + std::to_wstring(playerAction.PointerThrowX) + L") ";
 				inputText += L"\n MoveY:(" + std::to_wstring(playerAction.Y) + L") ";
 				screenManager->game->player->move(playerAction.X, playerAction.Y);
+				if (playerAction.Y == 1)
+					screenManager->game->player->jump();
 				break;
 			case PLAYER_ACTION_TYPES::INPUT_AIM:
 				inputText += L"\n AimX(" + std::to_wstring(playerAction.PointerThrowX) + L") ";
@@ -313,18 +305,18 @@ void DirectXTK3DSceneRenderer::Update(std::vector<PlayerInputData>* playerInputs
 		//m_text[i] = L"Input Player" + playerIdString += L": " + inputText;
 
 		/*DX::ThrowIfFailed(
-			m_deviceResources->GetDWriteFactory()->CreateTextLayout(
-				m_text[i].c_str(),
-				(uint32)m_text[i].length(),
-				m_textFormat.Get(),
-				DEBUG_INPUT_TEXT_MAX_WIDTH,
-				DEBUG_INPUT_TEXT_MAX_HEIGHT,
-				&m_textLayout[i]
-				)
-			);
+		m_deviceResources->GetDWriteFactory()->CreateTextLayout(
+		m_text[i].c_str(),
+		(uint32)m_text[i].length(),
+		m_textFormat.Get(),
+		DEBUG_INPUT_TEXT_MAX_WIDTH,
+		DEBUG_INPUT_TEXT_MAX_HEIGHT,
+		&m_textLayout[i]
+		)
+		);
 		DX::ThrowIfFailed(
-			m_textLayout[i]->GetMetrics(&m_textMetrics[i])
-			);*/
+		m_textLayout[i]->GetMetrics(&m_textMetrics[i])
+		);*/
 	}
 }
 
@@ -430,8 +422,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	auto logicalSize = m_deviceResources->GetLogicalSize(); //DPI dependent resolution
 
 	m_sprites.reset(new SpriteBatch(context));
-	spriteBatchT1.reset(new SpriteBatch(context));
-	spriteBatchT2.reset(new SpriteBatch(context));
+
 
 	m_font.reset(new SpriteFont(device, L"assets\\italic.spritefont"));
 	

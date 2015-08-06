@@ -4,7 +4,6 @@
 #include <ppltasks.h>
 
 using namespace SimpleSample;
-
 using namespace concurrency;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Core;

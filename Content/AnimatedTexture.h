@@ -142,7 +142,6 @@ public:
 		mOrigin = origin;
 	}
 
-
 private:
     bool                                                mPaused;
     int                                                 mFrame;
@@ -150,12 +149,11 @@ private:
     int                                                 mTextureWidth;
     int                                                 mTextureHeight;
 
-
-
     float                                               mTimePerFrame;
     float                                               mTotalElapsed;
     float                                               mDepth;
     float                                               mRotation;
+
     DirectX::XMFLOAT2                                   mOrigin;
     DirectX::XMFLOAT2                                   mScale;
     Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>    mTexture;

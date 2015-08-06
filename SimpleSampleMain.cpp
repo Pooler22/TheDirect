@@ -184,14 +184,12 @@ void SimpleSampleMain::Update()
 	// Update scene objects.
 	m_timer.Tick([&]()
 	{
-		m_sceneRenderer->Update(m_timer);
-
 		m_overlayManager->Update(m_timer);
 		m_inputManager->Update(m_timer);
 
 		std::vector<PlayerInputData> playerActions;
 		ProcessInput(&playerActions);
-		m_sceneRenderer->Update(&playerActions, m_playersConnected);
+		m_sceneRenderer->Update(m_timer, &playerActions, m_playersConnected);
 		m_debugTextRenderer->Update(&playerActions, m_playersConnected);
 		
 		// Only update the virtual controller if it's present.

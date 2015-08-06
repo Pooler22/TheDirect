@@ -15,12 +15,11 @@ class Game
 public:
 	Game::Game()
 	{
-		map = std::unique_ptr<Map>(new Map());
-		enemies = std::unique_ptr<std::vector<Person>>(new std::vector<Person>());
-		bonus = std::unique_ptr<std::vector<Person>>(new std::vector<Person>());
+		map.reset(new Map());
+		enemies.reset(new std::vector<Person>());
+		bonus.reset(new std::vector<Person>());
 		score = 0;
 	};
-	Game::~Game() {};
 
 	void Game::addBrickTexture(ID3D11ShaderResourceView* buttonSpriteSheet)
 	{

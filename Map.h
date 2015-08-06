@@ -13,12 +13,10 @@ class Map
 public:
 	Map()
 	{
-		//numberTestureVector = std::vector<int>();
 		baehaviorTestureVector = std::shared_ptr<std::vector<BRICK_BEHAVIOR>>();
 		bricks = std::vector<std::shared_ptr<Brick>>();
 		textureVector = std::shared_ptr<std::vector<std::shared_ptr<ID3D11ShaderResourceView>>>();
 	};
-	~Map() {};
 
 	void addBrickTexture(ID3D11ShaderResourceView* buttonSpriteSheet)
 	{

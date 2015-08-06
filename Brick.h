@@ -25,7 +25,9 @@ class Brick : public Button
 {
 public:
 
-	Brick::Brick(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, int screenWidth, int screenHeight, XMFLOAT2 sizeIn, BRICK_BEHAVIOR behaviorIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
+	Brick::Brick(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, int screenWidth, int screenHeight, XMFLOAT2 sizeIn, BRICK_BEHAVIOR behaviorIn) : 
+		framesOfAnimation(4), 
+		framesToBeShownPerSecond(4)
 	{
 		float rotation = 0.0f;
 		float scale = 1.f;
@@ -46,10 +48,9 @@ public:
 
 		position = positionIn;
 		dimensions.x = textureRectangle.Width = animation->getFrameWidth()/3;
-		dimensions.y = textureRectangle.Height = animation->getFrameHeight()/3;
-		updateBoundingRect();
-		
+		dimensions.y = textureRectangle.Height = animation->getFrameHeight()/3;		
 		behavior = behaviorIn;
+		updateBoundingRect();
 	}
 
 	void setBehavior(BRICK_BEHAVIOR behaviorIn) 
@@ -62,21 +63,9 @@ public:
 		return behavior;
 	}
 
-	bool isColision(Windows::Foundation::Rect rect)
-	{
-		if (boundingRectangle.IntersectsWith(rect))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-
 public:
-	int													framesOfAnimation;
-	int													framesToBeShownPerSecond;
 
-	BRICK_BEHAVIOR										behavior;
+	int					framesOfAnimation;
+	int					framesToBeShownPerSecond;
+	BRICK_BEHAVIOR		behavior;
 };

@@ -50,11 +50,27 @@ public:
 		position.y = position.y - (y * speed);
 		updateBoundingRect();
 	}
+	void jump() 
+	{
+		if (oldGravity == gravity)
+		{
+			oldGravity = gravity;
+			gravity = 0 - gravity;
+		}
+		else
+		{
+			gravity += 0.05;
+		}
+		
+	}
 
 public:
-	bool												stand;
-	int													speed;
-	int													gravity;
-	int													framesOfAnimation;
-	int													framesToBeShownPerSecond;
+	bool		jumpFlag;
+	int			oldGravity;
+
+	bool		stand;
+	int			speed;
+	float		gravity;
+	int			framesOfAnimation;
+	int			framesToBeShownPerSecond;
 };
