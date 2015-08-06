@@ -44,9 +44,9 @@ public:
 		return dimensions;
 	}
 
-	bool isColision(float x, float y)
+	bool isColision(Windows::Foundation::Rect rect)
 	{
-		if (x >= (boundingRectangle.X) && y >= (boundingRectangle.Y) && x <= (boundingRectangle.X + boundingRectangle.Width) && y <= (boundingRectangle.Y + boundingRectangle.Height))
+		if (boundingRectangle.IntersectsWith(rect))
 		{
 			return true;
 		}
@@ -71,10 +71,10 @@ public:
 		return boundingRectangle;
 	}
 
-	void resize(float scale)
+	void resize(float x, float y)
 	{
-		position.x *= scale;
-		position.y *= scale;
+		position.x *= x;
+		position.y *= y;
 		updateBoundingRect();
 	}
 

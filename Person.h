@@ -6,8 +6,9 @@
 #include <DirectXMath.h>
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
+#include "Button.h"
 
-class Person
+class Person : public Button
 {
 public:
 	Person(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
@@ -20,30 +21,13 @@ public:
 		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
 		
 		position = positionIn;
-		dimensions.x = textureRectangle.Width = animation->getFrameWidth() / 3;
+		dimensions.x = textureRectangle.Width = animation->getFrameWidth();
 		dimensions.y = textureRectangle.Height = animation->getFrameHeight() / 3;
 		updateBoundingRect();
 		speed = 10;
 		gravity = 1;
 		stand = false;
 	}
-
-	void setPosition(DirectX::XMFLOAT2 positionIn)
-	{
-		position = positionIn;
-		updateBoundingRect();
-	}
-
-	DirectX::XMFLOAT2 getPosition()
-	{
-		return position;
-	}
-
-	DirectX::XMFLOAT2 getDimension()
-	{
-		return dimensions;
-	}
-
 
 	void Update(float elapsed)
 	{
@@ -53,16 +37,6 @@ public:
 		}
 		
 		animation->Update(elapsed);
-	}
-
-	void Draw(DirectX::SpriteBatch* batch)
-	{
-		animation->Draw(batch, position);
-	}
-
-	Windows::Foundation::Rect getBoundingRectangle()
-	{
-		return boundingRectangle;
 	}
 
 	void setStand(bool standIn)
@@ -77,35 +51,10 @@ public:
 		updateBoundingRect();
 	}
 
-	void resize(float x, float y)
-	{
-		position.x *= x;
-		position.y *= y;
-		updateBoundingRect();
-	}
-
-private:
-
-	void updateBoundingRect()
-	{
-		//TODO: proper updating when rotating player object
-		boundingRectangle.X = position.x;
-		boundingRectangle.Y = position.y;
-		boundingRectangle.Width = dimensions.x;
-		boundingRectangle.Height = dimensions.y;
-	}
-
 public:
 	bool												stand;
 	int													speed;
 	int													gravity;
 	int													framesOfAnimation;
 	int													framesToBeShownPerSecond;
-	DirectX::XMFLOAT2									position;
-	DirectX::XMFLOAT2									dimensions;
-	Windows::Foundation::Rect							boundingRectangle;
-	Windows::Foundation::Rect							textureRectangle;
-
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	texture;
-	std::unique_ptr<AnimatedTexture>					animation;
 };

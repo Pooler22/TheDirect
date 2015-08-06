@@ -74,21 +74,13 @@ public:
 
 	void Game::isColision()
 	{
-		if ((map->isColision(player->getBoundingRectangle().X + player->getBoundingRectangle().Width, player->getBoundingRectangle().Y + player->getBoundingRectangle().Height) == COLISION_TYPE::COLISION_TYPE_STAND)
-			|| (map->isColision(player->getBoundingRectangle().X, player->getBoundingRectangle().Y + player->getBoundingRectangle().Height) == COLISION_TYPE::COLISION_TYPE_STAND))
+		if (map->isColision(player->getBoundingRectangle()))
 		{
-			player->setPosition(XMFLOAT2(0, 0));
-			player->setStand(true);
-		}
-		else if ((map->isColision(player->getBoundingRectangle().X + player->getBoundingRectangle().Width, player->getBoundingRectangle().Y + player->getBoundingRectangle().Height) == COLISION_TYPE::COLISION_TYPE_TRUE)
-			|| (map->isColision(player->getBoundingRectangle().X, player->getBoundingRectangle().Y + player->getBoundingRectangle().Height) == COLISION_TYPE::COLISION_TYPE_TRUE))
-		{
-			player->setPosition(XMFLOAT2(0, 0));
 			player->setStand(true);
 		}
 		else 
 		{
-			//player->setStand(false);
+			player->setStand(false);
 		}
 	}
 

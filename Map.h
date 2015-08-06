@@ -67,22 +67,16 @@ public:
 		return size;
 	}
 
-	COLISION_TYPE isColision(float x, float y)
+	bool isColision(Windows::Foundation::Rect rect)
 	{
-		COLISION_TYPE decision = COLISION_TYPE::COLISION_TYPE_FALSE;
 		for (auto &brick : bricks)
 		{
-			if (brick->isColision(x, y) == COLISION_TYPE::COLISION_TYPE_TRUE)
+			if (brick->isColision(rect) && brick->behavior == BRICK_BEHAVIOR_BLOCK)
 			{
-				COLISION_TYPE::COLISION_TYPE_TRUE;
+				return true;
 			}
-			else if (brick->isColision(x, y) == COLISION_TYPE::COLISION_TYPE_STAND)
-			{
-				standingPlatformHeight = brick->boundingRectangle.Y;
-				return decision =  COLISION_TYPE::COLISION_TYPE_STAND;
-			} 
 		}
-		return decision;
+		return false;
 	}
 
 	void setMapLevel(int x, int y, int* numberTestureVectorIn, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVectorIn, int screenWidth, int screenHeight)
@@ -107,7 +101,6 @@ public:
 				else
 					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture2, XMFLOAT2(x * (screenWidth / size.x), y * (screenHeight / size.y)), screenWidth, screenHeight, size, BRICK_BEHAVIOR_BLOCK)));
 			}
-
 		}
 	}
 
@@ -130,16 +123,16 @@ public:
 		}
 	}
 
-	float														standingPlatformHeight;
+	float																	standingPlatformHeight;
 private:
 	
-	XMFLOAT2													size;
-	int*														numberTestureVector;
-	std::shared_ptr<std::vector<BRICK_BEHAVIOR>>				baehaviorTestureVector;
+	XMFLOAT2																size;
+	int*																	numberTestureVector;
+	std::shared_ptr<std::vector<BRICK_BEHAVIOR>>							baehaviorTestureVector;
 
-	std::wstring												name;
-	std::vector<std::shared_ptr<Brick>>							bricks;
+	std::wstring															name;
+	std::vector<std::shared_ptr<Brick>>										bricks;
 	std::shared_ptr<std::vector<std::shared_ptr<ID3D11ShaderResourceView>>>	textureVector;
-	ID3D11ShaderResourceView*									texture;
-	ID3D11ShaderResourceView*									texture2;
+	ID3D11ShaderResourceView*												texture;
+	ID3D11ShaderResourceView*												texture2;
 };

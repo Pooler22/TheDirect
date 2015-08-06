@@ -34,7 +34,6 @@ public:
 		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scale, 0.0f));
 		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
 		//TO DO: resize 
-
 		Microsoft::WRL::ComPtr<ID3D11Resource> resource;
 		texture->GetResource(resource.GetAddressOf());
 		Microsoft::WRL::ComPtr<ID3D11Texture2D> tex2D;
@@ -63,26 +62,15 @@ public:
 		return behavior;
 	}
 
-	void resize(float x, float y)
+	bool isColision(Windows::Foundation::Rect rect)
 	{
-		position.x *= x;
-		position.y *= y;
-		updateBoundingRect();
-	}
-
-	COLISION_TYPE isColision(float x, float y)
-	{
-		if (x > (boundingRectangle.X) && y > (boundingRectangle.Y) && x < (boundingRectangle.X + boundingRectangle.Width) && y < (boundingRectangle.Y + boundingRectangle.Height))
+		if (boundingRectangle.IntersectsWith(rect))
 		{
-			return COLISION_TYPE::COLISION_TYPE_TRUE;
-		}
-		else if (x >(boundingRectangle.X) && y == (boundingRectangle.Y) && x < (boundingRectangle.X + boundingRectangle.Width) && y == (boundingRectangle.Y + boundingRectangle.Height))
-		{
-			return COLISION_TYPE::COLISION_TYPE_STAND;
+			return true;
 		}
 		else
 		{
-			return COLISION_TYPE::COLISION_TYPE_FALSE;
+			return false;
 		}
 	}
 
