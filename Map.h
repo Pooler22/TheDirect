@@ -77,6 +77,18 @@ public:
 		return false;
 	}
 
+	bool isStanding(Windows::Foundation::Rect rect)
+	{
+		for (auto &brick : bricks)
+		{
+			if (brick->isStanding(rect))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	void setMapLevel(int x, int y, int* numberTestureVectorIn, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVectorIn, int screenWidth, int screenHeight)
 	{
 		size.x = x;

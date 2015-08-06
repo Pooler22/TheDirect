@@ -63,6 +63,25 @@ public:
 		return behavior;
 	}
 
+	bool isStanding(Windows::Foundation::Rect rect)
+	{
+		if (rect.Bottom < boundingRectangle.Top )
+		{
+			if(boundingRectangle.Contains( Windows::Foundation::Point(rect.Y, rect.Left))||
+				boundingRectangle.Contains(Windows::Foundation::Point(rect.Y, rect.Right)))
+			{
+				if (behavior == BRICK_BEHAVIOR_BLOCK)
+				{
+					return true;
+				}
+			}
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 public:
 
 	int					framesOfAnimation;

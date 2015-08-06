@@ -43,6 +43,16 @@ public:
 		player = std::unique_ptr<Person>(new Person(buttonSpriteSheet,positionIn));
 	}
 
+	void Game::addEnemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn)
+	{
+		enemies->push_back(Person(buttonSpriteSheet, positionIn));
+	}
+
+	void Game::addBonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn)
+	{
+		bonus->push_back(Person(buttonSpriteSheet, positionIn));
+	}
+
 	void Game::Update(float elapsed)
 	{
 		isColision();
@@ -57,7 +67,7 @@ public:
 		{
 			player->setPosition(XMFLOAT2(player->getPosition().x, 0.0 - player->getDimension().y));
 		}
-		else if (player->getPosition().y < 0.0 - player->getDimension().y)
+		else if (player->getPosition().y < 0.0)
 		{
 			player->setPosition(XMFLOAT2(player->getPosition().x, screenHeight));
 		}
@@ -65,7 +75,7 @@ public:
 		{
 			player->setPosition(XMFLOAT2(0.0 - player->getDimension().x, player->getPosition().y));
 		}
-		else if (player->getPosition().x < 0.0 - player->getDimension().x)
+		else if (player->getPosition().x < 0.0)
 		{
 			player->setPosition(XMFLOAT2(screenWidth, player->getPosition().y));
 		}
@@ -73,7 +83,7 @@ public:
 
 	void Game::isColision()
 	{
-		if (map->isColision(player->getBoundingRectangle()))
+		if (map->isStanding(player->getBoundingRectangle()))
 		{
 			player->setStand(true);
 		}

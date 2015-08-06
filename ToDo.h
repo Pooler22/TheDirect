@@ -5,5 +5,6 @@ ref class ToDo sealed
 	//TODO: rozci¹ganie przycisków
 	//TODO: tekstura playera
 	//TODO: tanie playera na blokach
+	//TODO: jump person
 };
 

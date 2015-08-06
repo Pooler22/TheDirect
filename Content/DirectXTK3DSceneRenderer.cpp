@@ -516,15 +516,16 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 	};
-
-	for (int y = 0; y < y1; y++)
+	for (int x = 0; x < x1; x++)
+	
 	{
-		for (int x = 0; x < x1; x++)
+		for (int y = 0; y < y1; y++)
+
 		{
 			if (tab1[(x*x1)+y] == 1)
-				baehaviorTestureVector->push_back(BRICK_BEHAVIOR_NONE);
-			else 
 				baehaviorTestureVector->push_back(BRICK_BEHAVIOR_BLOCK);
+			else 
+				baehaviorTestureVector->push_back(BRICK_BEHAVIOR_NONE);
 		}
 	}
 		

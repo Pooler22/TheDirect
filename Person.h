@@ -27,10 +27,14 @@ public:
 		speed = 10;
 		gravity = 1;
 		stand = false;
+		jumpTime = 10;
 	}
 
 	void Update(float elapsed)
 	{
+		if(jumpTime > 0)
+			jumpTime--;
+
 		if (!stand)
 		{
 			move(0, -gravity);
@@ -52,21 +56,12 @@ public:
 	}
 	void jump() 
 	{
-		if (oldGravity == gravity)
-		{
-			oldGravity = gravity;
-			gravity = 0 - gravity;
-		}
-		else
-		{
-			gravity += 0.05;
-		}
-		
+		if(jumpTime > 0)
+			move(0, 2);
 	}
 
 public:
-	bool		jumpFlag;
-	int			oldGravity;
+	int			jumpTime;
 
 	bool		stand;
 	int			speed;
