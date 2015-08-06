@@ -18,12 +18,14 @@ public:
 		texture = playerSpriteSheet;
 		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, 1, 0.5f));
 		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
-
+		
 		position = positionIn;
 		dimensions.x = textureRectangle.Width = animation->getFrameWidth() / 3;
 		dimensions.y = textureRectangle.Height = animation->getFrameHeight() / 3;
 		updateBoundingRect();
 		speed = 10;
+		gravity = 1;
+		stand = false;
 	}
 
 	void setPosition(DirectX::XMFLOAT2 positionIn)
@@ -42,20 +44,29 @@ public:
 		return dimensions;
 	}
 
-	bool isColision(float x, float y)
+	COLISION_TYPE isColision(float x, float y)
 	{
 		if (x > (boundingRectangle.X) && y > (boundingRectangle.Y) && x < (boundingRectangle.X + boundingRectangle.Width) && y < (boundingRectangle.Y + boundingRectangle.Height))
 		{
-			return true;
+			return COLISION_TYPE_TRUE;
+		}
+		else if (x >(boundingRectangle.X) && y == (boundingRectangle.Y) && x < (boundingRectangle.X + boundingRectangle.Width) && y == (boundingRectangle.Y + boundingRectangle.Height))
+		{
+			return COLISION_TYPE_STAND;
 		}
 		else
 		{
-			return false;
+			return COLISION_TYPE_FALSE;
 		}
 	}
 
 	void Update(float elapsed)
 	{
+		if (!stand)
+		{
+			move(0, -gravity);
+		}
+		
 		animation->Update(elapsed);
 	}
 
@@ -68,6 +79,12 @@ public:
 	{
 		return boundingRectangle;
 	}
+
+	void setStand(bool standIn)
+	{
+		stand = standIn;
+	}
+
 	void move(float x, float y)
 	{
 		position.x = position.x + (x * speed);
@@ -94,8 +111,9 @@ private:
 	}
 
 public:
-
+	bool												stand;
 	int													speed;
+	int													gravity;
 	int													framesOfAnimation;
 	int													framesToBeShownPerSecond;
 	DirectX::XMFLOAT2									position;

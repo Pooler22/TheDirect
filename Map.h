@@ -90,18 +90,30 @@ public:
 
 	void generateMap(int screenWidth, int screenHeight)
 	{
+		getTextureDiension(texture).x;
+
 		for (int x = 0; x < size.x; x++)
-		
 		{
 			for (int y = 0; y < size.y; y++)
 			{
 				if(numberTestureVector[(int)((y * size.x) + x)]== 0)
-					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture, XMFLOAT2(x * (screenWidth/size.x),y * (screenHeight/ size.y)), screenWidth, screenHeight,size)));
+					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture, XMFLOAT2(x * (screenWidth/size.x),y * (screenHeight/ size.y)), screenWidth, screenHeight,size, BRICK_BEHAVIOR_NONE)));
 				else
-					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture2, XMFLOAT2(x * (screenWidth / size.x), y * (screenHeight / size.y)), screenWidth, screenHeight, size)));
+					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture2, XMFLOAT2(x * (screenWidth / size.x), y * (screenHeight / size.y)), screenWidth, screenHeight, size, BRICK_BEHAVIOR_BLOCK)));
 			}
 
 		}
+	}
+
+	XMFLOAT2 getTextureDiension(ID3D11ShaderResourceView* texture)
+	{
+		Microsoft::WRL::ComPtr<ID3D11Resource> resource;
+		texture->GetResource(resource.GetAddressOf());
+		Microsoft::WRL::ComPtr<ID3D11Texture2D> tex2D;
+		resource.As(&tex2D);
+		D3D11_TEXTURE2D_DESC desc;
+		tex2D->GetDesc(&desc);
+		return XMFLOAT2(desc.Width, desc.Height);
 	}
 
 	void resize(float x, float y)

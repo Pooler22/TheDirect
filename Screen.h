@@ -14,12 +14,13 @@ class Screen
 {
 public:
 
-	Screen(ID3D11ShaderResourceView* playerSpriteSheetIn, SpriteFont* spriteFontIn)
+	Screen(ID3D11ShaderResourceView* playerSpriteSheetIn, SpriteFont* spriteFontIn, std::wstring nameIn)
 	{
 		playerSpriteSheet = playerSpriteSheetIn;
 		spriteFont = spriteFontIn;
 
 		buttons = std::vector<std::shared_ptr<TextButton>>();
+		name = nameIn;
 	};
 	~Screen() {};
 

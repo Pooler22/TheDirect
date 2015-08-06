@@ -6,7 +6,7 @@
 #include <DirectXMath.h>
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
-#include "Figure.h"
+#include "Button.h"
 
 class TextButton : public Button
 {

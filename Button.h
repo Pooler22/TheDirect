@@ -6,6 +6,13 @@
 #include <DirectXMath.h>
 #include <DirectXTK\Inc\SimpleMath.h>
 
+enum COLISION_TYPE
+{
+	COLISION_TYPE_TRUE,
+	COLISION_TYPE_FALSE,
+	COLISION_TYPE_STAND
+};
+
 class Button
 {
 public:

@@ -45,24 +45,24 @@ public:
 
 	void Update(float elapsed)
 	{
+		if (nameCurrentScreen.compare(L"Play") == 0)
+			game->Update(elapsed);
 		for (auto &screen : screens)
 		{
 			if (screen->getName().compare(nameCurrentScreen) == 0)
 				screen->Update(elapsed);
 		}
-		if (nameCurrentScreen.compare(L"Play") == 0)
-			game->Update(elapsed);
 	}
 
 	void Draw(DirectX::SpriteBatch* batch)
 	{
+		if (nameCurrentScreen.compare(L"Play") == 0)
+			game->Draw(batch);
 		for (auto &screen : screens)
 		{
 			if(screen->getName().compare(nameCurrentScreen) == 0)
 				screen->Draw(batch);
 		}
-		if (nameCurrentScreen.compare(L"Play") == 0)
-			game->Draw(batch);
 	}
 
 	void setName(std::wstring stringIn)
@@ -86,11 +86,12 @@ public:
 	}
 	void resize(float x, float y)
 	{
+		game->resize(x, y);
 		for (auto &screen : screens)
 		{
 			screen->resize(x, y);
 		}
-		game->resize(x, y);
+		
 	}
 
 public:

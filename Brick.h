@@ -6,7 +6,7 @@
 #include <DirectXMath.h>
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
-#include "Figure.h"
+#include "Button.h"
 
 enum BRICK_BEHAVIOR
 {
@@ -18,7 +18,7 @@ class Brick : public Button
 {
 public:
 
-	Brick::Brick(ID3D11ShaderResourceView* playerSpriteSheet, DirectX::XMFLOAT2 positionIn, int screenWidth, int screenHeight, XMFLOAT2 sizeIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
+	Brick::Brick(ID3D11ShaderResourceView* playerSpriteSheet, DirectX::XMFLOAT2 positionIn, int screenWidth, int screenHeight, XMFLOAT2 sizeIn, BRICK_BEHAVIOR behaviorIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
 	{
 		float rotation = 0.0f;
 		float scale = 1.f;
@@ -26,8 +26,16 @@ public:
 		texture = playerSpriteSheet;
 		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scale, 0.0f));
 		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
-		
-		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, (1+textureRectangle.Height/(screenHeight / sizeIn.y)), 0.0f));
+		//TO DO: resize 
+
+		Microsoft::WRL::ComPtr<ID3D11Resource> resource;
+		texture->GetResource(resource.GetAddressOf());
+		Microsoft::WRL::ComPtr<ID3D11Texture2D> tex2D;
+		resource.As(&tex2D);
+		D3D11_TEXTURE2D_DESC desc;
+		tex2D->GetDesc(&desc);
+
+		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, (((float)screenHeight / ((float)sizeIn.y)) / (float)desc.Height), 0.0f));
 		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
 
 		position = positionIn;
@@ -35,24 +43,7 @@ public:
 		dimensions.y = textureRectangle.Height = animation->getFrameHeight()/3;
 		updateBoundingRect();
 		
-		behavior = BRICK_BEHAVIOR_NONE;
-	}
-
-	Brick(ID3D11ShaderResourceView* playerSpriteSheet, DirectX::XMFLOAT2 positionIn, int screenWidth, int screenHeight) : framesOfAnimation(4), framesToBeShownPerSecond(4)
-	{
-		float rotation = 0.0f;
-		float scale = 1.f;
-
-		texture = playerSpriteSheet;
-		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scale, 0.0f));
-		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
-
-		position = positionIn;
-		dimensions.x = textureRectangle.Width = animation->getFrameWidth() / 3;
-		dimensions.y = textureRectangle.Height = animation->getFrameHeight() / 3;
-		updateBoundingRect();
-
-		behavior = BRICK_BEHAVIOR_NONE;
+		behavior = behaviorIn;
 	}
 
 	void setBehavior(BRICK_BEHAVIOR behaviorIn) 

@@ -32,9 +32,11 @@ public:
 		map->addBrickTexture2(playerSpriteSheet);
 	}
 
-	void Game::setMapLevel(int x, int y, int* numberTestureVectorIn, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVectorIn, int screenWidth, int screenHeight)
+	void Game::setMapLevel(int x, int y, int* numberTestureVectorIn, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVectorIn, int screenWidthIn, int screenHeightIn)
 	{
-		map->setMapLevel(x,y, numberTestureVectorIn, baehaviorTestureVectorIn, screenWidth, screenHeight);
+		screenWidth = screenWidthIn,
+		screenHeight = screenHeightIn;
+		map->setMapLevel(x,y, numberTestureVectorIn, baehaviorTestureVectorIn, screenWidthIn, screenHeightIn);
 	}
 	
 	void Game::addPlayer(ID3D11ShaderResourceView* playerSpriteSheet, DirectX::XMFLOAT2 positionIn)
@@ -44,16 +46,44 @@ public:
 
 	void Game::Update(float elapsed)
 	{
+		correctPlayerPosition();
 		map->Update(elapsed);
 		player->Update(elapsed);
 		isColision();
 	}
 
+	void correctPlayerPosition()
+	{
+		if (player->getPosition().y > screenHeight)
+		{
+			player->setPosition(XMFLOAT2(player->getPosition().x, 0.0 - player->getDimension().y));
+		}
+		else if (player->getPosition().y < 0.0 - player->getDimension().y)
+		{
+			player->setPosition(XMFLOAT2(player->getPosition().x, screenHeight));
+		}
+		if (player->getPosition().x > screenWidth)
+		{
+			player->setPosition(XMFLOAT2(0.0 - player->getDimension().x, player->getPosition().y));
+		}
+		else if (player->getPosition().x < 0.0 - player->getDimension().x)
+		{
+			player->setPosition(XMFLOAT2(screenWidth, player->getPosition().y));
+		}
+	}
+
 	void Game::isColision()
 	{
-		if (map->isColision(player->position.x, player->position.y) == BRICK_BEHAVIOR_BLOCK)
+		if ((map->isColision(player->getBoundingRectangle().X + player->getBoundingRectangle().Width, player->getBoundingRectangle().Y + player->getBoundingRectangle().Height) == BRICK_BEHAVIOR_BLOCK)
+			|| (map->isColision(player->getBoundingRectangle().X, player->getBoundingRectangle().Y + player->getBoundingRectangle().Height) == BRICK_BEHAVIOR_BLOCK))
 		{
-			player->speed = 0;
+		
+			player->setPosition(XMFLOAT2(player->position.x, player->position.y-1));
+			player->setStand(true);
+		}
+		else 
+		{
+			player->setStand(false);
 		}
 	}
 
@@ -69,6 +99,8 @@ public:
 		player->Draw(batch);
 	}
 
+	int										screenWidth;
+	int										screenHeight;
 	std::unique_ptr<Map>					map;
 	std::unique_ptr<Person>					player;
 	std::unique_ptr<std::vector<Person>>	enemies;
