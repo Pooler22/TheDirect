@@ -511,35 +511,45 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	centerPosition.y = logicalSize.Height / 2.0;
 	float oneUnitHeight = logicalSize.Height / 7.0;
 	Screen* screen = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Main");
-	screen->addElement(L"Start", L"StartMain", XMFLOAT2(centerPosition.x, centerPosition.y- oneUnitHeight));
-	screen->addElement(L"Options", L"OptionsMain", XMFLOAT2(centerPosition.x, centerPosition.y));
-	screen->addElement(L"Exit", L"ExitMain", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
+	std::wstring name[] = { L"Start",L"Options",L"Exit" };
+	std::wstring id[] = { L"StartMain",L"OptionsMain",L"ExitMain" };
+	XMFLOAT2 position[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
+	screen->addMenu(name, id, position, 3);
 	screenManager->addScreen(screen);
 
 	Screen* screen1 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Options");
-	screen1->addElement(L"Music", L"MusicOptions", XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight));
-	screen1->addElement(L"Author", L"AuthorOptions", XMFLOAT2(centerPosition.x, centerPosition.y));
-	screen1->addElement(L"Back", L"BackOptions", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
+	std::wstring name1[] = { L"Musicv",L"Back",L"Exit" };
+	std::wstring id1[] = { L"MusicOptions",L"AuthorOptions",L"BackOptions" };
+	XMFLOAT2 position1[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
+	screen1->addMenu(name1, id1, position1, 3);
 	screenManager->addScreen(screen1);
 
 	Screen* screen2 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Level");
-	screen2->addElement(L"Offline", L"OfflineLevel", XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight));
-	screen2->addElement(L"Online", L"OnlineLevel", XMFLOAT2(centerPosition.x, centerPosition.y));
-	screen2->addElement(L"Back", L"BackLevel", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
+	std::wstring name2[] = { L"Offline",L"Online",L"Back" };
+	std::wstring id2[] = { L"OfflineLevel",L"OnlineLevel",L"BackLevel" };
+	XMFLOAT2 position2[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
+	screen2->addMenu(name2, id2, position2, 3);
 	screenManager->addScreen(screen2);
 
 	Screen* screen4 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Pause");
-	screen4->addElement(L"Return", L"ReturnPause", XMFLOAT2(centerPosition.x, centerPosition.y));
-	screen4->addElement(L"Exit", L"ExitPause", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
+	std::wstring name4[] = { L"Return",L"Exit"};
+	std::wstring id4[] = { L"ReturnPause",L"ExitPause"};
+	XMFLOAT2 position4[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y)};
+	screen4->addMenu(name4, id4, position4, 2);
 	screenManager->addScreen(screen4);
 
 	Screen* screen5= new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Author");
-	screen5->addElement(L"It's me ;)", L"DescriptionAuthor", XMFLOAT2(centerPosition.x, centerPosition.y));
-	screen5->addElement(L"Back", L"BackAuthor", XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight));
+	std::wstring name5[] = { L"It's me ;)",L"Back"};
+	std::wstring id5[] = { L"DescriptionAuthor",L"BackAuthor"};
+	XMFLOAT2 position5[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y)};
+	screen5->addMenu(name5, id5, position5, 2);
 	screenManager->addScreen(screen5);
 
-	Screen* screen3 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Play");	
-	screen3->addElement(L"Pause", L"PausePlay", XMFLOAT2(centerPosition.x, oneUnitHeight));
+	Screen* screen3 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Play");
+	std::wstring name3[] = { L"Pause"};
+	std::wstring id3[] = { L"PausePlay"};
+	XMFLOAT2 position3[] = {XMFLOAT2(centerPosition.x, 40)};
+	screen3->addMenu(name3, id3, position3, 1);
 	screenManager->addScreen(screen3);
 
 	DX::ThrowIfFailed(

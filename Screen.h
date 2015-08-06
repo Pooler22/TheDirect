@@ -34,6 +34,14 @@ public:
 		buttons.push_back(std::shared_ptr<TextButton>(new TextButton(playerSpriteSheet, spriteFont, s1, s2, position)));
 	}
 
+	void addMenu(std::wstring* s1, std::wstring* s2, XMFLOAT2* position, int size)
+	{
+		for (int i = 0; i < size; i++)
+		{
+			buttons.push_back(std::shared_ptr<TextButton>(new TextButton(playerSpriteSheet, spriteFont, s1[i], s2[i], position[i])));
+		}
+	}
+
 	void Update(float elapsed)
 	{
 		for (auto &button : buttons)
