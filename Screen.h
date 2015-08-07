@@ -26,16 +26,16 @@ public:
 		buttons.push_back(std::shared_ptr<TextButton>(button));
 	}
 
-	void addButton(std::wstring name, std::wstring id, XMFLOAT2 position)
+	void addButton(std::wstring name, std::wstring id, XMFLOAT2 position, float scaleIn)
 	{
-		buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet, spriteFont, name, id, position)));
+		buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet, spriteFont, name, id, position, scaleIn)));
 	}
 
-	void addMenu(std::wstring* names, std::wstring* ids, XMFLOAT2* position, int size)
+	void addMenu(std::wstring* names, std::wstring* ids, XMFLOAT2* position, int size, float scale)
 	{
 		for (int i = 0; i < size; i++)
 		{
-			buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet, spriteFont, names[i], ids[i], position[i])));
+			buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet, spriteFont, names[i], ids[i], position[i], scale)));
 		}
 	}
 
@@ -76,15 +76,16 @@ public:
 		return L"false";
 	}
 
-	void resize(float x, float y)
+	void resize(float scale)
 	{
 		for (auto &button : buttons) 
 		{
-			button->resize(x, y);
+			button->resize(scale);
 		}
 	}
 
 private:
+
 	ID3D11ShaderResourceView*					buttonSpriteSheet;
 	SpriteFont*									spriteFont;
 	std::wstring								name;

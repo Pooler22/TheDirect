@@ -25,30 +25,20 @@ class Brick : public Button
 {
 public:
 
-	Brick::Brick(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, int screenWidth, int screenHeight, XMFLOAT2 sizeIn, BRICK_BEHAVIOR behaviorIn) : 
+	Brick::Brick(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn, XMFLOAT2 sizeIn, BRICK_BEHAVIOR behaviorIn) :
 		framesOfAnimation(4), 
 		framesToBeShownPerSecond(4)
 	{
 		float rotation = 0.0f;
-		float scale = 1.f;
 
+		scale = scaleIn;
 		texture = buttonSpriteSheet;
-		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scale, 0.0f));
-		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
-		//TO DO: resize 
-		Microsoft::WRL::ComPtr<ID3D11Resource> resource;
-		texture->GetResource(resource.GetAddressOf());
-		Microsoft::WRL::ComPtr<ID3D11Texture2D> tex2D;
-		resource.As(&tex2D);
-		D3D11_TEXTURE2D_DESC desc;
-		tex2D->GetDesc(&desc);
-
-		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, (((float)screenHeight / ((float)sizeIn.y)) / (float)desc.Height), 0.0f));
+		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scaleIn, 0.0f));
 		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
 
 		position = positionIn;
-		dimensions.x = textureRectangle.Width = animation->getFrameWidth()/3;
-		dimensions.y = textureRectangle.Height = animation->getFrameHeight()/3;		
+		dimensions.x = animation->getFrameWidth();
+		dimensions.y = animation->getFrameHeight();		
 		behavior = behaviorIn;
 		updateBoundingRect();
 	}

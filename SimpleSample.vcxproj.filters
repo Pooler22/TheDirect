@@ -179,6 +179,9 @@
     <Image Include="Assets\brick2.dds">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\person.dds">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Assets\musicmono_adpcm.wav">

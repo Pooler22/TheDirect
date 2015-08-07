@@ -399,10 +399,11 @@ void DirectXTK3DSceneRenderer::Render()
 
 	if ((centerPosition.x != logicalSize.Width / 2) || (centerPosition.y != logicalSize.Height / 2))
 	{
-		screenManager->resize((logicalSize.Width/2) / centerPosition.x , (logicalSize.Height/2) / centerPosition.y);
+		screenManager->resize((logicalSize.Height/600));
 		centerPosition.y = logicalSize.Height/2;
 		centerPosition.x = logicalSize.Width/2;
 	}
+	
 
 	// Draw sprites
 	m_sprites->Begin();
@@ -426,6 +427,9 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 
 	m_font.reset(new SpriteFont(device, L"assets\\italic.spritefont"));
 	
+	float scale;
+
+	scale = logicalSize.Width / 600;
 
 	//player.reset(new Player(m_texture.Get()));
 
@@ -438,7 +442,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	//Adding walls to vector
 	//wallsVector.push_back(Wall(logicalSize, XMFLOAT2(300, 0), pipeTexture.Get()));
 	//wallsVector.emplace_back(Wall(logicalSize, XMFLOAT2(logicalSize.Width, 0), pipeTexture.Get()));
-	screenManager.reset(new ScreenManager(L"Main"));
+	screenManager.reset(new ScreenManager(L"Main", logicalSize.Width, logicalSize.Height));
 
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\button.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
@@ -451,42 +455,42 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	std::wstring name[] = { L"Start",L"Options",L"Exit" };
 	std::wstring id[] = { L"StartMain",L"OptionsMain",L"ExitMain" };
 	XMFLOAT2 position[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
-	screen->addMenu(name, id, position, 3);
+	screen->addMenu(name, id, position, 3,scale);
 	screenManager->addScreen(screen);
 
 	Screen* screen1 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Options");
 	std::wstring name1[] = { L"Musicv",L"Back",L"Exit" };
 	std::wstring id1[] = { L"MusicOptions",L"AuthorOptions",L"BackOptions" };
 	XMFLOAT2 position1[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
-	screen1->addMenu(name1, id1, position1, 3);
+	screen1->addMenu(name1, id1, position1, 3, scale);
 	screenManager->addScreen(screen1);
 
 	Screen* screen2 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Level");
 	std::wstring name2[] = { L"Offline",L"Online",L"Back" };
 	std::wstring id2[] = { L"OfflineLevel",L"OnlineLevel",L"BackLevel" };
 	XMFLOAT2 position2[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
-	screen2->addMenu(name2, id2, position2, 3);
+	screen2->addMenu(name2, id2, position2, 3, scale);
 	screenManager->addScreen(screen2);
 
 	Screen* screen4 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Pause");
 	std::wstring name4[] = { L"Return",L"Exit"};
 	std::wstring id4[] = { L"ReturnPause",L"ExitPause"};
 	XMFLOAT2 position4[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y)};
-	screen4->addMenu(name4, id4, position4, 2);
+	screen4->addMenu(name4, id4, position4, 2, scale);
 	screenManager->addScreen(screen4);
 
 	Screen* screen5= new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Author");
 	std::wstring name5[] = { L"It's me ;)",L"Back"};
 	std::wstring id5[] = { L"DescriptionAuthor",L"BackAuthor"};
 	XMFLOAT2 position5[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y)};
-	screen5->addMenu(name5, id5, position5, 2);
+	screen5->addMenu(name5, id5, position5, 2, scale);
 	screenManager->addScreen(screen5);
 
 	Screen* screen3 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Play");
 	std::wstring name3[] = { L"Pause"};
 	std::wstring id3[] = { L"PausePlay"};
 	XMFLOAT2 position3[] = {XMFLOAT2(centerPosition.x, 40)};
-	screen3->addMenu(name3, id3, position3, 1);
+	screen3->addMenu(name3, id3, position3, 1, scale);
 	screenManager->addScreen(screen3);
 
 	DX::ThrowIfFailed(
@@ -503,24 +507,32 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVector;
 	baehaviorTestureVector.reset(new std::vector<BRICK_BEHAVIOR>());
 	
-	int x1 = 16;
-	int y1 = 9;
+	int x1 = 32;
+	int y1 = 18;
 	int tab1[] = {
-		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 	};
+
 	for (int x = 0; x < x1; x++)
-	
 	{
 		for (int y = 0; y < y1; y++)
-
 		{
 			if (tab1[(x*x1)+y] == 1)
 				baehaviorTestureVector->push_back(BRICK_BEHAVIOR_BLOCK);
@@ -530,12 +542,12 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	}
 		
 	screenManager->addBrickTexture2(m_texture.Get());
-	screenManager->setMapLevel(x1,y1, tab1, baehaviorTestureVector, logicalSize.Width, logicalSize.Height);
+	screenManager->setMapLevel(x1,y1, tab1, baehaviorTestureVector, logicalSize.Width, logicalSize.Height, scale);
 
 	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\shipanimated.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		CreateDDSTextureFromFile(device, L"assets\\person.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
-	screenManager->game->addPlayer(m_texture.Get(), XMFLOAT2(centerPosition.x, centerPosition.y));
+	screenManager->game->addPlayer(m_texture.Get(), XMFLOAT2(1, 17), scale);
 
 	//set windows size for drawing the background
 	//clouds2->SetWindow(logicalSize.Width, logicalSize.Height);

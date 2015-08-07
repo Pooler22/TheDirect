@@ -11,12 +11,11 @@
 
 class ScreenManager
 {
-
 public:
-	ScreenManager(std::wstring nameIn)
+	ScreenManager(std::wstring nameIn, float widht, float height)
 	{
 		screens = std::vector<std::shared_ptr<Screen>>();
-		game.reset(new Game());
+		game.reset(new Game(widht, height));
 		nameCurrentScreen = nameIn;
 	}
 
@@ -35,9 +34,9 @@ public:
 		game->addBrickTexture2(spriteSheet);
 	}
 
-	void setMapLevel(int x, int y, int* numberTestureVector, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVector, int screenWidth, int screenHeight)
+	void setMapLevel(int x, int y, int* numberTestureVector, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVector, int screenWidth, int screenHeight, float scale)
 	{
-		game->setMapLevel(x,y, numberTestureVector, baehaviorTestureVector,  screenWidth, screenHeight);
+		game->setMapLevel(x,y, numberTestureVector, baehaviorTestureVector, scale);
 	}
 
 	void Update(float elapsed)
@@ -81,14 +80,15 @@ public:
 		}
 		return L"false";
 	}
-	void resize(float x, float y)
+
+	void resize(float scale)
 	{
-		game->resize(x, y);
+		game->resize(scale);
 		for (auto &screen : screens)
 		{
-			screen->resize(x, y);
+			screen->resize(scale);
+			game->resize(scale);
 		}
-		
 	}
 
 public:

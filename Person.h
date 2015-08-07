@@ -11,18 +11,19 @@
 class Person : public Button
 {
 public:
-	Person(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
+	Person(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
 	{
 		float rotation = 0.f;
-		float scale = 1.f;
+		scale = scaleIn;
 
 		texture = buttonSpriteSheet;
-		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, 1, 0.5f));
+		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scaleIn, 0.5f));
 		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
 		
-		position = positionIn;
-		dimensions.x = textureRectangle.Width = animation->getFrameWidth();
-		dimensions.y = textureRectangle.Height = animation->getFrameHeight() / 3;
+		dimensions.x = animation->getFrameWidth();
+		dimensions.y = animation->getFrameHeight();
+		position.x = positionIn.x;
+		position.y = positionIn.y - dimensions.y;
 		updateBoundingRect();
 		speed = 10;
 		gravity = 1;
@@ -56,8 +57,8 @@ public:
 	}
 	void jump() 
 	{
-		if(jumpTime > 0)
-			move(0, 2);
+		//if(jumpTime > 0)
+			//move(0, 2);
 	}
 
 public:

@@ -13,11 +13,13 @@
 class Game
 {
 public:
-	Game::Game()
+	Game::Game(int screenWidth, int screenHeight)
 	{
 		map.reset(new Map());
 		enemies.reset(new std::vector<Person>());
 		bonus.reset(new std::vector<Person>());
+		this->screenHeight = screenHeight;
+		this->screenWidth = screenWidth;
 		score = 0;
 	};
 
@@ -31,26 +33,24 @@ public:
 		map->addBrickTexture2(buttonSpriteSheet);
 	}
 
-	void Game::setMapLevel(int x, int y, int* numberTestureVectorIn, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVectorIn, int screenWidthIn, int screenHeightIn)
+	void Game::setMapLevel(int x, int y, int* numberTestureVectorIn, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVectorIn, float scaleIn)
 	{
-		screenWidth = screenWidthIn,
-		screenHeight = screenHeightIn;
-		map->setMapLevel(x,y, numberTestureVectorIn, baehaviorTestureVectorIn, screenWidthIn, screenHeightIn);
+		map->setMapLevel(x,y, numberTestureVectorIn, baehaviorTestureVectorIn, screenWidth, screenHeight, scaleIn);
 	}
 	
-	void Game::addPlayer(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn)
+	void Game::addPlayer(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float sizeIn)
 	{
-		player = std::unique_ptr<Person>(new Person(buttonSpriteSheet,positionIn));
+		player = std::unique_ptr<Person>(new Person(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), sizeIn));
 	}
 
-	void Game::addEnemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn)
+	void Game::addEnemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float sizeIn)
 	{
-		enemies->push_back(Person(buttonSpriteSheet, positionIn));
+		enemies->push_back(Person(buttonSpriteSheet, positionIn, sizeIn));
 	}
 
-	void Game::addBonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn)
+	void Game::addBonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float sizeIn)
 	{
-		bonus->push_back(Person(buttonSpriteSheet, positionIn));
+		bonus->push_back(Person(buttonSpriteSheet, positionIn, sizeIn));
 	}
 
 	void Game::Update(float elapsed)
@@ -65,9 +65,9 @@ public:
 	{
 		if (player->getPosition().y > screenHeight)
 		{
-			player->setPosition(XMFLOAT2(player->getPosition().x, 0.0 - player->getDimension().y));
+			player->setPosition(XMFLOAT2(player->getPosition().x, (0.0 - player->getDimension().y)));
 		}
-		else if (player->getPosition().y < 0.0)
+		else if (player->getPosition().y < 0.0 - player->getDimension().y)
 		{
 			player->setPosition(XMFLOAT2(player->getPosition().x, screenHeight));
 		}
@@ -75,7 +75,7 @@ public:
 		{
 			player->setPosition(XMFLOAT2(0.0 - player->getDimension().x, player->getPosition().y));
 		}
-		else if (player->getPosition().x < 0.0)
+		else if (player->getPosition().x < 0.0 - player->getDimension().x)
 		{
 			player->setPosition(XMFLOAT2(screenWidth, player->getPosition().y));
 		}
@@ -93,10 +93,12 @@ public:
 		}
 	}
 
-	void resize(float x, float y)
+	void resize(float scale)
 	{
-		map->resize(x, y);
-		player->resize(x, y);
+		map->resize(scale);
+		player->resize(scale);
+		screenWidth *= scale;
+		screenHeight *= scale;
 	}
 
 	void Game::Draw(DirectX::SpriteBatch* batch)

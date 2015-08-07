@@ -11,30 +11,32 @@
 class TextButton : public Button
 {
 public:
-	TextButton(ID3D11ShaderResourceView* buttonSpriteSheet, SpriteFont *spriteFont, std::wstring inString, std::wstring inId, XMFLOAT2 inPosition) : framesOfAnimation(4), framesToBeShownPerSecond(4)
+	TextButton(ID3D11ShaderResourceView* buttonSpriteSheet, SpriteFont *spriteFont, std::wstring inString, std::wstring inId, XMFLOAT2 inPosition, float scaleIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
 	{
 		float rotation = 0.f;
-		float scale = 3.f;
-
+		scale = scaleIn;
 		id = inId;
 		string = inString;
-		position = inPosition;
+		
 
 		texture = buttonSpriteSheet;
-		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, 3, 0.0f));
+		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scaleIn, 0.0f));
 		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
 
 		color = Colors::Black;
+		
 		m_font.reset(spriteFont);
+		colorNormal = Colors::Black;
+		colorOver = Colors::Blue;
 
 		dimensions.x = animation->getFrameWidth();
 		dimensions.y = animation->getFrameHeight();
-		position.x -= (dimensions.x / 2);
-		position.y -= (dimensions.y / 2);
-		updateBoundingRect();
 
-		colorNormal = Colors::Black;
-		colorOver = Colors::Blue;
+		position = inPosition;
+		position.x -= (dimensions.x / 2.0);
+		position.y -= (dimensions.y / 2.0);
+
+		updateBoundingRect();
 	}
 
 	bool isOver(float x, float y) 
@@ -75,18 +77,6 @@ public:
 	std::wstring getId()
 	{
 		return id;
-	}
-
-	Windows::Foundation::Rect getBoundingRect()
-	{
-		return boundingRectangle;
-	}
-
-	void resize(float x, float y)
-	{
-		position.x *= x;
-		position.y *= y;
-		updateBoundingRect();
 	}
 
 public:

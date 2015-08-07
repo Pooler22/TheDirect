@@ -20,13 +20,11 @@ public:
 
 	void addBrickTexture(ID3D11ShaderResourceView* buttonSpriteSheet)
 	{
-		//textureVector->push_back((std::shared_ptr<ID3D11ShaderResourceView>(playerSpriteSheet)));
 		texture = buttonSpriteSheet;
 	}
 
 	void addBrickTexture2(ID3D11ShaderResourceView* buttonSpriteSheet)
 	{
-		//textureVector->push_back((std::shared_ptr<ID3D11ShaderResourceView>(playerSpriteSheet)));
 		texture2 = buttonSpriteSheet;
 	}
 
@@ -89,16 +87,16 @@ public:
 		return false;
 	}
 
-	void setMapLevel(int x, int y, int* numberTestureVectorIn, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVectorIn, int screenWidth, int screenHeight)
+	void setMapLevel(int x, int y, int* numberTestureVectorIn, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVectorIn, int screenWidth, int screenHeight, float scale)
 	{
 		size.x = x;
 		size.y = y;
 		numberTestureVector = numberTestureVectorIn;
 		baehaviorTestureVector = baehaviorTestureVectorIn;
-		generateMap(screenWidth, screenHeight);
+		generateMap(screenWidth, screenHeight, scale);
 	}
 
-	void generateMap(int screenWidth, int screenHeight)
+	void generateMap(int screenWidth, int screenHeight, float scale)
 	{
 		getTextureDiension(texture).x;
 
@@ -107,9 +105,9 @@ public:
 			for (int y = 0; y < size.y; y++)
 			{
 				if(numberTestureVector[(int)((y * size.x) + x)]== 0)
-					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture, XMFLOAT2(x * (screenWidth/size.x),y * (screenHeight/ size.y)), screenWidth, screenHeight,size, BRICK_BEHAVIOR_NONE)));
+					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture, XMFLOAT2(x * (screenWidth/size.x),y * (screenHeight/ size.y)), scale ,size, BRICK_BEHAVIOR_NONE)));
 				else
-					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture2, XMFLOAT2(x * (screenWidth / size.x), y * (screenHeight / size.y)), screenWidth, screenHeight, size, BRICK_BEHAVIOR_BLOCK)));
+					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture2, XMFLOAT2(x * (screenWidth / size.x), y * (screenHeight / size.y)), scale, size, BRICK_BEHAVIOR_BLOCK)));
 			}
 		}
 	}
@@ -125,11 +123,11 @@ public:
 		return XMFLOAT2(desc.Width, desc.Height);
 	}
 
-	void resize(float x, float y)
+	void resize(float scale)
 	{
 		for (auto &brick : bricks) 
 		{
-			brick->resize(x, y);
+			brick->resize(scale);
 		}
 	}
 

@@ -266,6 +266,7 @@
     <Image Include="Assets\Logo.scale-100.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
+    <Image Include="Assets\person.dds" />
     <Image Include="Assets\pipe.dds" />
     <Image Include="Assets\pipe.png" />
     <Image Include="Assets\seafloor.dds" />
