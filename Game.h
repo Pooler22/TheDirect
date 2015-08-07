@@ -33,9 +33,9 @@ public:
 		map->addBrickTexture2(buttonSpriteSheet);
 	}
 
-	void Game::setMapLevel(int x, int y, int* numberTestureVectorIn, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVectorIn, float scaleIn)
+	void Game::setMapLevel(int x, int y, int* numberTestureVectorIn, float scaleIn)
 	{
-		map->setMapLevel(x,y, numberTestureVectorIn, baehaviorTestureVectorIn, screenWidth, screenHeight, scaleIn);
+		map->setMapLevel(x,y, numberTestureVectorIn, screenWidth, screenHeight, scaleIn);
 	}
 	
 	void Game::addPlayer(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float sizeIn)
@@ -83,13 +83,15 @@ public:
 
 	void Game::isColision()
 	{
-		if (map->isStanding(player->getBoundingRectangle()))
+		if (map->isStanding(player->boundingRectangle))
 		{
 			player->setStand(true);
+			player->setMoveDown(false);
 		}
 		else 
 		{
 			player->setStand(false);
+			player->setMoveDown(true);
 		}
 	}
 
@@ -106,7 +108,7 @@ public:
 		map->Draw(batch);
 		player->Draw(batch);
 	}
-
+	bool									moveDown;
 	int										screenWidth;
 	int										screenHeight;
 	std::unique_ptr<Map>					map;

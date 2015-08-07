@@ -55,21 +55,15 @@ public:
 
 	bool isStanding(Windows::Foundation::Rect rect)
 	{
-		if (rect.Bottom < boundingRectangle.Top )
+		if (behavior == BRICK_BEHAVIOR_BLOCK)
 		{
-			if(boundingRectangle.Contains( Windows::Foundation::Point(rect.Y, rect.Left))||
-				boundingRectangle.Contains(Windows::Foundation::Point(rect.Y, rect.Right)))
+			rect.Y += 1;
+			if (boundingRectangle.IntersectsWith(rect))
 			{
-				if (behavior == BRICK_BEHAVIOR_BLOCK)
-				{
-					return true;
-				}
+				return true;
 			}
 		}
-		else
-		{
-			return false;
-		}
+		return false;
 	}
 
 public:

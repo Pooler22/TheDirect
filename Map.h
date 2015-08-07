@@ -13,7 +13,6 @@ class Map
 public:
 	Map()
 	{
-		baehaviorTestureVector = std::shared_ptr<std::vector<BRICK_BEHAVIOR>>();
 		bricks = std::vector<std::shared_ptr<Brick>>();
 		textureVector = std::shared_ptr<std::vector<std::shared_ptr<ID3D11ShaderResourceView>>>();
 	};
@@ -80,19 +79,16 @@ public:
 		for (auto &brick : bricks)
 		{
 			if (brick->isStanding(rect))
-			{
 				return true;
-			}
 		}
 		return false;
 	}
 
-	void setMapLevel(int x, int y, int* numberTestureVectorIn, std::shared_ptr<std::vector<BRICK_BEHAVIOR>> baehaviorTestureVectorIn, int screenWidth, int screenHeight, float scale)
+	void setMapLevel(int x, int y, int* numberTestureVectorIn, int screenWidth, int screenHeight, float scale)
 	{
 		size.x = x;
 		size.y = y;
 		numberTestureVector = numberTestureVectorIn;
-		baehaviorTestureVector = baehaviorTestureVectorIn;
 		generateMap(screenWidth, screenHeight, scale);
 	}
 
@@ -136,7 +132,6 @@ private:
 	
 	XMFLOAT2																size;
 	int*																	numberTestureVector;
-	std::shared_ptr<std::vector<BRICK_BEHAVIOR>>							baehaviorTestureVector;
 
 	std::wstring															name;
 	std::vector<std::shared_ptr<Brick>>										bricks;

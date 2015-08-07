@@ -33,7 +33,7 @@ public:
 
 	void Update(float elapsed)
 	{
-		if(jumpTime > 0)
+		if(stand && jumpTime > 0)
 			jumpTime--;
 
 		if (!stand)
@@ -51,19 +51,41 @@ public:
 
 	void move(float x, float y)
 	{
-		position.x = position.x + (x * speed);
-		position.y = position.y - (y * speed);
+		if (!moveDown)
+		{
+			if (y * speed > 0)
+			{
+				position.x = position.x + (x * speed);
+				position.y = position.y - (y * speed);
+			}
+			else
+			{
+				position.x = position.x + (x * speed);
+			}
+		}
+		else 
+		{
+			position.x = position.x + (x * speed);
+			position.y = position.y - (y * speed);
+		}
+		
 		updateBoundingRect();
 	}
 	void jump() 
 	{
-		//if(jumpTime > 0)
-			//move(0, 2);
+		if(stand && jumpTime > 0)
+			move(0, 2);
+	}
+
+	void setMoveDown(bool flag)
+	{
+		moveDown = flag;
 	}
 
 public:
+	bool		jumpFlag;
 	int			jumpTime;
-
+	bool		moveDown;
 	bool		stand;
 	int			speed;
 	float		gravity;
