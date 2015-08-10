@@ -6,24 +6,30 @@
 #include <DirectXMath.h>
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
-#include "Button.h"
 
 class Person : public Button
 {
 public:
-	Person(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
+	Person::Person()
+	{}
+
+	Person::Person(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
 	{
+		valueHeart = 3;
+		this->over = false;
 		float rotation = 0.f;
 		scale = scaleIn;
 
 		texture = buttonSpriteSheet;
 		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scaleIn, 0.5f));
 		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
+
+		bubbles = std::vector<Button>();
 		
 		dimensions.x = animation->getFrameWidth();
 		dimensions.y = animation->getFrameHeight();
-		position.x = positionIn.x;
-		position.y = positionIn.y - dimensions.y;
+		startPosition.x = position.x = positionIn.x;
+		startPosition.y = position.y = positionIn.y - dimensions.y;
 		updateBoundingRect();
 		speed = 10;
 		gravity = 1;
@@ -31,7 +37,16 @@ public:
 		jumpTime = 10;
 	}
 
-	void Update(float elapsed)
+	virtual void  Person::Draw(DirectX::SpriteBatch* batch)
+	{
+		for (auto &bubble : bubbles)
+		{
+			bubble.Draw(batch);
+		}
+		animation->Draw(batch, position);
+	}
+
+	virtual void  Person::Update(float elapsed)
 	{
 		if(stand && jumpTime > 0)
 			jumpTime--;
@@ -40,16 +55,19 @@ public:
 		{
 			move(0, -gravity);
 		}
-		
+		for (auto &bubble : bubbles)
+		{
+			bubble.Update(elapsed);
+		}
 		animation->Update(elapsed);
 	}
 
-	void setStand(bool standIn)
+	virtual void  Person::setStand(bool standIn)
 	{
 		stand = standIn;
 	}
 
-	void move(float x, float y)
+	virtual void  Person::move(float x, float y)
 	{
 		if (!moveDown)
 		{
@@ -63,7 +81,7 @@ public:
 				position.x = position.x + (x * speed);
 			}
 		}
-		else 
+		else
 		{
 			position.x = position.x + (x * speed);
 			position.y = position.y - (y * speed);
@@ -71,18 +89,65 @@ public:
 		
 		updateBoundingRect();
 	}
-	void jump() 
+	void  Person::jump()
 	{
 		if(stand && jumpTime > 0)
 			move(0, 2);
 	}
 
-	void setMoveDown(bool flag)
+	void  Person::setMoveDown(bool flag)
 	{
 		moveDown = flag;
 	}
 
+	void  Person::die()
+	{
+		valueHeart--; // TODO check value of life
+		if (valueHeart == 0)
+		{
+			this->over = true;
+		}
+		setStartPosition();
+	}
+
+	void  Person::setStartPosition()
+	{
+		position = startPosition;
+		updateBoundingRect();
+	}
+	bool  Person::gameOver()
+	{
+		if (this->over)
+		{
+			this->over = false;
+			reset();
+			return true;
+		}
+		return false;
+	}
+
+	void  Person::reset()
+	{
+		valueHeart = 3;
+	}
+
+	void  Person::fire()
+	{
+		
+	}
+
+	/*void  Person::addBonus(std::shared_ptr<Bonus_struct> bs)
+	{
+		score += bs->score;
+		speed += bs->speed;
+	}*/
+
+
 public:
+	int score;
+	bool				over;
+	DirectX::XMFLOAT2	startPosition;
+	int			valueHeart;
 	bool		jumpFlag;
 	int			jumpTime;
 	bool		moveDown;
@@ -91,4 +156,6 @@ public:
 	float		gravity;
 	int			framesOfAnimation;
 	int			framesToBeShownPerSecond;
+	std::vector<Button> bubbles;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	bubbleTexture;
 };

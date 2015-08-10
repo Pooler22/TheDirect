@@ -95,6 +95,11 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 		m_retryDefault = true;
 	}
 
+	if (screenManager->gameOver())
+	{
+		screenManager->setName(L"GameOver");
+	}
+	
 	//#pragma region Gamepad
 	//	//GamePad
 	//	auto statePlayerOne = GameePad->GetState(0);
@@ -173,7 +178,7 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 
 #pragma endregion Handling collision detection + simple EnginePad rumble on crash
 
-	bool flagFromPressToRelasedClick = true;
+	
 	m_playersAttached = playersAttached;
 
 	for (unsigned int i = 0; i < XINPUT_MAX_CONTROLLERS; i++)
@@ -255,11 +260,16 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 					{
 						screenManager->setName(L"Options");
 					}
+					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"ContinueGameOver"))
+					{
+						screenManager->setName(L"Main");
+					}
+					
 					flagFromPressToRelasedClick = false;
 				}
 				break;
 			case PLAYER_ACTION_TYPES::INPUT_CANCEL:
-
+				break;
 			case PLAYER_ACTION_TYPES::INPUT_FIRE_RELEASED:
 				inputText += L"\n FirePressed(" + std::to_wstring(playerAction.NormalizedInputValue) + L") ";
 				inputText += L"\n FireReleased(" + std::to_wstring(playerAction.NormalizedInputValue) + L") ";
@@ -414,6 +424,7 @@ void DirectXTK3DSceneRenderer::Render()
 //this is the LOAD function
 void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 {
+	flagFromPressToRelasedClick = true;
 	// Create DirectXTK objects
 	auto device = m_deviceResources->GetD3DDevice();
 
@@ -493,6 +504,13 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	screen3->addMenu(name3, id3, position3, 1, scale);
 	screenManager->addScreen(screen3);
 
+	Screen* screen6 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"GameOver");
+	std::wstring name6[] = { L"Continue" };
+	std::wstring id6[] = { L"ContinueGameOver" };
+	XMFLOAT2 position6[] = { XMFLOAT2(centerPosition.x, centerPosition.y) };
+	screen6->addMenu(name6, id6, position6, 1, scale);
+	screenManager->addScreen(screen6);
+
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\brick2.dds", nullptr, m_texture2.ReleaseAndGetAddressOf())
 		);
@@ -534,6 +552,19 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		CreateDDSTextureFromFile(device, L"assets\\person.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 	screenManager->game->addPlayer(m_texture.Get(), XMFLOAT2(1, 17), scale);
+
+	DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\enemy.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
+	screenManager->game->addEnemy(m_texture.Get(), XMFLOAT2(5, 17), scale);
+
+	DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\bonus.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
+
+	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(10, 17), scale);
+	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(15, 3), scale);
+	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(23, 3), scale);
 
 	//set windows size for drawing the background
 	//clouds2->SetWindow(logicalSize.Width, logicalSize.Height);

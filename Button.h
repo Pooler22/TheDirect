@@ -29,23 +29,23 @@ public:
 		updateBoundingRect();
 	}
 
-	void setPosition(DirectX::XMFLOAT2 positionIn)
+	void Button::setPosition(DirectX::XMFLOAT2 positionIn)
 	{
 		position = positionIn;
 		updateBoundingRect();
 	}
 
-	DirectX::XMFLOAT2 getPosition()
+	DirectX::XMFLOAT2 Button::getPosition()
 	{
 		return position;
 	}
 
-	DirectX::XMFLOAT2 getDimension()
+	DirectX::XMFLOAT2 Button::getDimension()
 	{
 		return dimensions;
 	}
 
-	bool isColision(Windows::Foundation::Rect rect)
+	bool Button::isColision(Windows::Foundation::Rect rect)
 	{
 		if (boundingRectangle.IntersectsWith(rect))
 		{
@@ -57,22 +57,22 @@ public:
 		}
 	}
 
-	void Update(float elapsed)
+	void Button::Update(float elapsed)
 	{
 		animation->Update(elapsed);
 	}
 
-	void Draw(DirectX::SpriteBatch* batch)
+	void Button::Draw(DirectX::SpriteBatch* batch)
 	{
 		animation->Draw(batch, position);
 	}
 
-	Windows::Foundation::Rect getBoundingRectangle()
+	Windows::Foundation::Rect Button::getBoundingRectangle()
 	{
 		return boundingRectangle;
 	}
 
-	void resize(float scaleIn)
+	void Button::resize(float scaleIn)
 	{
 		dimensions.x *= scaleIn;
 		dimensions.y *= scaleIn;
@@ -82,9 +82,9 @@ public:
 		updateBoundingRect();
 	}
 
-protected:
+public:
 
-	void updateBoundingRect()
+	void Button::updateBoundingRect()
 	{
 		//TODO: proper updating when rotating player object
 		boundingRectangle.X = position.x;

@@ -79,7 +79,7 @@ namespace SimpleSample
         std::unique_ptr<DirectX::SoundEffect>                                   m_soundEffect;
         std::unique_ptr<DirectX::SoundEffectInstance>                           m_effect1;
         std::unique_ptr<DirectX::SoundEffectInstance>                           m_effect2;
-		
+		bool																	flagFromPressToRelasedClick;
 		// Variables used with the rendering loop.
         uint32_t                                                                m_audioEvent;
         float                                                                   m_audioTimerAcc;

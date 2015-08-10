@@ -255,6 +255,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Image Include="Assets\background.dds" />
+    <Image Include="Assets\bonus.dds" />
     <Image Include="Assets\brick.dds" />
     <Image Include="Assets\brick2.dds" />
     <Image Include="Assets\button.dds" />
@@ -262,13 +263,15 @@
     <Image Include="Assets\cloud2.dds" />
     <Image Include="Assets\clouds.dds" />
     <Image Include="Assets\clouds2.dds" />
+    <Image Include="Assets\enemy.dds" />
+    <Image Include="Assets\person.dds" />
     <Image Include="Assets\enemyanimated.dds" />
     <Image Include="Assets\Logo.scale-100.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="Assets\person.dds" />
     <Image Include="Assets\pipe.dds" />
     <Image Include="Assets\pipe.png" />
+    <Image Include="Assets\player.dds" />
     <Image Include="Assets\seafloor.dds" />
     <Image Include="Assets\shipanimated1.dds" />
     <Image Include="Assets\shipanimated.dds" />
@@ -289,6 +292,7 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="TextButton.h" />
     <ClInclude Include="Common\DeviceResources.h" />
     <ClInclude Include="Common\InputManager.h" />

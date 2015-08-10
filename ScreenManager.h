@@ -91,6 +91,11 @@ public:
 		}
 	}
 
+	bool gameOver()
+	{
+		return game->gameOver();
+	}
+
 public:
 	std::wstring								nameCurrentScreen;
 	std::vector<std::shared_ptr<Screen>>		screens;

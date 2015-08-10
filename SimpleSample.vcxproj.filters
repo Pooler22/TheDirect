@@ -99,6 +99,9 @@
     <ClInclude Include="Button.h">
       <Filter>Content</Filter>
     </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Content</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -179,7 +182,16 @@
     <Image Include="Assets\brick2.dds">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\player.dds">
+      <Filter>Assets</Filter>
+    </Image>
     <Image Include="Assets\person.dds">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\bonus.dds">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\enemy.dds">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>
