@@ -13,22 +13,12 @@ public:
 	Person::Person()
 	{}
 
-	Person::Person(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
+	Person::Person(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn) : 
+		Button(buttonSpriteSheet, positionIn, scaleIn),
+		framesToBeShownPerSecond(4),
+		framesOfAnimation(4)
 	{
-		float rotation = 0.f;
-		scale = scaleIn;
-
-		texture = buttonSpriteSheet;
-		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scaleIn, 0.5f));
-		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
-
 		bubbles = std::vector<Button>();
-		
-		dimensions.x = animation->getFrameWidth();
-		dimensions.y = animation->getFrameHeight();
-		startPosition.x = position.x = positionIn.x;
-		startPosition.y = position.y = positionIn.y - dimensions.y;
-		updateBoundingRect();
 		speed = 10;
 		gravity = 1;
 		stand = false;
@@ -84,7 +74,6 @@ public:
 			position.x = position.x + (x * speed);
 			position.y = position.y - (y * speed);
 		}
-		
 		updateBoundingRect();
 	}
 
@@ -119,14 +108,14 @@ public:
 
 public:
 	DirectX::XMFLOAT2	startPosition;
-	bool		jumpFlag;
-	int			jumpTime;
-	bool		moveDown;
-	bool		stand;
-	int			speed;
-	float		gravity;
-	int			framesOfAnimation;
-	int			framesToBeShownPerSecond;
+	bool				jumpFlag;
+	int					jumpTime;
+	bool				moveDown;
+	bool				stand;
+	int					speed;
+	float				gravity;
+	int					framesOfAnimation;
+	int					framesToBeShownPerSecond;
 	std::vector<Button> bubbles;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	bubbleTexture;
 };

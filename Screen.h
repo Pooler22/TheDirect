@@ -54,6 +54,7 @@ public:
 			button->Draw(batch);
 		}
 	}
+
 	void setName(std::wstring stringIn)
 	{
 		name = stringIn;

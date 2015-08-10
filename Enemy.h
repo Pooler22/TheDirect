@@ -15,7 +15,10 @@ public:
 	Enemy::Enemy()
 	{}
 
-	Enemy::Enemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn, int moveDirectionIn) : framesOfAnimation(4), framesToBeShownPerSecond(4), Person(buttonSpriteSheet, positionIn, scaleIn)
+	Enemy::Enemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn, int moveDirectionIn) : 
+		Person(buttonSpriteSheet, positionIn, scaleIn),
+		framesToBeShownPerSecond(4), 
+		framesOfAnimation(4)
 	{
 		moveDirection = moveDirectionIn;
 	}
@@ -47,8 +50,7 @@ public:
 	}
 
 public:
-	int			moveDirection;
-	int			framesOfAnimation;
-	int			framesToBeShownPerSecond;
-
+	int		moveDirection;
+	int		framesOfAnimation;
+	int		framesToBeShownPerSecond;
 };

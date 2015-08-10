@@ -188,7 +188,7 @@ public:
 
 	void Game::getColision()
 	{
-		if (map->getColision(player->boundingRectangle) == COLISION_TYPES123::COLISION_TYPE_LEFT)
+		if (map->getColision(player->boundingRectangle) == COLISION_TYPE::COLISION_TYPE_LEFT)
 		{
 			player->setBlockDirection(1);
 		}
@@ -197,7 +197,7 @@ public:
 			player->setBlockDirection(0);
 		}
 
-		if (map->getColision(player->boundingRectangle) == COLISION_TYPES123::COLISION_TYPE_RIGHT)
+		if (map->getColision(player->boundingRectangle) == COLISION_TYPE::COLISION_TYPE_RIGHT)
 		{
 			player->setBlockDirection(2);
 		}
@@ -206,7 +206,7 @@ public:
 			player->setBlockDirection(0);
 		}
 
-		if (map->getColision(player->boundingRectangle) == COLISION_TYPES123::COLISION_TYPE_TRUE)
+		if (map->getColision(player->boundingRectangle) == COLISION_TYPE::COLISION_TYPE_TRUE)
 		{
 			player->setStand(true);
 			player->setMoveDown(false);

@@ -67,7 +67,7 @@ public:
 	{
 		for (auto &brick : bricks)
 		{
-			if (brick->getColision(rect) == COLISION_TYPES123::COLISION_TYPE_TRUE && brick->behavior == BRICK_BEHAVIOR_BLOCK)
+			if (brick->getColision(rect) == COLISION_TYPE::COLISION_TYPE_TRUE && brick->behavior == BRICK_BEHAVIOR_BLOCK)
 			{
 				return true;
 			}

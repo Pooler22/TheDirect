@@ -15,7 +15,10 @@ public:
 	Player::Player()
 	{}
 
-	Player::Player(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn ) : framesOfAnimation(4), framesToBeShownPerSecond(4), Person(buttonSpriteSheet, positionIn, scaleIn)
+	Player::Player(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn ) : 
+		Person(buttonSpriteSheet, positionIn, scaleIn),
+		framesToBeShownPerSecond(4), 
+		framesOfAnimation(4)
 	{
 		life = 3;
 		score = 0;
@@ -37,16 +40,12 @@ public:
 		if (this->over)
 		{
 			this->over = false;
-			reset();
+			resetLevel();
 			return true;
 		}
 		return false;
 	}
-	void  Player::reset()
-	{
-		life = 3;
-	}
-	
+
 	int getLife()
 	{
 		return life;

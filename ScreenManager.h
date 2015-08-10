@@ -96,7 +96,6 @@ public:
 		for (auto &screen : screens)
 		{
 			screen->resize(scale);
-			game->resize(scale);
 		}
 	}
 

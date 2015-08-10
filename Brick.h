@@ -9,7 +9,7 @@
 #include "Button.h"
 #include <iostream>
 
-enum COLISION_TYPES123
+enum COLISION_TYPE
 {
 	COLISION_TYPE_FALSE = 0x0,
 	COLISION_TYPE_TRUE = 0x01,
@@ -30,22 +30,12 @@ class Brick : public Button
 {
 public:
 
-	Brick::Brick(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn, XMFLOAT2 sizeIn, BRICK_BEHAVIOR behaviorIn) :
-		framesOfAnimation(4), 
-		framesToBeShownPerSecond(4)
+	Brick::Brick(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn, XMFLOAT2 sizeIn, BRICK_BEHAVIOR behaviorIn) : 
+		Button(buttonSpriteSheet, positionIn, scaleIn),
+		framesToBeShownPerSecond(4),
+		framesOfAnimation(4)
 	{
-		float rotation = 0.0f;
-
-		scale = scaleIn;
-		texture = buttonSpriteSheet;
-		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scaleIn, 0.0f));
-		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
-
-		position = positionIn;
-		dimensions.x = animation->getFrameWidth();
-		dimensions.y = animation->getFrameHeight();		
 		behavior = behaviorIn;
-		updateBoundingRect();
 	}
 
 	void setBehavior(BRICK_BEHAVIOR behaviorIn) 
@@ -71,24 +61,23 @@ public:
 		return false;
 	}
 
-	COLISION_TYPES123 getColision(Windows::Foundation::Rect rect)
+	COLISION_TYPE getColision(Windows::Foundation::Rect rect)
 	{
 		if (boundingRectangle.IntersectsWith(rect))
 		{
-			if ((boundingRectangle.X) < (rect.X+rect.Width))
+			if (boundingRectangle.Right <= rect.Left)
 			{
-				return COLISION_TYPES123::COLISION_TYPE_LEFT;
+				return COLISION_TYPE::COLISION_TYPE_LEFT;
 			}
-			if ((boundingRectangle.X + boundingRectangle.Width) < (rect.X))
+			else if (boundingRectangle.Left >= rect.Right)
 			{
-				return COLISION_TYPES123::COLISION_TYPE_RIGHT;
+				return COLISION_TYPE::COLISION_TYPE_RIGHT;
 			}
-			return COLISION_TYPES123::COLISION_TYPE_TRUE;
-				
+			return COLISION_TYPE::COLISION_TYPE_TRUE;
 		}
 		else
 		{
-			return COLISION_TYPES123::COLISION_TYPE_FALSE;
+			return COLISION_TYPE::COLISION_TYPE_FALSE;
 		}
 	}
 

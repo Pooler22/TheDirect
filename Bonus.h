@@ -19,16 +19,7 @@ public:
 	{
 	}
 
-	void resetLevel()
-	{
-		position = startPosition;
-		updateBoundingRect();
-	}
-
-	
-
 public:
 	int			framesOfAnimation;
 	int			framesToBeShownPerSecond;
-
 };
