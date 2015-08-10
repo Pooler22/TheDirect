@@ -295,6 +295,7 @@
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Skill.h" />
     <ClInclude Include="TextButton.h" />
     <ClInclude Include="Common\DeviceResources.h" />
     <ClInclude Include="Common\InputManager.h" />

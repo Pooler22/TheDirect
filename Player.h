@@ -8,6 +8,7 @@
 #include "SpriteFont.h"
 #include "Person.h"
 #include "Button.h"
+#include "Skill.h"
 
 class Player : public Person
 {
@@ -15,22 +16,20 @@ public:
 	Player::Player() :
 		Person()
 	{
-		skill = SKILL_T(0, 0, 0, 0);
+		
 	}
 
 	Player::Player(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn ) : 
 		Person(buttonSpriteSheet, positionIn, scaleIn)
 	{
-		skill = SKILL_T(0, 0, 0, 0);
-		life = 3;
-		score = 0;
+		skill.reset(new Skill(3, 1, 0, 5, 1));
 		over = false;
 	}
 
 	void  Player::die()
 	{
-		life--; // TODO check value of life
-		if (life == 0)
+		skill->life = skill->life - 1;
+		if (skill->life == 0)
 		{
 			this->over = true;
 		}
@@ -50,11 +49,11 @@ public:
 
 	int getLife()
 	{
-		return life;
+		return skill->life;
 	}
 	void setLife(int life)
 	{
-		this->life = life;
+		this->skill->life = life;
 	}
 
 	int getScore()
@@ -68,7 +67,7 @@ public:
 	}
 	void resetLevel()
 	{
-		life = 3;
+		skill->life = 3;
 		score = 0;
 		position = startPosition;
 		updateBoundingRect();
@@ -126,7 +125,7 @@ public:
 public:
 	int			blockDirection;
 	bool		over;
-	int			life;
-	int			score;
-	SKILL_T		skill;
+
+	int							score;
+	std::unique_ptr<Skill>		skill;
 };

@@ -564,8 +564,8 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		CreateDDSTextureFromFile(device, L"assets\\bonus.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 
-	std::shared_ptr<SKILL_T> bonus;
-	bonus.reset(new SKILL_T(0,0,0,0));
+	std::shared_ptr<Skill> bonus;
+	bonus.reset(new Skill(0,0,0,0,0));
 	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(10, 17), scale,bonus);
 	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(15, 3), scale, bonus);
 	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(23, 3), scale, bonus);

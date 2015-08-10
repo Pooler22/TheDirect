@@ -108,6 +108,9 @@
     <ClInclude Include="Bonus.h">
       <Filter>Content</Filter>
     </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>Content</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
