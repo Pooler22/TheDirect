@@ -16,7 +16,7 @@ enum COLISION_TYPE
 	COLISION_TYPE_TOP = 0x02,
 	COLISION_TYPE_LEFT = 0x04,
 	COLISION_TYPE_RIGHT = 0x08,
-	COLISION_TYPE_BUTTOM = 0x01
+	COLISION_TYPE_BUTTOM = 0x10
 };
 
 enum BRICK_BEHAVIOR
@@ -25,15 +25,12 @@ enum BRICK_BEHAVIOR
 	BRICK_BEHAVIOR_BLOCK
 };
 
-
 class Brick : public Button
 {
 public:
 
 	Brick::Brick(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn, XMFLOAT2 sizeIn, BRICK_BEHAVIOR behaviorIn) : 
-		Button(buttonSpriteSheet, positionIn, scaleIn),
-		framesToBeShownPerSecond(4),
-		framesOfAnimation(4)
+		Button(buttonSpriteSheet, positionIn, scaleIn)
 	{
 		behavior = behaviorIn;
 	}
@@ -82,8 +79,5 @@ public:
 	}
 
 public:
-
-	int					framesOfAnimation;
-	int					framesToBeShownPerSecond;
 	BRICK_BEHAVIOR		behavior;
 };

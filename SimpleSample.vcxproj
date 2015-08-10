@@ -294,7 +294,6 @@
     <ClInclude Include="Bonus.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="Level.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="TextButton.h" />
     <ClInclude Include="Common\DeviceResources.h" />

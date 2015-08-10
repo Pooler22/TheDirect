@@ -11,12 +11,11 @@ class Person : public Button
 {
 public:
 	Person::Person()
-	{}
+	{
+	}
 
 	Person::Person(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn) : 
-		Button(buttonSpriteSheet, positionIn, scaleIn),
-		framesToBeShownPerSecond(4),
-		framesOfAnimation(4)
+		Button(buttonSpriteSheet, positionIn, scaleIn)
 	{
 		bubbles = std::vector<Button>();
 		speed = 10;
@@ -94,12 +93,6 @@ public:
 		updateBoundingRect();
 	}
 	
-	/*void  Person::addBonus(std::shared_ptr<Bonus_struct> bs)
-	{
-		score += bs->score;
-		speed += bs->speed;
-	}*/
-
 	void resetLevel()
 	{
 		position = startPosition;
@@ -107,15 +100,24 @@ public:
 	}
 
 public:
-	DirectX::XMFLOAT2	startPosition;
-	bool				jumpFlag;
-	int					jumpTime;
-	bool				moveDown;
-	bool				stand;
-	int					speed;
-	float				gravity;
-	int					framesOfAnimation;
-	int					framesToBeShownPerSecond;
-	std::vector<Button> bubbles;
+	DirectX::XMFLOAT2									startPosition;
+	bool												jumpFlag;
+	int													jumpTime;
+	bool												moveDown;
+	bool												stand;
+	int													speed;
+	float												gravity;
+	std::vector<Button>									bubbles;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	bubbleTexture;
+
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	textureJump;
+	std::unique_ptr<AnimatedTexture>					animationJump;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	textureLeft;
+	std::unique_ptr<AnimatedTexture>					animationLeft;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	textureRight;
+	std::unique_ptr<AnimatedTexture>					animationRight;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	textureFire;
+	std::unique_ptr<AnimatedTexture>					animationFire;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	textureDie;
+	std::unique_ptr<AnimatedTexture>					animationDie;
 };

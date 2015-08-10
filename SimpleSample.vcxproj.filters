@@ -99,9 +99,6 @@
     <ClInclude Include="Button.h">
       <Filter>Content</Filter>
     </ClInclude>
-    <ClInclude Include="Level.h">
-      <Filter>Content</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Content</Filter>
     </ClInclude>

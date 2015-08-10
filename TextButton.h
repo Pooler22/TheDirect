@@ -12,20 +12,18 @@ class TextButton : public Button
 {
 public:
 	TextButton(ID3D11ShaderResourceView* buttonSpriteSheet, SpriteFont *spriteFont, std::wstring inString, std::wstring inId, XMFLOAT2 inPosition, float scaleIn) : 
-		Button(buttonSpriteSheet,  inPosition, scaleIn),
-		framesToBeShownPerSecond(4),
-		framesOfAnimation(4)
+		Button(buttonSpriteSheet,  inPosition, scaleIn)
 	{
 		id = inId;
 		string = inString;
-		m_font.reset(spriteFont);
 		colorNormal = color = Colors::Black;
 		colorOver = Colors::Blue;
+		m_font.reset(spriteFont);
 	}
 
 	bool isOver(float x, float y) 
 	{
-		if (x > (boundingRectangle.X) && y > (boundingRectangle.Y) && x < (boundingRectangle.X + boundingRectangle.Width) && y < (boundingRectangle.Y + boundingRectangle.Height))
+		if(boundingRectangle.IntersectsWith(Windows::Foundation::Rect(x,y,1,1)))
 		{
 			color = colorOver;
 			return true;
@@ -64,10 +62,6 @@ public:
 	}
 
 public:
-
-	int										framesOfAnimation;
-	int										framesToBeShownPerSecond;
-
 	std::wstring							string;
 	std::wstring							id;
 	DirectX::XMVECTOR						color;

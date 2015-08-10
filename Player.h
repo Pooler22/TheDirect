@@ -12,14 +12,16 @@
 class Player : public Person
 {
 public:
-	Player::Player()
-	{}
+	Player::Player() :
+		Person()
+	{
+		skill = SKILL_T(0, 0, 0, 0);
+	}
 
 	Player::Player(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn ) : 
-		Person(buttonSpriteSheet, positionIn, scaleIn),
-		framesToBeShownPerSecond(4), 
-		framesOfAnimation(4)
+		Person(buttonSpriteSheet, positionIn, scaleIn)
 	{
+		skill = SKILL_T(0, 0, 0, 0);
 		life = 3;
 		score = 0;
 		over = false;
@@ -98,6 +100,12 @@ public:
 		updateBoundingRect();
 	}
 
+	/*void  Person::addBonus(std::shared_ptr<Bonus_struct> bs)
+	{
+	score += bs->score;
+	speed += bs->speed;
+	}*/
+
 	void setBlockDirection(int direction)
 	{
 		blockDirection = direction;
@@ -116,11 +124,9 @@ public:
 	}
 
 public:
-	int		blockDirection;
-	bool	over;
-	int		life;
-	int		score;
-	int		framesOfAnimation;
-	int		framesToBeShownPerSecond;
-
+	int			blockDirection;
+	bool		over;
+	int			life;
+	int			score;
+	SKILL_T		skill;
 };

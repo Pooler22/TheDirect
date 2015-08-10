@@ -16,9 +16,7 @@ public:
 	{}
 
 	Enemy::Enemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn, int moveDirectionIn) : 
-		Person(buttonSpriteSheet, positionIn, scaleIn),
-		framesToBeShownPerSecond(4), 
-		framesOfAnimation(4)
+		Person(buttonSpriteSheet, positionIn, scaleIn)
 	{
 		moveDirection = moveDirectionIn;
 	}
@@ -43,14 +41,6 @@ public:
 		animation->Update(elapsed);
 	}
 
-	void resetLevel()
-	{
-		position = startPosition;
-		updateBoundingRect();
-	}
-
 public:
 	int		moveDirection;
-	int		framesOfAnimation;
-	int		framesToBeShownPerSecond;
 };
