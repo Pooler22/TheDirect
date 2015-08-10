@@ -186,6 +186,38 @@ public:
 		}
 	}
 
+	void Game::getColision()
+	{
+		if (map->getColision(player->boundingRectangle) == COLISION_TYPES123::COLISION_TYPE_LEFT)
+		{
+			player->setBlockDirection(1);
+		}
+		else
+		{
+			player->setBlockDirection(0);
+		}
+
+		if (map->getColision(player->boundingRectangle) == COLISION_TYPES123::COLISION_TYPE_RIGHT)
+		{
+			player->setBlockDirection(2);
+		}
+		else
+		{
+			player->setBlockDirection(0);
+		}
+
+		if (map->getColision(player->boundingRectangle) == COLISION_TYPES123::COLISION_TYPE_TRUE)
+		{
+			player->setStand(true);
+			player->setMoveDown(false);
+		}
+		else
+		{
+			player->setStand(false);
+			player->setMoveDown(true);
+		}
+	}
+
 	virtual void Game::isColision(std::vector<Bonus>::iterator person)
 	{
 		if (map->isStanding(person->boundingRectangle))

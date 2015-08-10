@@ -73,7 +73,51 @@ public:
 		updateBoundingRect();
 	}
 
+	virtual void  Player::move(float x, float y)
+	{
+		if (!moveDown)
+		{
+			if (y * speed > 0)
+			{
+				if (blockDirection == 1 && x < 0)
+					position.x = position.x + (x * speed);
+				if (blockDirection == 2 && x < 0)
+					position.x = position.x + (x * speed);
+				position.y = position.y - (y * speed);
+			}
+			else
+			{
+				position.x = position.x + (x * speed);
+			}
+		}
+		else
+		{
+			position.x = position.x + (x * speed);
+			position.y = position.y - (y * speed);
+		}
+
+		updateBoundingRect();
+	}
+
+	void setBlockDirection(int direction)
+	{
+		blockDirection = direction;
+		if (direction == 0)
+		{
+
+		}
+		else if (direction == 1)
+		{
+
+		}
+		else if (direction == 2)
+		{
+
+		}
+	}
+
 public:
+	int		blockDirection;
 	bool	over;
 	int		life;
 	int		score;

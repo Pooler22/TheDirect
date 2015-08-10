@@ -67,7 +67,7 @@ public:
 	{
 		for (auto &brick : bricks)
 		{
-			if (brick->getColision(rect) == COLISION_TYPE_TRUE && brick->behavior == BRICK_BEHAVIOR_BLOCK)
+			if (brick->getColision(rect) == COLISION_TYPES123::COLISION_TYPE_TRUE && brick->behavior == BRICK_BEHAVIOR_BLOCK)
 			{
 				return true;
 			}
@@ -75,16 +75,17 @@ public:
 		return false;
 	}
 
-	COLISION_TYPE getColision(Windows::Foundation::Rect rect)
+	unsigned int getColision(Windows::Foundation::Rect rect)
 	{
+		unsigned int opt = 0x0;
 		for (auto &brick : bricks)
 		{
-			if (brick->getColision(rect) != COLISION_TYPE_FALSE && brick->behavior == BRICK_BEHAVIOR_BLOCK)
+			if (brick->behavior == BRICK_BEHAVIOR_BLOCK)
 			{
-				return brick->getColision(rect);
+				opt |= brick->getColision(rect);
 			}
 		}
-		return COLISION_TYPE_FALSE;
+		return opt;
 	}
 
 	void setStringText(std::wstring string)

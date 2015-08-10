@@ -7,15 +7,16 @@
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
 #include "Button.h"
+#include <iostream>
 
-enum COLISION_TYPE
+enum COLISION_TYPES123
 {
-	COLISION_TYPE_TRUE,
-	COLISION_TYPE_FALSE,
-	COLISION_TYPE_TOP,
-	COLISION_TYPE_LEFT,
-	COLISION_TYPE_RIGHT,
-	COLISION_TYPE_BUTTOM
+	COLISION_TYPE_FALSE = 0x0,
+	COLISION_TYPE_TRUE = 0x01,
+	COLISION_TYPE_TOP = 0x02,
+	COLISION_TYPE_LEFT = 0x04,
+	COLISION_TYPE_RIGHT = 0x08,
+	COLISION_TYPE_BUTTOM = 0x01
 };
 
 enum BRICK_BEHAVIOR
@@ -70,15 +71,24 @@ public:
 		return false;
 	}
 
-	COLISION_TYPE getColision(Windows::Foundation::Rect rect)
+	COLISION_TYPES123 getColision(Windows::Foundation::Rect rect)
 	{
 		if (boundingRectangle.IntersectsWith(rect))
 		{
-			return COLISION_TYPE_TRUE;
+			if ((boundingRectangle.X) < (rect.X+rect.Width))
+			{
+				return COLISION_TYPES123::COLISION_TYPE_LEFT;
+			}
+			if ((boundingRectangle.X + boundingRectangle.Width) < (rect.X))
+			{
+				return COLISION_TYPES123::COLISION_TYPE_RIGHT;
+			}
+			return COLISION_TYPES123::COLISION_TYPE_TRUE;
+				
 		}
 		else
 		{
-			return COLISION_TYPE_FALSE;
+			return COLISION_TYPES123::COLISION_TYPE_FALSE;
 		}
 	}
 

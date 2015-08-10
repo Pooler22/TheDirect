@@ -87,6 +87,7 @@ public:
 		
 		updateBoundingRect();
 	}
+
 	void  Person::jump()
 	{
 		if(stand && jumpTime > 0)
