@@ -97,6 +97,7 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 
 	if (screenManager->gameOver())
 	{
+		screenManager->setString(L"GameOver", L"ScoreGameOver", std::to_wstring(screenManager->game->getScore()));
 		screenManager->setName(L"GameOver");
 	}
 	
@@ -251,6 +252,7 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"ExitPause"))
 					{
 						screenManager->setName(L"Main");
+						screenManager->resetLevel();
 					}
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"DescriptionAuthor"))
 					{
@@ -263,6 +265,7 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"ContinueGameOver"))
 					{
 						screenManager->setName(L"Main");
+						screenManager->resetLevel();
 					}
 					
 					flagFromPressToRelasedClick = false;
@@ -505,10 +508,10 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	screenManager->addScreen(screen3);
 
 	Screen* screen6 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"GameOver");
-	std::wstring name6[] = { L"Continue" };
-	std::wstring id6[] = { L"ContinueGameOver" };
-	XMFLOAT2 position6[] = { XMFLOAT2(centerPosition.x, centerPosition.y) };
-	screen6->addMenu(name6, id6, position6, 1, scale);
+	std::wstring name6[] = {L"Score",  L"Continue"};
+	std::wstring id6[] = { L"ScoreGameOver" , L"ContinueGameOver"};
+	XMFLOAT2 position6[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight),XMFLOAT2(centerPosition.x, centerPosition.y) };
+	screen6->addMenu(name6, id6, position6, 2, scale);
 	screenManager->addScreen(screen6);
 
 	DX::ThrowIfFailed(
@@ -522,21 +525,21 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		);
 
 	int x1 = 32;
-	int y1 = 18;
+	int y1 = 19;
 	int tab1[] = {
 		1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -546,7 +549,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 
 		
 	screenManager->addBrickTexture2(m_texture.Get());
-	screenManager->setMapLevel(x1,y1, tab1, logicalSize.Width, logicalSize.Height, scale);
+	screenManager->setMapLevel(x1,y1, tab1, logicalSize.Width, logicalSize.Height, scale, m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"));
 
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\person.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
@@ -556,7 +559,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\enemy.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
-	screenManager->game->addEnemy(m_texture.Get(), XMFLOAT2(5, 17), scale);
+	screenManager->game->addEnemy(m_texture.Get(), XMFLOAT2(5, 17), scale, 1);
 
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\bonus.dds", nullptr, m_texture.ReleaseAndGetAddressOf())

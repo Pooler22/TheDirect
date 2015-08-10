@@ -102,6 +102,15 @@
     <ClInclude Include="Level.h">
       <Filter>Content</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Bonus.h">
+      <Filter>Content</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

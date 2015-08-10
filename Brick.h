@@ -8,18 +8,22 @@
 #include "SpriteFont.h"
 #include "Button.h"
 
+enum COLISION_TYPE
+{
+	COLISION_TYPE_TRUE,
+	COLISION_TYPE_FALSE,
+	COLISION_TYPE_TOP,
+	COLISION_TYPE_LEFT,
+	COLISION_TYPE_RIGHT,
+	COLISION_TYPE_BUTTOM
+};
+
 enum BRICK_BEHAVIOR
 {
 	BRICK_BEHAVIOR_NONE,
 	BRICK_BEHAVIOR_BLOCK
 };
 
-enum COLISION_TYPE
-{
-	COLISION_TYPE_TRUE,
-	COLISION_TYPE_FALSE,
-	COLISION_TYPE_STAND
-};
 
 class Brick : public Button
 {
@@ -64,6 +68,18 @@ public:
 			}
 		}
 		return false;
+	}
+
+	COLISION_TYPE getColision(Windows::Foundation::Rect rect)
+	{
+		if (boundingRectangle.IntersectsWith(rect))
+		{
+			return COLISION_TYPE_TRUE;
+		}
+		else
+		{
+			return COLISION_TYPE_FALSE;
+		}
 	}
 
 public:

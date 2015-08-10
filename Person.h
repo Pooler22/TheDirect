@@ -15,8 +15,6 @@ public:
 
 	Person::Person(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
 	{
-		valueHeart = 3;
-		this->over = false;
 		float rotation = 0.f;
 		scale = scaleIn;
 
@@ -100,54 +98,26 @@ public:
 		moveDown = flag;
 	}
 
-	void  Person::die()
-	{
-		valueHeart--; // TODO check value of life
-		if (valueHeart == 0)
-		{
-			this->over = true;
-		}
-		setStartPosition();
-	}
-
 	void  Person::setStartPosition()
 	{
 		position = startPosition;
 		updateBoundingRect();
 	}
-	bool  Person::gameOver()
-	{
-		if (this->over)
-		{
-			this->over = false;
-			reset();
-			return true;
-		}
-		return false;
-	}
-
-	void  Person::reset()
-	{
-		valueHeart = 3;
-	}
-
-	void  Person::fire()
-	{
-		
-	}
-
+	
 	/*void  Person::addBonus(std::shared_ptr<Bonus_struct> bs)
 	{
 		score += bs->score;
 		speed += bs->speed;
 	}*/
 
+	void resetLevel()
+	{
+		position = startPosition;
+		updateBoundingRect();
+	}
 
 public:
-	int score;
-	bool				over;
 	DirectX::XMFLOAT2	startPosition;
-	int			valueHeart;
 	bool		jumpFlag;
 	int			jumpTime;
 	bool		moveDown;

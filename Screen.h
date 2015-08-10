@@ -84,6 +84,15 @@ public:
 		}
 	}
 
+	void setString(std::wstring idButton, std::wstring stinrg)
+	{
+		for (auto &button : buttons)
+		{
+			if (button->getId() == idButton)
+				button->setString(stinrg);
+		}
+	}
+
 private:
 
 	ID3D11ShaderResourceView*					buttonSpriteSheet;

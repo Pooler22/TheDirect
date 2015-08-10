@@ -41,6 +41,7 @@ public:
 		{
 			brick->Draw(batch);
 		}
+		m_font->DrawString(batch, textString.c_str(), textPosition, Colors::Blue);
 	}
 	void setName(std::wstring stringIn)
 	{
@@ -66,12 +67,29 @@ public:
 	{
 		for (auto &brick : bricks)
 		{
-			if (brick->isColision(rect) && brick->behavior == BRICK_BEHAVIOR_BLOCK)
+			if (brick->getColision(rect) == COLISION_TYPE_TRUE && brick->behavior == BRICK_BEHAVIOR_BLOCK)
 			{
 				return true;
 			}
 		}
 		return false;
+	}
+
+	COLISION_TYPE getColision(Windows::Foundation::Rect rect)
+	{
+		for (auto &brick : bricks)
+		{
+			if (brick->getColision(rect) != COLISION_TYPE_FALSE && brick->behavior == BRICK_BEHAVIOR_BLOCK)
+			{
+				return brick->getColision(rect);
+			}
+		}
+		return COLISION_TYPE_FALSE;
+	}
+
+	void setStringText(std::wstring string)
+	{
+		textString = string;
 	}
 
 	bool isStanding(Windows::Foundation::Rect rect)
@@ -84,26 +102,29 @@ public:
 		return false;
 	}
 
-	void setMapLevel(int x, int y, int* numberTestureVectorIn, int screenWidth, int screenHeight, float scale)
+	void setMapLevel(int x, int y, int* numberTestureVectorIn, int screenWidth, int screenHeight, float scale, ID3D11ShaderResourceView* playerSpriteSheetIn, SpriteFont* spriteFontIn)
 	{
 		size.x = x;
 		size.y = y;
+		m_font.reset(spriteFontIn);
 		numberTestureVector = numberTestureVectorIn;
 		generateMap(screenWidth, screenHeight, scale);
+
 	}
 
 	void generateMap(int screenWidth, int screenHeight, float scale)
 	{
 		getTextureDiension(texture).x;
-
+		textPosition.x = 0;
+		textPosition.y = 0;
 		for (int x = 0; x < size.x; x++)
 		{
-			for (int y = 0; y < size.y; y++)
+			for (int y = 0; y < size.y -1; y++)
 			{
 				if(numberTestureVector[(int)((y * size.x) + x)]== 0)
-					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture, XMFLOAT2(x * (screenWidth/size.x),y * (screenHeight/ size.y)), scale ,size, BRICK_BEHAVIOR_NONE)));
+					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture, XMFLOAT2(x * (screenWidth/size.x),(y+1) * (screenHeight/ size.y)), scale ,size, BRICK_BEHAVIOR_NONE)));
 				else
-					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture2, XMFLOAT2(x * (screenWidth / size.x), y * (screenHeight / size.y)), scale, size, BRICK_BEHAVIOR_BLOCK)));
+					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture2, XMFLOAT2(x * (screenWidth / size.x), (y+1) * (screenHeight / size.y)), scale, size, BRICK_BEHAVIOR_BLOCK)));
 			}
 		}
 	}
@@ -138,4 +159,7 @@ private:
 	std::shared_ptr<std::vector<std::shared_ptr<ID3D11ShaderResourceView>>>	textureVector;
 	ID3D11ShaderResourceView*												texture;
 	ID3D11ShaderResourceView*												texture2;
+	std::unique_ptr<DirectX::SpriteFont>									m_font;
+	std::wstring															textString;
+	XMFLOAT2																textPosition;
 };
