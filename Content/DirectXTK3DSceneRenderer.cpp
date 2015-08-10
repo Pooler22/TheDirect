@@ -564,13 +564,11 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\bonus.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
-
-	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(10, 17), scale);
-	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(15, 3), scale);
-	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(23, 3), scale);
-
-	//set windows size for drawing the background
-	//clouds2->SetWindow(logicalSize.Width, logicalSize.Height);
+	std::shared_ptr<Bonus_t> bonus;
+	bonus.reset(new Bonus_t(0,0,0,0));
+	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(10, 17), scale,bonus);
+	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(15, 3), scale, bonus);
+	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(23, 3), scale, bonus);
 
 	//Gamepad
 	//GamePad.reset(new GamePad);
@@ -581,9 +579,4 @@ void DirectXTK3DSceneRenderer::ReleaseDeviceDependentResources()
     m_sprites.reset();
     m_font.reset();
     m_texture.Reset();
-	//backgroundTexture.Reset();
-	//cloudsTexture.Reset();
-	//cloudsTexture2.Reset();
-	//pipeTexture.Reset();
-	//enemyTexture.Reset();
 }

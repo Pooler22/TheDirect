@@ -9,17 +9,40 @@
 #include "Person.h"
 #include "Button.h"
 
+typedef struct Bonus_t
+{
+	int speedMove;
+	int point;
+	int shotDistance;
+	int shotspeed;
+
+	Bonus_t::Bonus_t(int speedMove, int point, int shotDistance, int shotspeed)
+	{
+		this->speedMove = speedMove;
+		this->point = point;
+		this->shotDistance = shotDistance;
+		this->shotspeed = shotspeed;
+	}
+};
+
+
+
 class Bonus : public Person
 {
 public:
 	Bonus::Bonus()
 	{}
 
-	Bonus::Bonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn) : framesOfAnimation(4), framesToBeShownPerSecond(4), Person(buttonSpriteSheet, positionIn, scaleIn)
+	Bonus::Bonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn, std::shared_ptr<Bonus_t> bonus) :
+		Person(buttonSpriteSheet, positionIn, scaleIn),
+		framesToBeShownPerSecond(4), 
+		framesOfAnimation(4)
 	{
+		this->bonus = bonus;
 	}
 
 public:
 	int			framesOfAnimation;
 	int			framesToBeShownPerSecond;
+	std::shared_ptr<Bonus_t>		bonus;
 };
