@@ -71,8 +71,8 @@ namespace SimpleSample
 		//void XM_CALLCONV DrawGrid(DirectX::FXMVECTOR xAxis, DirectX::FXMVECTOR yAxis, DirectX::FXMVECTOR origin, size_t xdivs, size_t ydivs, DirectX::GXMVECTOR color);
 		
         std::unique_ptr<DirectX::SpriteBatch>                                   m_sprites;
-        std::unique_ptr<DirectX::SpriteFont>                                    m_font;
-
+        std::shared_ptr<DirectX::SpriteFont>                                    m_font;
+		int																		scale;
 		//Sound
 		std::unique_ptr<DirectX::AudioEngine>                                   m_audEngine;
         std::unique_ptr<DirectX::WaveBank>                                      m_waveBank;
@@ -88,6 +88,8 @@ namespace SimpleSample
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>                        m_texture;
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>                        m_texture2;
 		//std::unique_ptr<GamePad>												GamePad;
+		Windows::Foundation::Size												logicalSize;
+		bool																	playMusic;
 	};
 }
 

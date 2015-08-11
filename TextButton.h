@@ -11,14 +11,14 @@
 class TextButton : public Button
 {
 public:
-	TextButton(ID3D11ShaderResourceView* buttonSpriteSheet, SpriteFont *spriteFont, std::wstring inString, std::wstring inId, XMFLOAT2 inPosition, float scaleIn) : 
+	TextButton(ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<DirectX::SpriteFont> spriteFont, std::wstring inString, std::wstring inId, XMFLOAT2 inPosition, float scaleIn) :
 		Button(buttonSpriteSheet,  inPosition, scaleIn)
 	{
 		id = inId;
 		string = inString;
 		colorNormal = color = Colors::Black;
 		colorOver = Colors::Blue;
-		m_font.reset(spriteFont);
+		m_font = spriteFont;
 	}
 
 	bool isOver(float x, float y) 
@@ -67,5 +67,5 @@ public:
 	DirectX::XMVECTOR						color;
 	DirectX::XMVECTOR						colorNormal;
 	DirectX::XMVECTOR						colorOver;
-	std::unique_ptr<DirectX::SpriteFont>	m_font;
+	std::shared_ptr<DirectX::SpriteFont>	m_font;
 };

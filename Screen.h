@@ -13,7 +13,7 @@ class Screen
 {
 public:
 
-	Screen(ID3D11ShaderResourceView* playerSpriteSheetIn, SpriteFont* spriteFontIn, std::wstring nameIn)
+	Screen(ID3D11ShaderResourceView* playerSpriteSheetIn, std::shared_ptr<DirectX::SpriteFont>  spriteFontIn, std::wstring nameIn)
 	{
 		buttonSpriteSheet = playerSpriteSheetIn;
 		spriteFont = spriteFontIn;
@@ -97,7 +97,7 @@ public:
 private:
 
 	ID3D11ShaderResourceView*					buttonSpriteSheet;
-	SpriteFont*									spriteFont;
+	std::shared_ptr<DirectX::SpriteFont> 		spriteFont;
 	std::wstring								name;
 	std::vector<std::shared_ptr<TextButton>>	buttons;
 };

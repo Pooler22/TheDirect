@@ -19,55 +19,43 @@ class Game
 public:
 	Game::Game(int screenWidth, int screenHeight)
 	{
-		map.reset(new Map());
-		enemies.reset(new std::vector<Enemy>());
-		bonus.reset(new std::vector<Bonus>());
+		this->map.reset(new Map());
+		this->enemies.reset(new std::vector<Enemy>());
+		this->bonus.reset(new std::vector<Bonus>());
 		this->screenHeight = screenHeight;
 		this->screenWidth = screenWidth;
 	};
 
-	void Game::addBrickTexture(ID3D11ShaderResourceView* buttonSpriteSheet)
+	void Game::setMapLevel(int x, int y, int* numberTestureVectorIn,int screenWidth, int screenHeight, float scaleIn, ID3D11ShaderResourceView* playerSpriteSheetIn, std::shared_ptr<SpriteFont> spriteFontIn)
 	{
-		map->addBrickTexture(buttonSpriteSheet);
-	}
-
-	void Game::addBrickTexture2(ID3D11ShaderResourceView* buttonSpriteSheet)
-	{
-		map->addBrickTexture2(buttonSpriteSheet);
-	}
-
-	void Game::setMapLevel(int x, int y, int* numberTestureVectorIn, float scaleIn, ID3D11ShaderResourceView* playerSpriteSheetIn, SpriteFont* spriteFontIn)
-	{
-		map->setMapLevel(x,y, numberTestureVectorIn, screenWidth, screenHeight, scaleIn, playerSpriteSheetIn, spriteFontIn);
+		this->map->setMapLevel(x, y, numberTestureVectorIn, this->screenWidth, this->screenHeight, scaleIn, playerSpriteSheetIn, spriteFontIn);
 	}
 	
 	void Game::addPlayer(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float sizeIn)
 	{
-		player = std::unique_ptr<Player>(new Player(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), sizeIn));
+		this->player = std::unique_ptr<Player>(new Player(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), sizeIn));
 	}
 
 	void Game::addEnemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float sizeIn, int moveDirection)
 	{
-		enemies->push_back(Enemy(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), sizeIn, moveDirection));
+		this->enemies->push_back(Enemy(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), sizeIn, moveDirection));
 	}
+	
 	void Game::addBonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float sizeIn, std::shared_ptr<Skill> bonus)
 	{
 		this->bonus->push_back(Bonus(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), sizeIn, bonus));
-		//bonus_copy->push_back(Bonus(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), sizeIn));
 	}
-
 
 	void Game::Update(float elapsed)
 	{
-		map->setStringText(L"Life: " + std::to_wstring(player->getLife()) + L" Score: " + std::to_wstring(player->getScore()));
-		isColision();
+		getColision();
 		playerVsEnemyColision();
 		playerVsBonusColision();
-		//playerVsBonusColision();
 		correctPlayerPosition();
 		
 		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
 		{
+
 			isColision(it);
 			correctPlayerPosition(it);
 			it->Update(elapsed);
@@ -78,9 +66,14 @@ public:
 			correctPlayerPosition(it);
 			it->Update(elapsed);
 		}
+		updateScore();
+		this->map->Update(elapsed);
+		this->player->Update(elapsed);
+	}
 
-		map->Update(elapsed);
-		player->Update(elapsed);
+	void updateScore()
+	{
+		this->map->setStringText(L"Life: " + std::to_wstring(player->getLife()) + L" Score: " + std::to_wstring(player->getScore()));
 	}
 
 	void playerVsEnemyColision() 
@@ -89,19 +82,20 @@ public:
 		{
 			if (player->boundingRectangle.IntersectsWith(it->boundingRectangle))
 			{
-				player->die();
+				this->player->die();
 			}
 		}
 	}
+	
 	void playerVsBonusColision()
 	{
 		int i = 0;
 		for ( std::vector<Bonus>::iterator it = bonus->begin(); it != bonus->end();)
 		{
-			if (player->boundingRectangle.IntersectsWith(it->boundingRectangle))
+			if (this->player->boundingRectangle.IntersectsWith(it->boundingRectangle))
 			{
 				it = bonus->erase(it);
-				player->speed += 1;
+				this->player->speed += 1;
 			}
 			else
 			{
@@ -111,7 +105,6 @@ public:
 		}
 	}
 	
-
 	void correctPlayerPosition(std::vector<Bonus>::iterator person)
 	{
 		if (person->getPosition().y > screenHeight)
@@ -188,17 +181,19 @@ public:
 
 	void Game::getColision()
 	{
-		if (map->getColision(player->boundingRectangle) == COLISION_TYPE::COLISION_TYPE_LEFT)
+		if ((map->getColision(player->boundingRectangle) & COLISION_TYPE::COLISION_TYPE_LEFT) == COLISION_TYPE::COLISION_TYPE_LEFT)
 		{
 			player->setBlockDirection(1);
+			//player->speed = 0;
 		}
 		else
 		{
 			player->setBlockDirection(0);
 		}
 
-		if (map->getColision(player->boundingRectangle) == COLISION_TYPE::COLISION_TYPE_RIGHT)
+		if ((map->getColision(player->boundingRectangle) & COLISION_TYPE::COLISION_TYPE_RIGHT) == COLISION_TYPE::COLISION_TYPE_RIGHT)
 		{
+			//player->speed = 0;
 			player->setBlockDirection(2);
 		}
 		else
@@ -206,7 +201,7 @@ public:
 			player->setBlockDirection(0);
 		}
 
-		if (map->getColision(player->boundingRectangle) == COLISION_TYPE::COLISION_TYPE_TRUE)
+		if ((map->getColision(player->boundingRectangle) & COLISION_TYPE::COLISION_TYPE_TRUE) == COLISION_TYPE::COLISION_TYPE_TRUE)
 		{
 			player->setStand(true);
 			player->setMoveDown(false);
@@ -218,7 +213,7 @@ public:
 		}
 	}
 
-	virtual void Game::isColision(std::vector<Bonus>::iterator person)
+	void Game::isColision(std::vector<Bonus>::iterator person)
 	{
 		if (map->isStanding(person->boundingRectangle))
 		{
@@ -231,7 +226,8 @@ public:
 			person->setMoveDown(true);
 		}
 	}
-	virtual void Game::isColision(std::vector<Enemy>::iterator person)
+	
+	void Game::isColision(std::vector<Enemy>::iterator person)
 	{
 		if (map->isStanding(person->boundingRectangle))
 		{
@@ -257,7 +253,7 @@ public:
 		{
 			it->resize(scale);
 		}
-		screenWidth *= scale;
+		//TODO: ?
 		screenHeight *= scale;
 	}
 
@@ -265,11 +261,11 @@ public:
 	{
 		map->Draw(batch);
 		player->Draw(batch);
-		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
+		for (std::vector<Bonus>::iterator it = bonus->begin(); it != bonus->end(); ++it)
 		{
 			it->Draw(batch);
 		}
-		for (std::vector<Bonus>::iterator it = bonus->begin(); it != bonus->end(); ++it)
+		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
 		{
 			it->Draw(batch);
 		}
@@ -299,18 +295,21 @@ public:
 		}
 	}
 
-	void copyVecFast(std::vector<Bonus> original) // no reference
+	void Game::addBrickTexture(ID3D11ShaderResourceView* buttonSpriteSheet)
 	{
+		this->map->addBrickTexture(buttonSpriteSheet);
+	}
 
-		std::vector<Bonus> new_;
-		new_.swap(original);
+	void Game::addBrickTexture2(ID3D11ShaderResourceView* buttonSpriteSheet)
+	{
+		this->map->addBrickTexture2(buttonSpriteSheet);
 	}
 
 	bool									moveDown;
 	int										screenWidth;
 	int										screenHeight;
-	std::unique_ptr<Map>					map;
 
+	std::unique_ptr<Map>					map;
 	std::unique_ptr<Player>					player;
 	std::unique_ptr<std::vector<Enemy>>		enemies;
 	std::unique_ptr<std::vector<Bonus>>		bonus;

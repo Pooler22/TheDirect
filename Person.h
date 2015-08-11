@@ -100,24 +100,13 @@ public:
 	}
 
 public:
-	DirectX::XMFLOAT2									startPosition;
-	bool												jumpFlag;
+	int													speed;
 	int													jumpTime;
+	bool												jumpFlag;
 	bool												moveDown;
 	bool												stand;
-	int													speed;
 	float												gravity;
+	DirectX::XMFLOAT2									startPosition;
 	std::vector<Button>									bubbles;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	bubbleTexture;
-
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	textureJump;
-	std::unique_ptr<AnimatedTexture>					animationJump;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	textureLeft;
-	std::unique_ptr<AnimatedTexture>					animationLeft;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	textureRight;
-	std::unique_ptr<AnimatedTexture>					animationRight;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	textureFire;
-	std::unique_ptr<AnimatedTexture>					animationFire;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	textureDie;
-	std::unique_ptr<AnimatedTexture>					animationDie;
 };

@@ -19,14 +19,17 @@
     <Image Include="Assets\SplashScreen.png">
       <Filter>Assets</Filter>
     </Image>
+    <Filter Include="Content\GameElements">
+      <UniqueIdentifier>{9682ce60-9672-460a-8ae6-462656de99eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\Renderers">
+      <UniqueIdentifier>{36f224ad-8ef8-46d6-9161-9c77541c6b2e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
     <ClCompile Include="SimpleSampleMain.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Content\DirectXTK3DSceneRenderer.cpp">
-      <Filter>Content</Filter>
-    </ClCompile>
     <ClCompile Include="Common\DeviceResources.cpp">
       <Filter>Common</Filter>
     </ClCompile>
@@ -36,30 +39,21 @@
     <ClCompile Include="Common\OverlayManager.cpp">
       <Filter>Common</Filter>
     </ClCompile>
+    <ClCompile Include="Content\DirectXTK3DSceneRenderer.cpp">
+      <Filter>Content\Renderers</Filter>
+    </ClCompile>
     <ClCompile Include="Content\SampleDebugTextRenderer.cpp">
-      <Filter>Content</Filter>
+      <Filter>Content\Renderers</Filter>
     </ClCompile>
     <ClCompile Include="Content\SampleVirtualControllerRenderer.cpp">
-      <Filter>Content</Filter>
+      <Filter>Content\Renderers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SimpleSampleMain.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Content\DirectXTK3DSceneRenderer.h">
-      <Filter>Content</Filter>
-    </ClInclude>
     <ClInclude Include="Common\DeviceResources.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Content\AnimatedTexture.h">
-      <Filter>Content</Filter>
-    </ClInclude>
-    <ClInclude Include="Content\ScrollingBackground.h">
-      <Filter>Content</Filter>
-    </ClInclude>
-    <ClInclude Include="Wall.h">
-      <Filter>Content</Filter>
     </ClInclude>
     <ClInclude Include="Common\InputManager.h">
       <Filter>Common</Filter>
@@ -67,49 +61,61 @@
     <ClInclude Include="Common\OverlayManager.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Content\SampleDebugTextRenderer.h">
-      <Filter>Content</Filter>
-    </ClInclude>
-    <ClInclude Include="Content\SampleVirtualControllerRenderer.h">
-      <Filter>Content</Filter>
-    </ClInclude>
     <ClInclude Include="ToDo.h" />
-    <ClInclude Include="Screen.h">
-      <Filter>Content</Filter>
-    </ClInclude>
-    <ClInclude Include="ScreenManager.h">
-      <Filter>Content</Filter>
-    </ClInclude>
-    <ClInclude Include="Brick.h">
-      <Filter>Content</Filter>
-    </ClInclude>
     <ClInclude Include="App.h" />
-    <ClInclude Include="Map.h">
-      <Filter>Content</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Content</Filter>
-    </ClInclude>
-    <ClInclude Include="Person.h">
-      <Filter>Content</Filter>
-    </ClInclude>
-    <ClInclude Include="TextButton.h">
-      <Filter>Content</Filter>
-    </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Content</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Content</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Content</Filter>
+    <ClInclude Include="Content\AnimatedTexture.h">
+      <Filter>Content\GameElements</Filter>
     </ClInclude>
     <ClInclude Include="Bonus.h">
-      <Filter>Content</Filter>
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Brick.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Person.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenManager.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\ScrollingBackground.h">
+      <Filter>Content\GameElements</Filter>
     </ClInclude>
     <ClInclude Include="Skill.h">
-      <Filter>Content</Filter>
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="TextButton.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\DirectXTK3DSceneRenderer.h">
+      <Filter>Content\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\SampleDebugTextRenderer.h">
+      <Filter>Content\Renderers</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\SampleVirtualControllerRenderer.h">
+      <Filter>Content\Renderers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
