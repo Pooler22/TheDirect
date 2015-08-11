@@ -12,7 +12,7 @@
 class ScreenManager
 {
 public:
-	ScreenManager(std::wstring nameIn, float screenWidth, float screenHeight, float scaleX, float scaleY)
+	ScreenManager(std::wstring nameIn, float screenWidth, float screenHeight, float scaleX, float scaleY, ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<SpriteFont> textSprite)
 	{
 		this->scaleX = scaleX;
 		this->scaleY = scaleY;
@@ -21,10 +21,19 @@ public:
 		this->screens = std::vector<std::shared_ptr<Screen>>();
 		this->game.reset(new Game(screenWidth, screenHeight));
 		this->nameCurrentScreen = nameIn;
+		this->buttonSpriteSheet = buttonSpriteSheet;
+		this->textSprite = textSprite;
 	}
 
 	void addScreen(Screen* screen)
 	{
+		this->screens.push_back(std::shared_ptr<Screen>(screen));
+	}
+
+	void addScreen(std::wstring nameIn, int size, std::wstring name[], std::wstring id[], XMFLOAT2 position[])
+	{
+		Screen* screen = new Screen(buttonSpriteSheet, textSprite, nameIn);
+		screen->addMenu(name, id, position, size, scaleX, scaleY);
 		this->screens.push_back(std::shared_ptr<Screen>(screen));
 	}
 
@@ -36,6 +45,16 @@ public:
 	void addBrickTexture2(ID3D11ShaderResourceView* spriteSheet)
 	{
 		this->game->addBrickTexture2(spriteSheet);
+	}
+
+	void addPlayer(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn)
+	{
+		game->addPlayer(buttonSpriteSheet, positionIn, scaleX, scaleY);
+	}
+
+	void addEnemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, int i)
+	{
+		game->addEnemy(buttonSpriteSheet, positionIn, scaleX, scaleY, i);
 	}
 
 	void addBonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, std::shared_ptr<Skill> bonus)
@@ -123,6 +142,9 @@ public:
 	float										scaleY;
 	float										screenWidth;
 	float										screenHeight;
+	ID3D11ShaderResourceView*					buttonSpriteSheet;
+	std::shared_ptr<SpriteFont>					textSprite;
+
 	std::wstring								nameCurrentScreen;
 	std::unique_ptr<Game>						game;
 	std::vector<std::shared_ptr<Screen>>		screens;
