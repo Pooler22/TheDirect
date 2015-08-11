@@ -542,7 +542,7 @@ void DirectXTK3DSceneRenderer::Render()
 
 	if ((this->logicalSize.Width != logicalSize.Width) || (this->logicalSize.Height != logicalSize.Height))
 	{
-		screenManager->resize((float)logicalSize.Height / (float) (19.0 * 25.0), (float)logicalSize.Width / (float)(32.0 * 25.0));
+		screenManager->resize(logicalSize.Width / (32.0 * 25.0), logicalSize.Height / (19.0 * 25.0));
 	}
 	
 	// Draw sprites
