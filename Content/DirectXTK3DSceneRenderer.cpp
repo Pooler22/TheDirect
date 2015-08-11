@@ -45,13 +45,13 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	flagFromPressToRelasedClick = true;
 	playMusic = false;
 
-	scaleX = (float) logicalSize.Height / (float)(19.0 * 25.0);
-	scaleY = (float)logicalSize.Width / (float)(32.0 * 25.0);
+	scaleX = (float)logicalSize.Width / (32.0 * 25.0);
+	scaleY = (float) logicalSize.Height / (19.0 * 25.0);
 	centerPosition.x = logicalSize.Width / 2.0;
 	centerPosition.y = logicalSize.Height / 2.0;
 	float oneUnitHeight = logicalSize.Height / 7.0;
 
-	screenManager.reset(new ScreenManager(L"Main", logicalSize.Width, logicalSize.Height));
+	screenManager.reset(new ScreenManager(L"Main", logicalSize.Width, logicalSize.Height, scaleX, scaleY));
 
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\button.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
@@ -139,7 +139,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 	};
 
-	screenManager->setMapLevel(x1, y1, tab1, logicalSize.Width, logicalSize.Height, scaleX, scaleY, m_texture.Get(), m_font);
+	screenManager->setMapLevel(x1, y1, tab1, m_texture.Get(), m_font);
 
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\person.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
@@ -157,9 +157,10 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 
 	std::shared_ptr<Skill> bonus;
 	bonus.reset(new Skill(0, 0, 0, 0, 0));
-	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(10, 17), scaleX, scaleY, bonus);
-	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(15, 3), scaleX, scaleY, bonus);
-	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(23, 3), scaleX, scaleY, bonus);
+	XMFLOAT2 positionB[] = { XMFLOAT2(10, 17) ,XMFLOAT2(15, 3), XMFLOAT2(23, 3)};
+	screenManager->addBonus(m_texture.Get(), positionB[0], bonus);
+	screenManager->addBonus(m_texture.Get(), positionB[1], bonus);
+	screenManager->addBonus(m_texture.Get(), positionB[2], bonus);
 
 	//Gamepad
 	//GamePad.reset(new GamePad);
@@ -306,9 +307,6 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 	EnginePad->SetVibration(0, 0.75f, 0.75f);
 	}
 	}*/
-
-	//screen->Update((float)timer.GetElapsedSeconds());
-	//buttons[0]->Update((float)timer.GetElapsedSeconds());
 	screenManager->Update((float)timer.GetElapsedSeconds());
 
 //#pragma endregion Handling collision detection + simple EnginePad rumble on crash
@@ -521,24 +519,24 @@ void DirectXTK3DSceneRenderer::Render()
 
 	D3D11_TEXTURE2D_DESC pDesc;
 	Microsoft::WRL::ComPtr<ID3D11Resource> res;
+	
+	// get texture size 
 	//1.) -----------------
 	//m_texture->GetResource(&res);
 	//((ID3D11Texture2D*)res.Get())->GetDesc(&pDesc); // Usually dangerous!
 
 	//2.) -----------------
-	m_texture->GetResource(res.GetAddressOf());
-	m_texture2->GetResource(res.GetAddressOf());
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> text2D;
-	res.As(&text2D);
-	text2D->GetDesc(&pDesc);
+	//m_texture->GetResource(res.GetAddressOf());
+	//m_texture2->GetResource(res.GetAddressOf());
+	//Microsoft::WRL::ComPtr<ID3D11Texture2D> text2D;
+	//res.As(&text2D);
+	//text2D->GetDesc(&pDesc);
 
-	auto height = pDesc.Height; //texture height
-	auto width = pDesc.Width; //texture width
+	//auto height = pDesc.Height; //texture height
+	//auto width = pDesc.Width; //texture width
 
 	auto windowSize = m_deviceResources->GetOutputSize(); // physical screen resolution
 	auto logicalSize = m_deviceResources->GetLogicalSize(); //DPI dependent resolution
-
-	
 
 	if ((this->logicalSize.Width != logicalSize.Width) || (this->logicalSize.Height != logicalSize.Height))
 	{

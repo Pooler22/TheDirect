@@ -15,33 +15,33 @@ public:
 
 	Screen(ID3D11ShaderResourceView* playerSpriteSheetIn, std::shared_ptr<DirectX::SpriteFont>  spriteFontIn, std::wstring nameIn)
 	{
-		buttonSpriteSheet = playerSpriteSheetIn;
-		spriteFont = spriteFontIn;
-		name = nameIn;
-		buttons = std::vector<std::shared_ptr<TextButton>>();
+		this->buttonSpriteSheet = playerSpriteSheetIn;
+		this->spriteFont = spriteFontIn;
+		this->name = nameIn;
+		this->buttons = std::vector<std::shared_ptr<TextButton>>();
 	};
 
 	void addButton(TextButton* button)
 	{
-		buttons.push_back(std::shared_ptr<TextButton>(button));
+		this->buttons.push_back(std::shared_ptr<TextButton>(button));
 	}
 
 	void addButton(std::wstring name, std::wstring id, XMFLOAT2 position, float scaleX, float scaleY)
 	{
-		buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet, spriteFont, name, id, position, scaleX, scaleY)));
+		this->buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet, spriteFont, name, id, position, scaleX, scaleY)));
 	}
 
 	void addMenu(std::wstring* names, std::wstring* ids, XMFLOAT2* position, int size, float scaleX, float scaleY)
 	{
 		for (int i = 0; i < size; i++)
 		{
-			buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet, spriteFont, names[i], ids[i], position[i], scaleX, scaleY)));
+			this->buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet, spriteFont, names[i], ids[i], position[i], scaleX, scaleY)));
 		}
 	}
 
 	void Update(float elapsed)
 	{
-		for (auto &button : buttons)
+		for (auto &button : this->buttons)
 		{
 			button->Update(elapsed);
 		}
@@ -49,7 +49,7 @@ public:
 
 	void Draw(DirectX::SpriteBatch* batch)
 	{
-		for (auto &button : buttons)
+		for (auto &button : this->buttons)
 		{
 			button->Draw(batch);
 		}
@@ -57,19 +57,19 @@ public:
 
 	void setName(std::wstring stringIn)
 	{
-		name = stringIn;
+		this->name = stringIn;
 	}
 
 	std::wstring getName()
 	{
-		return name;
+		return this->name;
 	}
 
 	std::wstring isClicked(float x, float y)
 	{
-		for (auto &button : buttons)
+		for (auto &button : this->buttons)
 		{
-			if (button->isOver(x, y))
+			if (button->isOver(Windows::Foundation::Rect(x, y,1,1)))
 			{
 				return button->getId();
 			}
@@ -79,7 +79,7 @@ public:
 
 	void resize(float scaleX, float scaleY)
 	{
-		for (auto &button : buttons) 
+		for (auto &button : this->buttons)
 		{
 			button->resize(scaleX, scaleY);
 		}

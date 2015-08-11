@@ -14,23 +14,23 @@ public:
 	TextButton(ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<DirectX::SpriteFont> spriteFont, std::wstring inString, std::wstring inId, XMFLOAT2 inPosition, float scaleX, float scaleY) :
 		Button(buttonSpriteSheet,  inPosition, scaleX, scaleY)
 	{
-		id = inId;
-		string = inString;
-		colorNormal = color = Colors::Black;
-		colorOver = Colors::Blue;
-		m_font = spriteFont;
+		this->id = inId;
+		this->string = inString;
+		this->colorNormal = this->color = Colors::Black;
+		this->colorOver = Colors::Blue;
+		this->m_font = spriteFont;
 	}
 
-	bool isOver(float x, float y) 
+	bool isOver(Windows::Foundation::Rect rect)
 	{
-		if(boundingRectangle.IntersectsWith(Windows::Foundation::Rect(x,y,1,1)))
+		if(this->boundingRectangle.IntersectsWith(rect))
 		{
-			color = colorOver;
+			this->color = this->colorOver;
 			return true;
 		}
 		else
 		{
-			color = colorNormal;
+			this->color = this->colorNormal;
 			return false;
 		}
 	}
@@ -41,29 +41,29 @@ public:
 		m_font->DrawString(batch, string.c_str(), position, color);
 	}
 
-	void setString(std::wstring in)
+	void setString(std::wstring string)
 	{
-		string = in;
+		this->string = string;
 	}
 
 	std::wstring getString()
 	{
-		return string;
+		return this->string;
 	}
 
-	void setId(std::wstring in)
+	void setId(std::wstring string)
 	{
-		id = in;
+		this->id = string;
 	}
 
 	std::wstring getId()
 	{
-		return id;
+		return this->id;
 	}
 
 public:
-	std::wstring							string;
 	std::wstring							id;
+	std::wstring							string;
 	DirectX::XMVECTOR						color;
 	DirectX::XMVECTOR						colorNormal;
 	DirectX::XMVECTOR						colorOver;

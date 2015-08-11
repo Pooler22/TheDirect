@@ -40,6 +40,7 @@
 #include "ScreenManager.h"
 #include "Game.h"
 
+
 namespace SimpleSample
 {
 	class DirectXTK3DSceneRenderer
@@ -50,14 +51,13 @@ namespace SimpleSample
 		void CreateWindowSizeDependentResources();
         void CreateAudioResources();
 		void ReleaseDeviceDependentResources();
-		void Update(DX::StepTimer const& timer);
 		void Update(DX::StepTimer const& timer, std::vector<PlayerInputData>* playerInput, unsigned int playersAttached);
 		void Update(std::vector<PlayerInputData>* playerInput, unsigned int playersAttached);
 		void Render();
 		// Signals a new audio device is available
 		void NewAudioDevice();
 		
-		XMFLOAT2																centerPosition;
+		
                 
 	private:
 
@@ -69,27 +69,29 @@ namespace SimpleSample
 
         // Not usefull right now
 		//void XM_CALLCONV DrawGrid(DirectX::FXMVECTOR xAxis, DirectX::FXMVECTOR yAxis, DirectX::FXMVECTOR origin, size_t xdivs, size_t ydivs, DirectX::GXMVECTOR color);
-        std::unique_ptr<DirectX::SpriteBatch>                                   m_sprites;
-        std::shared_ptr<DirectX::SpriteFont>                                    m_font;
-		float																	scaleX;
-		float																	scaleY;
+		
 		//Sound
+		bool																	playMusic;
+        float                                                                   m_audioTimerAcc;
+        uint32_t                                                                m_audioEvent;
 		std::unique_ptr<DirectX::AudioEngine>                                   m_audEngine;
         std::unique_ptr<DirectX::WaveBank>                                      m_waveBank;
         std::unique_ptr<DirectX::SoundEffect>                                   m_soundEffect;
         std::unique_ptr<DirectX::SoundEffectInstance>                           m_effect1;
         std::unique_ptr<DirectX::SoundEffectInstance>                           m_effect2;
-		bool																	flagFromPressToRelasedClick;
 		// Variables used with the rendering loop.
-        uint32_t                                                                m_audioEvent;
-        float                                                                   m_audioTimerAcc;
         bool                                                                    m_retryDefault;
+		bool																	flagFromPressToRelasedClick;
+		float																	scaleX;
+		float																	scaleY;
+		XMFLOAT2																centerPosition;
+		Windows::Foundation::Size												logicalSize;
+		std::shared_ptr<DirectX::SpriteFont>                                    m_font;
+		std::unique_ptr<DirectX::SpriteBatch>                                   m_sprites;
 		std::unique_ptr<ScreenManager>											screenManager;
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>                        m_texture;
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>                        m_texture2;
 		//std::unique_ptr<GamePad>												GamePad;
-		Windows::Foundation::Size												logicalSize;
-		bool																	playMusic;
 	};
 }
 
