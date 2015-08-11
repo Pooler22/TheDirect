@@ -103,7 +103,7 @@ public:
 
 	void generateMap(int screenWidth, int screenHeight, float scale)
 	{
-		getTextureDiension(texture).x;
+		//getTextureDiension(texture).x;
 		textPosition.x = 0;
 		textPosition.y = 0;
 		for (int x = 0; x < size.x; x++)
@@ -111,9 +111,9 @@ public:
 			for (int y = 0; y < size.y -1; y++)
 			{
 				if(numberTestureVector[(int)((y * size.x) + x)]== 0)
-					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture, XMFLOAT2(x * (screenWidth /size.x),(y+1) * (screenHeight/ size.y)), scale ,size, BRICK_BEHAVIOR_NONE)));
+					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture, XMFLOAT2(x * (screenHeight / size.y),(y+1) * (screenHeight/ size.y)), scale ,size, BRICK_BEHAVIOR_NONE)));
 				else
-					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture2, XMFLOAT2(x * (screenWidth / size.x), (y+1) * (screenHeight / size.y)), scale, size, BRICK_BEHAVIOR_BLOCK)));
+					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture2, XMFLOAT2(x * (screenHeight / size.y), (y+1) * (screenHeight / size.y)), scale, size, BRICK_BEHAVIOR_BLOCK)));
 			}
 		}
 	}

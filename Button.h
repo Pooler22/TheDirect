@@ -13,17 +13,18 @@ public:
 	{
 	};
 
-	Button(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scale) : 
+	Button(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scale) :
 		framesOfAnimation(4), 
 		framesToBeShownPerSecond(4)
 	{
 		float rotation = 0.0f;
-
+		this->scale = scale;
 		texture = buttonSpriteSheet;
 		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scale, 0.0f));
 		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
 
-		position = positionIn;
+		position.x = positionIn.x;
+		position.y = positionIn.y;
 		dimensions.x = animation->getFrameWidth();
 		dimensions.y = animation->getFrameHeight();
 		updateBoundingRect();
@@ -74,11 +75,14 @@ public:
 
 	virtual void Button::resize(float scaleIn)
 	{
-		dimensions.x *= scaleIn;
-		dimensions.y *= scaleIn;
-		position.x *= scaleIn;
-		position.y *= scaleIn;
-		scale = scaleIn;
+		float tmpScale = scaleIn / this->scale;
+		this->dimensions.x *= tmpScale;
+		this->dimensions.y *= tmpScale;
+		this->position.x *= tmpScale;
+		this->position.y *= tmpScale;
+		this->scale = scaleIn;
+		this->animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), 0.0f, scaleIn, 0.0f));
+		this->animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
 		updateBoundingRect();
 	}
 

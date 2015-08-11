@@ -45,7 +45,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	flagFromPressToRelasedClick = true;
 	playMusic = false;
 
-	scale = logicalSize.Height / 475;
+	scale = (float) logicalSize.Height / (float)(19.0 * 25.0);
 	centerPosition.x = logicalSize.Width / 2.0;
 	centerPosition.y = logicalSize.Height / 2.0;
 	float oneUnitHeight = logicalSize.Height / 7.0;
@@ -537,9 +537,11 @@ void DirectXTK3DSceneRenderer::Render()
 	auto windowSize = m_deviceResources->GetOutputSize(); // physical screen resolution
 	auto logicalSize = m_deviceResources->GetLogicalSize(); //DPI dependent resolution
 
+	
+
 	if ((this->logicalSize.Width != logicalSize.Width) || (this->logicalSize.Height != logicalSize.Height))
 	{
-		screenManager->resize((logicalSize.Height/475));
+		screenManager->resize((float)logicalSize.Height / (float) (19.0 * 25.0));
 	}
 	
 	// Draw sprites
