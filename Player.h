@@ -19,8 +19,8 @@ public:
 		
 	}
 
-	Player::Player(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn ) : 
-		Person(buttonSpriteSheet, positionIn, scaleIn)
+	Player::Player(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY) :
+		Person(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
 		skill.reset(new Skill(3, 1, 0, 5, 1));
 		over = false;

@@ -45,7 +45,8 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	flagFromPressToRelasedClick = true;
 	playMusic = false;
 
-	scale = (float) logicalSize.Height / (float)(19.0 * 25.0);
+	scaleX = (float) logicalSize.Height / (float)(19.0 * 25.0);
+	scaleY = (float)logicalSize.Width / (float)(32.0 * 25.0);
 	centerPosition.x = logicalSize.Width / 2.0;
 	centerPosition.y = logicalSize.Height / 2.0;
 	float oneUnitHeight = logicalSize.Height / 7.0;
@@ -60,49 +61,49 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	std::wstring name[] = { L"Start",L"Options",L"Exit" };
 	std::wstring id[] = { L"StartMain",L"OptionsMain",L"ExitMain" };
 	XMFLOAT2 position[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
-	screen->addMenu(name, id, position, 3, scale);
+	screen->addMenu(name, id, position, 3, scaleX, scaleY);
 	screenManager->addScreen(screen);
 
 	Screen* screen1 = new Screen(m_texture.Get(), m_font, L"Options");
 	std::wstring name1[] = { L"Musicv",L"Back",L"Exit" };
 	std::wstring id1[] = { L"MusicOptions",L"AuthorOptions",L"BackOptions" };
 	XMFLOAT2 position1[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
-	screen1->addMenu(name1, id1, position1, 3, scale);
+	screen1->addMenu(name1, id1, position1, 3, scaleX, scaleY);
 	screenManager->addScreen(screen1);
 
 	Screen* screen2 = new Screen(m_texture.Get(), m_font, L"Level");
 	std::wstring name2[] = { L"Offline",L"Online",L"Back" };
 	std::wstring id2[] = { L"OfflineLevel",L"OnlineLevel",L"BackLevel" };
 	XMFLOAT2 position2[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
-	screen2->addMenu(name2, id2, position2, 3, scale);
+	screen2->addMenu(name2, id2, position2, 3, scaleX, scaleY);
 	screenManager->addScreen(screen2);
 
 	Screen* screen4 = new Screen(m_texture.Get(), m_font, L"Pause");
 	std::wstring name4[] = { L"Return",L"Exit" };
 	std::wstring id4[] = { L"ReturnPause",L"ExitPause" };
 	XMFLOAT2 position4[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y) };
-	screen4->addMenu(name4, id4, position4, 2, scale);
+	screen4->addMenu(name4, id4, position4, 2, scaleX, scaleY);
 	screenManager->addScreen(screen4);
 
 	Screen* screen5 = new Screen(m_texture.Get(), m_font, L"Author");
 	std::wstring name5[] = { L"It's me ;)",L"Back" };
 	std::wstring id5[] = { L"DescriptionAuthor",L"BackAuthor" };
 	XMFLOAT2 position5[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y) };
-	screen5->addMenu(name5, id5, position5, 2, scale);
+	screen5->addMenu(name5, id5, position5, 2, scaleX, scaleY);
 	screenManager->addScreen(screen5);
 
 	Screen* screen3 = new Screen(m_texture.Get(), m_font, L"Play");
 	std::wstring name3[] = { L"Pause" };
 	std::wstring id3[] = { L"PausePlay" };
 	XMFLOAT2 position3[] = { XMFLOAT2(centerPosition.x, 40) };
-	screen3->addMenu(name3, id3, position3, 1, scale);
+	screen3->addMenu(name3, id3, position3, 1, scaleX, scaleY);
 	screenManager->addScreen(screen3);
 
 	Screen* screen6 = new Screen(m_texture.Get(), m_font, L"GameOver");
 	std::wstring name6[] = { L"Score",  L"Continue" };
 	std::wstring id6[] = { L"ScoreGameOver" , L"ContinueGameOver" };
 	XMFLOAT2 position6[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight),XMFLOAT2(centerPosition.x, centerPosition.y) };
-	screen6->addMenu(name6, id6, position6, 2, scale);
+	screen6->addMenu(name6, id6, position6, 2, scaleX, scaleY);
 	screenManager->addScreen(screen6);
 
 	DX::ThrowIfFailed(
@@ -138,17 +139,17 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 	};
 
-	screenManager->setMapLevel(x1, y1, tab1, logicalSize.Width, logicalSize.Height, scale, m_texture.Get(), m_font);
+	screenManager->setMapLevel(x1, y1, tab1, logicalSize.Width, logicalSize.Height, scaleX, scaleY, m_texture.Get(), m_font);
 
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\person.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
-	screenManager->game->addPlayer(m_texture.Get(), XMFLOAT2(1, 15), scale);
+	screenManager->game->addPlayer(m_texture.Get(), XMFLOAT2(1, 15), scaleX, scaleY);
 
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\enemy.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
-	screenManager->game->addEnemy(m_texture.Get(), XMFLOAT2(5, 17), scale, 1);
+	screenManager->game->addEnemy(m_texture.Get(), XMFLOAT2(5, 17), scaleX, scaleY, 1);
 
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\bonus.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
@@ -156,9 +157,9 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 
 	std::shared_ptr<Skill> bonus;
 	bonus.reset(new Skill(0, 0, 0, 0, 0));
-	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(10, 17), scale, bonus);
-	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(15, 3), scale, bonus);
-	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(23, 3), scale, bonus);
+	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(10, 17), scaleX, scaleY, bonus);
+	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(15, 3), scaleX, scaleY, bonus);
+	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(23, 3), scaleX, scaleY, bonus);
 
 	//Gamepad
 	//GamePad.reset(new GamePad);
@@ -541,7 +542,7 @@ void DirectXTK3DSceneRenderer::Render()
 
 	if ((this->logicalSize.Width != logicalSize.Width) || (this->logicalSize.Height != logicalSize.Height))
 	{
-		screenManager->resize((float)logicalSize.Height / (float) (19.0 * 25.0));
+		screenManager->resize((float)logicalSize.Height / (float) (19.0 * 25.0), (float)logicalSize.Width / (float)(32.0 * 25.0));
 	}
 	
 	// Draw sprites

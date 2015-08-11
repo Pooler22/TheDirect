@@ -92,16 +92,16 @@ public:
 		return false;
 	}
 
-	void setMapLevel(int x, int y, int* numberTestureVectorIn, int screenWidth, int screenHeight, float scale, ID3D11ShaderResourceView* playerSpriteSheetIn, std::shared_ptr<SpriteFont> spriteFontIn)
+	void setMapLevel(int x, int y, int* numberTestureVectorIn, int screenWidth, int screenHeight, float scaleX, float scaleY, ID3D11ShaderResourceView* playerSpriteSheetIn, std::shared_ptr<SpriteFont> spriteFontIn)
 	{
 		size.x = x;
 		size.y = y + 1;
 		m_font = spriteFontIn;
 		numberTestureVector = numberTestureVectorIn;
-		generateMap(screenWidth, screenHeight, scale);
+		generateMap(screenWidth, screenHeight, scaleX, scaleY);
 	}
 
-	void generateMap(int screenWidth, int screenHeight, float scale)
+	void generateMap(int screenWidth, int screenHeight, float scaleX, float scaleY)
 	{
 		//getTextureDiension(texture).x;
 		textPosition.x = 0;
@@ -111,9 +111,9 @@ public:
 			for (int y = 0; y < size.y -1; y++)
 			{
 				if(numberTestureVector[(int)((y * size.x) + x)]== 0)
-					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture, XMFLOAT2(x * (screenHeight / size.y),(y+1) * (screenHeight/ size.y)), scale ,size, BRICK_BEHAVIOR_NONE)));
+					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture, XMFLOAT2(x * (screenHeight / size.y),(y+1) * (screenHeight/ size.y)), scaleX, scaleY ,size, BRICK_BEHAVIOR_NONE)));
 				else
-					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture2, XMFLOAT2(x * (screenHeight / size.y), (y+1) * (screenHeight / size.y)), scale, size, BRICK_BEHAVIOR_BLOCK)));
+					bricks.push_back(std::shared_ptr<Brick>(new Brick(texture2, XMFLOAT2(x * (screenHeight / size.y), (y+1) * (screenHeight / size.y)), scaleX, scaleY, size, BRICK_BEHAVIOR_BLOCK)));
 			}
 		}
 	}
@@ -129,11 +129,11 @@ public:
 		return XMFLOAT2(desc.Width, desc.Height);
 	}
 
-	void resize(float scale)
+	void resize(float scaleX, float scaleY)
 	{
 		for (auto &brick : bricks) 
 		{
-			brick->resize(scale);
+			brick->resize(scaleX, scaleY);
 		}
 	}
 

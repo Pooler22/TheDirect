@@ -421,7 +421,7 @@ struct Matrix : public XMFLOAT4X4
     void Translation( const Vector3& v ) { _41 = v.x; _42 = v.y; _43 = v.z; }
 
     // Matrix operations
-    bool Decompose( Vector3& scale, Quaternion& rotation, Vector3& translation );
+    bool Decompose( Vector3& scaleX, Quaternion& rotation, Vector3& translation );
 
     Matrix Transpose() const;
     void Transpose( Matrix& result ) const;
@@ -442,7 +442,7 @@ struct Matrix : public XMFLOAT4X4
 
     static Matrix CreateScale( const Vector3& scales );
     static Matrix CreateScale( float xs, float ys, float zs );
-    static Matrix CreateScale( float scale );
+    static Matrix CreateScale( float scaleX );
 
     static Matrix CreateRotationX( float radians );
     static Matrix CreateRotationY( float radians );

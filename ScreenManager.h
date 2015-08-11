@@ -34,9 +34,9 @@ public:
 		game->addBrickTexture2(spriteSheet);
 	}
 
-	void setMapLevel(int x, int y, int* numberTestureVector, int screenWidth, int screenHeight, float scale, ID3D11ShaderResourceView* playerSpriteSheetIn, std::shared_ptr<SpriteFont> spriteFontIn)
+	void setMapLevel(int x, int y, int* numberTestureVector, int screenWidth, int screenHeight, float scaleX, float scaleY, ID3D11ShaderResourceView* playerSpriteSheetIn, std::shared_ptr<SpriteFont> spriteFontIn)
 	{
-		game->setMapLevel(x,y, numberTestureVector, screenWidth, screenHeight, scale, playerSpriteSheetIn, spriteFontIn);
+		game->setMapLevel(x,y, numberTestureVector, screenWidth, screenHeight, scaleX, scaleY, playerSpriteSheetIn, spriteFontIn);
 	}
 
 	void Update(float elapsed)
@@ -90,12 +90,12 @@ public:
 		}
 	}
 
-	void resize(float scale)
+	void resize(float scaleX, float scaleY)
 	{
-		game->resize(scale);
+		game->resize(scaleX, scaleY);
 		for (auto &screen : screens)
 		{
-			screen->resize(scale);
+			screen->resize(scaleX, scaleY);
 		}
 	}
 

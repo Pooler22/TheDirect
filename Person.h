@@ -14,8 +14,8 @@ public:
 	{
 	}
 
-	Person::Person(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn) : 
-		Button(buttonSpriteSheet, positionIn, scaleIn)
+	Person::Person(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY) :
+		Button(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
 		bubbles = std::vector<Button>();
 		speed = 10;

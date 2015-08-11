@@ -26,24 +26,24 @@ public:
 		this->screenWidth = screenWidth;
 	};
 
-	void Game::setMapLevel(int x, int y, int* numberTestureVectorIn,int screenWidth, int screenHeight, float scaleIn, ID3D11ShaderResourceView* playerSpriteSheetIn, std::shared_ptr<SpriteFont> spriteFontIn)
+	void Game::setMapLevel(int x, int y, int* numberTestureVectorIn,int screenWidth, int screenHeight, float scaleX, float scaleY, ID3D11ShaderResourceView* playerSpriteSheetIn, std::shared_ptr<SpriteFont> spriteFontIn)
 	{
-		this->map->setMapLevel(x, y, numberTestureVectorIn, this->screenWidth, this->screenHeight, scaleIn, playerSpriteSheetIn, spriteFontIn);
+		this->map->setMapLevel(x, y, numberTestureVectorIn, this->screenWidth, this->screenHeight, scaleX, scaleY, playerSpriteSheetIn, spriteFontIn);
 	}
 	
-	void Game::addPlayer(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float sizeIn)
+	void Game::addPlayer(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY)
 	{
-		this->player = std::unique_ptr<Player>(new Player(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), sizeIn));
+		this->player = std::unique_ptr<Player>(new Player(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), scaleX, scaleY));
 	}
 
-	void Game::addEnemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float sizeIn, int moveDirection)
+	void Game::addEnemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, int moveDirection)
 	{
-		this->enemies->push_back(Enemy(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), sizeIn, moveDirection));
+		this->enemies->push_back(Enemy(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), scaleX, scaleY, moveDirection));
 	}
 	
-	void Game::addBonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float sizeIn, std::shared_ptr<Skill> bonus)
+	void Game::addBonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, std::shared_ptr<Skill> bonus)
 	{
-		this->bonus->push_back(Bonus(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), sizeIn, bonus));
+		this->bonus->push_back(Bonus(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), scaleX, scaleY, bonus));
 	}
 
 	void Game::Update(float elapsed)
@@ -241,20 +241,20 @@ public:
 		}
 	}
 
-	void resize(float scale)
+	void resize(float scaleX, float scaleY)
 	{
-		map->resize(scale);
-		player->resize(scale);
+		map->resize(scaleX, scaleY);
+		player->resize(scaleX, scaleY);
 		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
 		{
-			it->resize(scale);
+			it->resize(scaleX, scaleY);
 		}
 		for (std::vector<Bonus>::iterator it = bonus->begin(); it != bonus->end(); ++it)
 		{
-			it->resize(scale);
+			it->resize(scaleX, scaleY);
 		}
 		//TODO: ?
-		screenHeight *= scale;
+		screenHeight *= scaleX;
 	}
 
 	void Game::Draw(DirectX::SpriteBatch* batch)

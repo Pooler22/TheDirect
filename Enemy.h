@@ -15,8 +15,8 @@ public:
 	Enemy::Enemy()
 	{}
 
-	Enemy::Enemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn, int moveDirectionIn) : 
-		Person(buttonSpriteSheet, positionIn, scaleIn)
+	Enemy::Enemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, int moveDirectionIn) :
+		Person(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
 		moveDirection = moveDirectionIn;
 	}

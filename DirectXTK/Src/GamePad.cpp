@@ -58,10 +58,10 @@ namespace
                 float dist = sqrtf( x*x + y*y );
                 float wanted = ApplyLinearDeadZone( dist, maxValue, deadZoneSize );
 
-                float scale = (wanted > 0.f) ? ( wanted / dist ) : 0.f;
+                float scaleX = (wanted > 0.f) ? ( wanted / dist ) : 0.f;
 
-                resultX = std::max( -1.f, std::min( x * scale, 1.f ) );
-                resultY = std::max( -1.f, std::min( y * scale, 1.f ) );
+                resultX = std::max( -1.f, std::min( x * scaleX, 1.f ) );
+                resultY = std::max( -1.f, std::min( y * scaleX, 1.f ) );
             }
             break;
 

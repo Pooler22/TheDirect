@@ -71,7 +71,8 @@ namespace SimpleSample
 		//void XM_CALLCONV DrawGrid(DirectX::FXMVECTOR xAxis, DirectX::FXMVECTOR yAxis, DirectX::FXMVECTOR origin, size_t xdivs, size_t ydivs, DirectX::GXMVECTOR color);
         std::unique_ptr<DirectX::SpriteBatch>                                   m_sprites;
         std::shared_ptr<DirectX::SpriteFont>                                    m_font;
-		float																	scale;
+		float																	scaleX;
+		float																	scaleY;
 		//Sound
 		std::unique_ptr<DirectX::AudioEngine>                                   m_audEngine;
         std::unique_ptr<DirectX::WaveBank>                                      m_waveBank;

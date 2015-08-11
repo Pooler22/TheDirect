@@ -11,8 +11,8 @@
 class TextButton : public Button
 {
 public:
-	TextButton(ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<DirectX::SpriteFont> spriteFont, std::wstring inString, std::wstring inId, XMFLOAT2 inPosition, float scaleIn) :
-		Button(buttonSpriteSheet,  inPosition, scaleIn)
+	TextButton(ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<DirectX::SpriteFont> spriteFont, std::wstring inString, std::wstring inId, XMFLOAT2 inPosition, float scaleX, float scaleY) :
+		Button(buttonSpriteSheet,  inPosition, scaleX, scaleY)
 	{
 		id = inId;
 		string = inString;

@@ -29,8 +29,8 @@ class Brick : public Button
 {
 public:
 
-	Brick::Brick(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn, XMFLOAT2 sizeIn, BRICK_BEHAVIOR behaviorIn) : 
-		Button(buttonSpriteSheet, positionIn, scaleIn)
+	Brick::Brick(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, XMFLOAT2 sizeIn, BRICK_BEHAVIOR behaviorIn) :
+		Button(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
 		this->behavior = behaviorIn;
 	}

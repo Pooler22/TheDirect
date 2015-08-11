@@ -23,7 +23,8 @@ class AnimatedTexture
 public:
     AnimatedTexture( const DirectX::XMFLOAT2& origin,
                      float rotation,
-                     float scale,
+                     float scaleX,
+					 float scaleY,
                      float depth ) :
         mPaused(false),
         mFrameCount(0),
@@ -32,7 +33,7 @@ public:
         mTimePerFrame(0.f),
         mTotalElapsed(0.f),
         mRotation( rotation ),
-        mScale( scale, scale ),
+        mScale( scaleX, scaleY ),
         mDepth( depth ),
         mOrigin( origin )
     {
