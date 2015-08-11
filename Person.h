@@ -17,7 +17,7 @@ public:
 	Person::Person(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY) :
 		Button(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
-		bubbles = std::vector<Button>();
+		this->scaleX = scaleX;
 		speed = 10;
 		gravity = 1;
 		stand = false;
@@ -26,10 +26,6 @@ public:
 
 	virtual void  Person::Draw(DirectX::SpriteBatch* batch)
 	{
-		for (auto &bubble : bubbles)
-		{
-			bubble.Draw(batch);
-		}
 		animation->Draw(batch, position);
 	}
 
@@ -42,10 +38,6 @@ public:
 		{
 			move(0, -gravity);
 		}
-		for (auto &bubble : bubbles)
-		{
-			bubble.Update(elapsed);
-		}
 		animation->Update(elapsed);
 	}
 
@@ -56,22 +48,22 @@ public:
 
 	virtual void  Person::move(float x, float y)
 	{
-		if (!moveDown)
+		if (moveDown)
 		{
-			if (y * speed > 0)
-			{
-				position.x = position.x + (x * speed);
-				position.y = position.y - (y * speed);
-			}
-			else
-			{
-				position.x = position.x + (x * speed);
-			}
+			position.x = position.x + (x * speed * scaleX);
+			position.y = position.y - (y * speed * scaleX);
 		}
 		else
 		{
-			position.x = position.x + (x * speed);
-			position.y = position.y - (y * speed);
+			if (y * speed > 0)
+			{
+				position.x = position.x + (x * speed * scaleX);
+				position.y = position.y - (y * speed * scaleX);
+			}
+			else
+			{
+				position.x = position.x + (x * speed * scaleX);
+			}
 		}
 		updateBoundingRect();
 	}
@@ -81,6 +73,8 @@ public:
 		if(stand && jumpTime > 0)
 			move(0, 2);
 	}
+
+	
 
 	void  Person::setMoveDown(bool flag)
 	{
@@ -100,6 +94,7 @@ public:
 	}
 
 public:
+	float												scaleX;
 	int													speed;
 	int													jumpTime;
 	bool												jumpFlag;
@@ -107,6 +102,5 @@ public:
 	bool												stand;
 	float												gravity;
 	DirectX::XMFLOAT2									startPosition;
-	std::vector<Button>									bubbles;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	bubbleTexture;
+	
 };

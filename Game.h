@@ -181,7 +181,8 @@ public:
 
 	void Game::getColision()
 	{
-		if ((map->getColision(player->boundingRectangle) & COLISION_TYPE::COLISION_TYPE_LEFT) == COLISION_TYPE::COLISION_TYPE_LEFT)
+		unsigned int colision = map->getColision(player->boundingRectangle);
+		if ((colision & COLISION_TYPE::COLISION_TYPE_LEFT) == COLISION_TYPE::COLISION_TYPE_LEFT)
 		{
 			player->setBlockDirection(1);
 			//player->speed = 0;
@@ -191,7 +192,7 @@ public:
 			player->setBlockDirection(0);
 		}
 
-		if ((map->getColision(player->boundingRectangle) & COLISION_TYPE::COLISION_TYPE_RIGHT) == COLISION_TYPE::COLISION_TYPE_RIGHT)
+		if ((colision & COLISION_TYPE::COLISION_TYPE_RIGHT) == COLISION_TYPE::COLISION_TYPE_RIGHT)
 		{
 			//player->speed = 0;
 			player->setBlockDirection(2);
@@ -201,7 +202,7 @@ public:
 			player->setBlockDirection(0);
 		}
 
-		if ((map->getColision(player->boundingRectangle) & COLISION_TYPE::COLISION_TYPE_TRUE) == COLISION_TYPE::COLISION_TYPE_TRUE)
+		if ((colision & COLISION_TYPE::COLISION_TYPE_TRUE) == COLISION_TYPE::COLISION_TYPE_TRUE)
 		{
 			player->setStand(true);
 			player->setMoveDown(false);

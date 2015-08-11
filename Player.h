@@ -16,14 +16,41 @@ public:
 	Player::Player() :
 		Person()
 	{
-		
+		this->scaleX = 1;
 	}
 
 	Player::Player(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY) :
 		Person(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
+		this->scaleX = scaleX;
+		shots.reset(new std::vector<Button>());
 		skill.reset(new Skill(3, 1, 0, 5, 1));
 		over = false;
+	}
+
+	void  Draw(DirectX::SpriteBatch* batch)
+	{
+		for (std::vector<Button>::iterator it = shots->begin(); it != shots->end(); ++it)
+		{
+			it->Draw(batch);
+		}
+		animation->Draw(batch, position);
+	}
+
+	void  Update(float elapsed)
+	{
+		if (stand && jumpTime > 0)
+			jumpTime--;
+
+		if (!stand)
+		{
+			move(0, -gravity);
+		}
+		for (std::vector<Button>::iterator it = shots->begin(); it != shots->end(); ++it)
+		{
+			it->Update(elapsed);
+		}
+		animation->Update(elapsed);
 	}
 
 	void  Player::die()
@@ -80,23 +107,28 @@ public:
 			if (y * speed > 0)
 			{
 				if (blockDirection == 1 && x < 0)
-					position.x = position.x + (x * speed);
+					position.x = position.x + (x * speed * scaleX);
 				if (blockDirection == 2 && x < 0)
-					position.x = position.x + (x * speed);
-				position.y = position.y - (y * speed);
+					position.x = position.x + (x * speed * scaleX);
+				position.y = position.y - (y * speed * scaleX);
 			}
 			else
 			{
-				position.x = position.x + (x * speed);
+				position.x = position.x + (x * speed * scaleX);
 			}
 		}
 		else
 		{
-			position.x = position.x + (x * speed);
-			position.y = position.y - (y * speed);
+			position.x = position.x + (x * speed * scaleX);
+			position.y = position.y - (y * speed * scaleX);
 		}
 
 		updateBoundingRect();
+	}
+
+	void fire()
+	{
+		shots->push_back(Button());
 	}
 
 	/*void  Person::addBonus(std::shared_ptr<Bonus_struct> bs)
@@ -123,9 +155,12 @@ public:
 	}
 
 public:
-	int			blockDirection;
-	bool		over;
+	int													blockDirection;
+	bool												over;
 
-	int							score;
-	std::unique_ptr<Skill>		skill;
+	int													score;
+	std::unique_ptr<Skill>								skill;
+	std::shared_ptr<std::vector<Button>>				shots;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	bubbleTexture;
+
 };
