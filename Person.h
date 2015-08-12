@@ -67,7 +67,28 @@ public:
 		updateBoundingRect();
 	}
 
-	void colision(Windows::Foundation::Rect rect, BRICK_BEHAVIOR behavior)
+	void correctPersonPosition(float screenWidth, float screenHeight)
+	{
+		if (position.y > screenHeight)
+		{
+			position.y = 0.0 - dimensions.y;
+		}
+		else if (position.y < 0.0 - dimensions.y)
+		{
+			position.y = screenHeight;
+		}
+		if (getPosition().x > screenWidth)
+		{
+			position.x = 0.0 - dimensions.x;
+		}
+		else if (getPosition().x < 0.0 - dimensions.x)
+		{
+			position.x = screenWidth;
+		}
+		updateBoundingRect();
+	}
+
+	void colision(Windows::Foundation::Rect rect)
 	{
 		if (boundingRectangle.IntersectsWith(rect))
 			{

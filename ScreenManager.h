@@ -19,7 +19,7 @@ public:
 		this->screenWidth = screenWidth;
 		this->screenHeight = screenHeight;
 		this->screens = std::vector<std::shared_ptr<Screen>>();
-		this->game.reset(new Game(screenWidth, screenHeight));
+		this->game.reset(new Game(screenWidth, screenHeight, scaleX, scaleY));
 		this->nameCurrentScreen = nameIn;
 		this->buttonSpriteSheet = buttonSpriteSheet;
 		this->textSprite = textSprite;
@@ -49,22 +49,22 @@ public:
 
 	void addPlayer(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn)
 	{
-		game->addPlayer(buttonSpriteSheet, positionIn, scaleX, scaleY);
+		game->addPlayer(buttonSpriteSheet, positionIn);
 	}
 
 	void addEnemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, int i)
 	{
-		game->addEnemy(buttonSpriteSheet, positionIn, scaleX, scaleY, i);
+		game->addEnemy(buttonSpriteSheet, positionIn, i);
 	}
 
 	void addBonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, std::shared_ptr<Skill> bonus)
 	{
-		game->addBonus(buttonSpriteSheet, positionIn, scaleX, scaleY, bonus);
+		game->addBonus(buttonSpriteSheet, positionIn, bonus);
 	}
 
 	void setMapLevel(int x, int y, int* numberTestureVector,ID3D11ShaderResourceView* playerSpriteSheetIn, std::shared_ptr<SpriteFont> spriteFontIn)
 	{
-		this->game->setMapLevel(x,y, numberTestureVector, screenWidth, screenHeight, scaleX, scaleY, playerSpriteSheetIn, spriteFontIn);
+		this->game->setMapLevel(x,y, numberTestureVector, playerSpriteSheetIn, spriteFontIn);
 	}
 
 	void Update(float elapsed)

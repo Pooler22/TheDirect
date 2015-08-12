@@ -106,6 +106,14 @@ public:
 		shots->push_back(Button(texture.Get(), position,1.0f, 1.0f));
 	}
 
+	void addBonus(std::shared_ptr<Skill> bonus)
+	{
+		skill->life += bonus->life;
+		skill->point += bonus->point;
+		skill->shotDistance += bonus->shotDistance;
+		skill->shotspeed += bonus->shotspeed;
+		skill->speedMove += bonus->speedMove;
+	}
 public:
 
 	DirectX::XMFLOAT2									lastGoodPosition;

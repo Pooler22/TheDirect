@@ -59,10 +59,10 @@ public:
 	{
 		for (auto &brick : bricks)
 		{
-			if (brick->getColision(rect) != COLISION_TYPE::COLISION_TYPE_FALSE)
-			{
-				return true;
-			}
+			//if (brick->getColision(rect) != COLISION_TYPE::COLISION_TYPE_FALSE)
+			//{
+			//	return true;
+			//}
 		}
 		return false;
 	}
@@ -72,7 +72,7 @@ public:
 		unsigned int opt = 0x0;
 		for (auto &brick : bricks)
 		{
-			opt |= brick->getColision(rect);
+		//	opt |= brick->getColision(rect);
 		}
 		return opt;
 	}
@@ -86,8 +86,8 @@ public:
 	{
 		for (auto &brick : bricks)
 		{
-			if (brick->isStanding(rect))
-				return true;
+		//	if (brick->isStanding(rect))
+			//	return true;
 		}
 		return false;
 	}

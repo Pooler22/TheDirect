@@ -17,31 +17,33 @@
 class Game
 {
 public:
-	Game::Game(int screenWidth, int screenHeight)
+	Game::Game(int screenWidth, int screenHeight, float scaleX, float scaleY)
 	{
 		this->map.reset(new Map());
 		this->enemies.reset(new std::vector<Enemy>());
 		this->bonus.reset(new std::vector<Bonus>());
 		this->screenHeight = screenHeight;
 		this->screenWidth = screenWidth;
+		this->scaleX = scaleX;
+		this->scaleY = scaleY;
 	};
 
-	void Game::setMapLevel(int x, int y, int* numberTestureVectorIn,int screenWidth, int screenHeight, float scaleX, float scaleY, ID3D11ShaderResourceView* playerSpriteSheetIn, std::shared_ptr<SpriteFont> spriteFontIn)
+	void Game::setMapLevel(int x, int y, int* numberTestureVectorIn, ID3D11ShaderResourceView* playerSpriteSheetIn, std::shared_ptr<SpriteFont> spriteFontIn)
 	{
 		this->map->setMapLevel(x, y, numberTestureVectorIn, this->screenWidth, this->screenHeight, scaleX, scaleY, playerSpriteSheetIn, spriteFontIn);
 	}
 	
-	void Game::addPlayer(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY)
+	void Game::addPlayer(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn)
 	{
 		this->player = std::unique_ptr<Player>(new Player(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), scaleX, scaleY));
 	}
 
-	void Game::addEnemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, int moveDirection)
+	void Game::addEnemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, int moveDirection)
 	{
 		this->enemies->push_back(Enemy(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), scaleX, scaleY, moveDirection));
 	}
 	
-	void Game::addBonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, std::shared_ptr<Skill> bonus)
+	void Game::addBonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, std::shared_ptr<Skill> bonus)
 	{
 		this->bonus->push_back(Bonus(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), scaleX, scaleY, bonus));
 	}
@@ -52,31 +54,30 @@ public:
 		{
 			if (brick->getBehavior() == BRICK_BEHAVIOR_BLOCK) 
 			{
-				player->colision(brick->getBoundingRectangle(), brick->getBehavior());
+				player->colision(brick->getBoundingRectangle());
 				for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
 				{
-					it->colision(brick->getBoundingRectangle(), brick->getBehavior());
+					it->colision(brick->getBoundingRectangle());
 				}
 				for (std::vector<Bonus>::iterator it = bonus->begin(); it != bonus->end(); ++it)
 				{
-					it->colision(brick->getBoundingRectangle(), brick->getBehavior());
+					it->colision(brick->getBoundingRectangle());
 				}
 			}
 		}
-			
-		
+
 		playerVsEnemyColision();
 		playerVsBonusColision();
-		correctPlayerPosition();
+		player->correctPersonPosition(screenWidth, screenHeight);
 		
 		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
 		{
-			correctPlayerPosition(it);
+			it->correctPersonPosition(screenWidth, screenHeight);
 			it->Update(elapsed);
 		}
 		for (std::vector<Bonus>::iterator it = bonus->begin(); it != bonus->end(); ++it)
 		{
-			correctPlayerPosition(it);
+			it->correctPersonPosition(screenWidth, screenHeight);
 			it->Update(elapsed);
 		}
 		updateScore();
@@ -102,84 +103,24 @@ public:
 	
 	void playerVsBonusColision()
 	{
-		int i = 0;
 		for ( std::vector<Bonus>::iterator it = bonus->begin(); it != bonus->end();)
 		{
 			if (this->player->boundingRectangle.IntersectsWith(it->boundingRectangle))
 			{
+				this->player->addBonus(it->getBonus());
 				it = bonus->erase(it);
-				this->player->speed += 1;
 			}
 			else
 			{
 				++it;
 			}
-			i++;
 		}
 	}
 	
-	void correctPlayerPosition(std::vector<Bonus>::iterator person)
-	{
-		if (person->getPosition().y > screenHeight)
-		{
-			person->setPosition(XMFLOAT2(person->getPosition().x, (0.0 - person->getDimension().y)));
-		}
-		else if (person->getPosition().y < 0.0 - person->getDimension().y)
-		{
-			person->setPosition(XMFLOAT2(person->getPosition().x, screenHeight));
-		}
-		if (person->getPosition().x > screenWidth)
-		{
-			person->setPosition(XMFLOAT2(0.0 - person->getDimension().x, person->getPosition().y));
-		}
-		else if (person->getPosition().x < 0.0 - person->getDimension().x)
-		{
-			person->setPosition(XMFLOAT2(screenWidth, person->getPosition().y));
-		}
-	}
-	
-	void correctPlayerPosition(std::vector<Enemy>::iterator person)
-	{
-		if (person->getPosition().y > screenHeight)
-		{
-			person->setPosition(XMFLOAT2(person->getPosition().x, (0.0 - person->getDimension().y)));
-		}
-		else if (person->getPosition().y < 0.0 - person->getDimension().y)
-		{
-			person->setPosition(XMFLOAT2(person->getPosition().x, screenHeight));
-		}
-		if (person->getPosition().x > screenWidth)
-		{
-			person->setPosition(XMFLOAT2(0.0 - person->getDimension().x, person->getPosition().y));
-		}
-		else if (person->getPosition().x < 0.0 - person->getDimension().x)
-		{
-			person->setPosition(XMFLOAT2(screenWidth, person->getPosition().y));
-		}
-	}
-
-	void correctPlayerPosition()
-	{
-		if (player->getPosition().y > screenHeight)
-		{
-			player->setPosition(XMFLOAT2(player->getPosition().x, (0.0 - player->getDimension().y)));
-		}
-		else if (player->getPosition().y < 0.0 - player->getDimension().y)
-		{
-			player->setPosition(XMFLOAT2(player->getPosition().x, screenHeight));
-		}
-		if (player->getPosition().x > screenWidth)
-		{
-			player->setPosition(XMFLOAT2(0.0 - player->getDimension().x, player->getPosition().y));
-		}
-		else if (player->getPosition().x < 0.0 - player->getDimension().x)
-		{
-			player->setPosition(XMFLOAT2(screenWidth, player->getPosition().y));
-		}
-	}
-
 	void resize(float scaleX, float scaleY)
 	{
+		this->scaleX = scaleX;
+		this->scaleY = scaleY;
 		map->resize(scaleX, scaleY);
 		player->resize(scaleX, scaleY);
 		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
@@ -245,6 +186,8 @@ public:
 	bool									moveDown;
 	int										screenWidth;
 	int										screenHeight;
+	float scaleX;
+	float scaleY;
 
 	std::unique_ptr<Map>					map;
 	std::unique_ptr<Player>					player;

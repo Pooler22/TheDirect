@@ -62,7 +62,6 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	XMFLOAT2 position[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
 	screenManager->addScreen(L"Main", 3, name, id, position);
 
-
 	std::wstring name1[] = { L"Music",L"Author",L"Exit" };
 	std::wstring id1[] = { L"MusicOptions",L"AuthorOptions",L"BackOptions" };
 	XMFLOAT2 position1[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
@@ -395,7 +394,6 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 						screenManager->setName(L"Main");
 						screenManager->resetLevel();
 					}
-					
 					flagFromPressToRelasedClick = false;
 				}
 				break;
@@ -460,6 +458,7 @@ void DirectXTK3DSceneRenderer::NewAudioDevice()
         m_retryDefault = true;
     }
 }
+
 // Drawing Grid on screen using primitives (PrimitiveBatch) - not usefull right now
 //void XM_CALLCONV DirectXTK3DSceneRenderer::DrawGrid(FXMVECTOR xAxis, FXMVECTOR yAxis, FXMVECTOR origin, size_t xdivs, size_t ydivs, GXMVECTOR color)
 //{
@@ -500,6 +499,7 @@ void DirectXTK3DSceneRenderer::NewAudioDevice()
 //   m_batch->End();
 //}
 //this is the DRAW function
+
 void DirectXTK3DSceneRenderer::Render()
 {
 	auto context = m_deviceResources->GetD3DDeviceContext();

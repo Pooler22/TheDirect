@@ -9,9 +9,7 @@
 class Button
 {
 public:
-	Button::Button() 
-	{
-	};
+	Button::Button() {};
 
 	Button(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY) :
 		framesOfAnimation(4), 
@@ -31,32 +29,20 @@ public:
 		updateBoundingRect();
 	}
 
-	virtual void Button::setPosition(DirectX::XMFLOAT2 positionIn)
+	void Button::setPosition(DirectX::XMFLOAT2 positionIn)
 	{
 		position = positionIn;
 		updateBoundingRect();
 	}
 
-	virtual DirectX::XMFLOAT2 Button::getPosition()
+	DirectX::XMFLOAT2 Button::getPosition()
 	{
 		return position;
 	}
 
-	virtual DirectX::XMFLOAT2 Button::getDimension()
+	DirectX::XMFLOAT2 Button::getDimension()
 	{
 		return dimensions;
-	}
-
-	virtual bool Button::isColision(Windows::Foundation::Rect rect)
-	{
-		if (boundingRectangle.IntersectsWith(rect))
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
 	}
 
 	virtual void Button::Update(float elapsed)
@@ -64,17 +50,17 @@ public:
 		animation->Update(elapsed);
 	}
 
-	virtual void Button::Draw(DirectX::SpriteBatch* batch)
+	void Button::Draw(DirectX::SpriteBatch* batch)
 	{
 		animation->Draw(batch, position);
 	}
 
-	virtual Windows::Foundation::Rect Button::getBoundingRectangle()
+	Windows::Foundation::Rect Button::getBoundingRectangle()
 	{
 		return boundingRectangle;
 	}
 
-	virtual void Button::resize(float scaleX, float scaleY)
+	void Button::resize(float scaleX, float scaleY)
 	{
 		float tmpScaleX = scaleX / this->scaleX;
 		float tmpScaleY = scaleY / this->scaleY;
@@ -89,8 +75,6 @@ public:
 		updateBoundingRect();
 	}
 
-public:
-
 	virtual void Button::updateBoundingRect()
 	{
 		//TODO: proper updating when rotating player object
@@ -101,7 +85,6 @@ public:
 	}
 
 public:
-
 	int													framesOfAnimation;
 	int													framesToBeShownPerSecond;
 	
