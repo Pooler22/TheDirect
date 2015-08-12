@@ -15,40 +15,22 @@ public:
 	Enemy::Enemy()
 	{}
 
-	Enemy::Enemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn, int moveDirectionIn) : framesOfAnimation(4), framesToBeShownPerSecond(4), Person(buttonSpriteSheet, positionIn, scaleIn)
+	Enemy::Enemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, int moveDirectionIn) :
+		Person(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
 		moveDirection = moveDirectionIn;
 	}
 
 	void Update(float elapsed) override
 	{
-		if (stand && jumpTime > 0)
-			jumpTime--;
+		if (blockRight || blockLeft)
+			moveDirection = -moveDirection;
 
-		if (!stand)
-		{
-			move(0, -gravity);
-		}
-		if(moveDirection == 1)
-		{
-			move(1,0);
-		}
-		else
-		{
-			move(-1, 0);
-		}
+			move(moveDirection, 0);
+
 		animation->Update(elapsed);
 	}
 
-	void resetLevel()
-	{
-		position = startPosition;
-		updateBoundingRect();
-	}
-
 public:
-	int			moveDirection;
-	int			framesOfAnimation;
-	int			framesToBeShownPerSecond;
-
+	int		moveDirection;
 };

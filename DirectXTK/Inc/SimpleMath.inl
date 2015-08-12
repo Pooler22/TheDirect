@@ -2111,7 +2111,7 @@ inline Matrix operator* (float S, const Matrix& M)
 // Matrix operations
 //------------------------------------------------------------------------------
 
-inline bool Matrix::Decompose( Vector3& scale, Quaternion& rotation, Vector3& translation )
+inline bool Matrix::Decompose( Vector3& scaleX, Quaternion& rotation, Vector3& translation )
 {
     using namespace DirectX;
 
@@ -2120,7 +2120,7 @@ inline bool Matrix::Decompose( Vector3& scale, Quaternion& rotation, Vector3& tr
     if ( !XMMatrixDecompose( &s, &r, &t, *this ) )
         return false;
 
-    XMStoreFloat3( &scale, s );
+    XMStoreFloat3( &scaleX, s );
     XMStoreFloat4( &rotation, r );
     XMStoreFloat3( &translation, t );
 
@@ -2321,11 +2321,11 @@ inline Matrix Matrix::CreateScale( float xs, float ys, float zs )
     return R;
 }
 
-inline Matrix Matrix::CreateScale( float scale )
+inline Matrix Matrix::CreateScale( float scaleX )
 {
     using namespace DirectX;
     Matrix R;
-    XMStoreFloat4x4( &R, XMMatrixScaling( scale, scale, scale ) );
+    XMStoreFloat4x4( &R, XMMatrixScaling( scaleX, scaleX, scaleX ) );
     return R;
 }
 

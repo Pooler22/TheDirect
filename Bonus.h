@@ -8,6 +8,7 @@
 #include "SpriteFont.h"
 #include "Person.h"
 #include "Button.h"
+#include "Skill.h"
 
 class Bonus : public Person
 {
@@ -15,20 +16,22 @@ public:
 	Bonus::Bonus()
 	{}
 
-	Bonus::Bonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn) : framesOfAnimation(4), framesToBeShownPerSecond(4), Person(buttonSpriteSheet, positionIn, scaleIn)
+	Bonus::Bonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, std::shared_ptr<Skill> bonus) :
+		Person(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
+		this->bonus = bonus;
 	}
 
-	void resetLevel()
+	std::shared_ptr<Skill> getBonus()
 	{
-		position = startPosition;
-		updateBoundingRect();
+		return bonus;
 	}
 
-	
+	void setBonus(std::shared_ptr<Skill> bonus)
+	{
+		this->bonus = bonus;
+	}
 
 public:
-	int			framesOfAnimation;
-	int			framesToBeShownPerSecond;
-
+	std::shared_ptr<Skill> bonus;
 };

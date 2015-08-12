@@ -30,6 +30,129 @@ DirectXTK3DSceneRenderer::DirectXTK3DSceneRenderer(const std::shared_ptr<DX::Dev
     CreateAudioResources();
 }
 
+//this is the LOAD function
+void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
+{
+	// Create DirectXTK objects
+	auto device = m_deviceResources->GetD3DDevice();
+	auto context = m_deviceResources->GetD3DDeviceContext();
+	auto windowSize = m_deviceResources->GetOutputSize(); // physical screen resolution
+	logicalSize = m_deviceResources->GetLogicalSize(); //DPI dependent resolution
+
+	m_sprites.reset(new SpriteBatch(context));
+	m_font.reset(new SpriteFont(device, L"assets\\italic.spritefont"));
+
+	flagFromPressToRelasedClick = true;
+	playMusic = false;
+
+	scaleX = (float)logicalSize.Width / (32.0 * 25.0);
+	scaleY = (float) logicalSize.Height / (19.0 * 25.0);
+	centerPosition.x = logicalSize.Width / 2.0;
+	centerPosition.y = logicalSize.Height / 2.0;
+	float oneUnitHeight = logicalSize.Height / 7.0;
+
+	DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\button.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
+
+	screenManager.reset(new ScreenManager(L"Main", logicalSize.Width, logicalSize.Height, scaleX, scaleY, m_texture.Get(), m_font));
+
+	std::wstring name[] = { L"Start",L"Options",L"Exit" };
+	std::wstring id[] = { L"StartMain",L"OptionsMain",L"ExitMain" };
+	XMFLOAT2 position[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
+	screenManager->addScreen(L"Main", 3, name, id, position);
+
+
+	std::wstring name1[] = { L"Music",L"Author",L"Exit" };
+	std::wstring id1[] = { L"MusicOptions",L"AuthorOptions",L"BackOptions" };
+	XMFLOAT2 position1[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
+	screenManager->addScreen(L"Options", 3, name1, id1, position1);
+
+	std::wstring name2[] = { L"Offline",L"Online",L"Back" };
+	std::wstring id2[] = { L"OfflineLevel",L"OnlineLevel",L"BackLevel" };
+	XMFLOAT2 position2[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
+	screenManager->addScreen(L"Level", 3, name2, id2, position2);
+
+	std::wstring name4[] = { L"Return",L"Exit" };
+	std::wstring id4[] = { L"ReturnPause",L"ExitPause" };
+	XMFLOAT2 position4[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y) };
+	screenManager->addScreen(L"Pause", 2, name4, id4, position4);
+
+	std::wstring name5[] = { L"It's me ;)",L"Back" };
+	std::wstring id5[] = { L"DescriptionAuthor",L"BackAuthor" };
+	XMFLOAT2 position5[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y) };
+	screenManager->addScreen(L"Author", 2, name5, id5, position5);
+
+	std::wstring name3[] = { L"Pause" };
+	std::wstring id3[] = { L"PausePlay" };
+	XMFLOAT2 position3[] = { XMFLOAT2(centerPosition.x, 40) };
+	screenManager->addScreen(L"Play", 1, name3, id3, position3);
+
+	std::wstring name6[] = { L"Score",  L"Continue" };
+	std::wstring id6[] = { L"ScoreGameOver" , L"ContinueGameOver" };
+	XMFLOAT2 position6[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight),XMFLOAT2(centerPosition.x, centerPosition.y) };
+	screenManager->addScreen(L"GameOver", 2, name6, id6, position6);
+
+	DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\brick2.dds", nullptr, m_texture2.ReleaseAndGetAddressOf())
+		);
+	screenManager->addBrickTexture(m_texture2.Get());
+
+	DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\brick.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
+	screenManager->addBrickTexture2(m_texture.Get());
+
+	int x1 = 32;
+	int y1 = 18;
+	int tab1[] = {
+		1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1
+	};
+
+	screenManager->setMapLevel(x1, y1, tab1, m_texture.Get(), m_font);
+
+	DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\person.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
+	screenManager->addPlayer(m_texture.Get(), XMFLOAT2(1, 15));
+
+	DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\enemy.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
+	screenManager->addEnemy(m_texture.Get(), XMFLOAT2(5, 17), 1);
+
+	DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\bonus.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
+
+	std::shared_ptr<Skill> bonus;
+	bonus.reset(new Skill(0, 0, 0, 0, 0));
+	XMFLOAT2 positionB[] = { XMFLOAT2(10, 17) ,XMFLOAT2(15, 3), XMFLOAT2(23, 3)};
+	screenManager->addBonus(m_texture.Get(), positionB[0], bonus);
+	screenManager->addBonus(m_texture.Get(), positionB[1], bonus);
+	screenManager->addBonus(m_texture.Get(), positionB[2], bonus);
+
+	//Gamepad
+	//GamePad.reset(new GamePad);
+}
+
 // Initializes view parameters when the window size changes.
 void DirectXTK3DSceneRenderer::CreateWindowSizeDependentResources()
 {
@@ -60,8 +183,8 @@ void DirectXTK3DSceneRenderer::CreateAudioResources()
     m_effect1 = m_soundEffect->CreateInstance();
     m_effect2 = m_waveBank->CreateInstance(10);
 
-    //m_effect1->Play(true);
-    //m_effect2->Play();
+	//m_effect1->Play(true);
+	//m_effect2->Play();
 }
 
 // Updates the scene to be displayed.
@@ -86,6 +209,7 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 			if (m_audioEvent >= 11)
 				m_audioEvent = 0;
 		}
+
 	}
 
 	if (!m_audEngine->IsCriticalError() && m_audEngine->Update())
@@ -131,10 +255,9 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 	//animation->Update((float)timer.GetElapsedSeconds());
 	//player->Update((float)timer.GetElapsedSeconds());
 
-#pragma region Enemy AI
+//#pragma region Enemy AI
 	// TODO: handle enemy AI using promises and Lambdas
-	std::vector<std::future<DirectX::XMFLOAT2>> futures;
-
+	//std::vector<std::future<DirectX::XMFLOAT2>> futures;
 	//for (auto enemy : enemiesVector)
 	//{
 	//	futures.push_back( std::async(std::launch::async,
@@ -146,20 +269,19 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 	//	}) );
 	//}
 
-	for (auto &future : futures)
-	{
+	//for (auto &future : futures)
+	//{
 		//TODO:get results
 		//auto enemiesIterator = enemiesVector.begin();
 
-		DirectX::XMFLOAT2 tempPos;
-		tempPos = future.get();
+	//	DirectX::XMFLOAT2 tempPos;
+	//	tempPos = future.get();
 		//(*enemiesIterator).setPosition(tempPos);
 		//enemiesIterator++;
-	}
+	//}
+//#pragma endregion Handling Enemy AI using std::async and std::Future. Also using C++11 Lambdas
 
-#pragma endregion Handling Enemy AI using std::async and std::Future. Also using C++11 Lambdas
-
-#pragma region Collisions
+//#pragma region Collisions
 	//collisionString = L"There is no collision";
 	//EnginePad->SetVibration(0, 0.f, 0.f);
 	/*for (auto wallsIterator = wallsVector.begin(); wallsIterator < wallsVector.end(); wallsIterator++)
@@ -172,20 +294,14 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 	EnginePad->SetVibration(0, 0.75f, 0.75f);
 	}
 	}*/
-
-	//screen->Update((float)timer.GetElapsedSeconds());
-	//buttons[0]->Update((float)timer.GetElapsedSeconds());
 	screenManager->Update((float)timer.GetElapsedSeconds());
 
-#pragma endregion Handling collision detection + simple EnginePad rumble on crash
+//#pragma endregion Handling collision detection + simple EnginePad rumble on crash
 
-	
 	m_playersAttached = playersAttached;
 
 	for (unsigned int i = 0; i < XINPUT_MAX_CONTROLLERS; i++)
 	{
-		std::wstring inputText = L"";
-
 		unsigned int playerAttached = (playersAttached & (1 << i));
 
 		if (!playerAttached)
@@ -199,12 +315,14 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 			switch (playerAction.PlayerAction)
 			{
 			case PLAYER_ACTION_TYPES::INPUT_FIRE_PRESSED:
-				inputText += L"\n FireDown(" + std::to_wstring(playerAction.NormalizedInputValue) + L") ";
 				break;
 			case PLAYER_ACTION_TYPES::INPUT_FIRE_DOWN:
-				inputText += L"\n FireDown(" + std::to_wstring(playerAction.NormalizedInputValue) + L") ";
 				if (flagFromPressToRelasedClick)
 				{
+					if (screenManager->getName() == L"Play")
+					{
+						screenManager->game->player->fire();
+					}
 					if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"StartMain"))
 					{
 						screenManager->setName(L"Level");
@@ -219,7 +337,17 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 					}
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"MusicOptions"))
 					{
-						//TO DO: music
+						playMusic = !playMusic;
+						if (playMusic)
+						{
+							m_effect1->Play(true);
+							m_effect2->Play();
+						}
+						else
+						{
+							m_effect1->Pause();
+							m_effect2->Pause();
+						}
 					}
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"AuthorOptions"))
 					{
@@ -274,34 +402,24 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 			case PLAYER_ACTION_TYPES::INPUT_CANCEL:
 				break;
 			case PLAYER_ACTION_TYPES::INPUT_FIRE_RELEASED:
-				inputText += L"\n FirePressed(" + std::to_wstring(playerAction.NormalizedInputValue) + L") ";
-				inputText += L"\n FireReleased(" + std::to_wstring(playerAction.NormalizedInputValue) + L") ";
 				flagFromPressToRelasedClick = true;
 				break;
 
 			case PLAYER_ACTION_TYPES::INPUT_JUMP_PRESSED:
-				inputText += L"\n JumpPressed(" + std::to_wstring(playerAction.NormalizedInputValue) + L") ";
 				break;
 			case PLAYER_ACTION_TYPES::INPUT_JUMP_DOWN:
-				inputText += L"\n JumpDown(" + std::to_wstring(playerAction.NormalizedInputValue) + L") ";
 				break;
 			case PLAYER_ACTION_TYPES::INPUT_JUMP_RELEASED:
-				inputText += L"\n JumpReleased(" + std::to_wstring(playerAction.NormalizedInputValue) + L") ";
 				break;
 
 			case PLAYER_ACTION_TYPES::INPUT_MOVE:
-				inputText += L"\n MoveX:(" + std::to_wstring(playerAction.PointerThrowX) + L") ";
-				inputText += L"\n MoveY:(" + std::to_wstring(playerAction.Y) + L") ";
 				screenManager->game->player->move(playerAction.X, playerAction.Y);
 				if (playerAction.Y == 1)
-					screenManager->game->player->jump();
+					//screenManager->game->player->jump();
 				break;
 			case PLAYER_ACTION_TYPES::INPUT_AIM:
-				inputText += L"\n AimX(" + std::to_wstring(playerAction.PointerThrowX) + L") ";
-				inputText += L"\n AimY(" + std::to_wstring(playerAction.Y) + L") ";
 				break;
 			case PLAYER_ACTION_TYPES::INPUT_BRAKE:
-				inputText += L"\n Brake(" + std::to_wstring(playerAction.NormalizedInputValue) + L") ";
 				break;
 
 			default:
@@ -381,7 +499,6 @@ void DirectXTK3DSceneRenderer::NewAudioDevice()
 //
 //   m_batch->End();
 //}
-
 //this is the DRAW function
 void DirectXTK3DSceneRenderer::Render()
 {
@@ -393,187 +510,34 @@ void DirectXTK3DSceneRenderer::Render()
 
 	D3D11_TEXTURE2D_DESC pDesc;
 	Microsoft::WRL::ComPtr<ID3D11Resource> res;
+	
+	// get texture size 
 	//1.) -----------------
 	//m_texture->GetResource(&res);
 	//((ID3D11Texture2D*)res.Get())->GetDesc(&pDesc); // Usually dangerous!
 
 	//2.) -----------------
-	m_texture->GetResource(res.GetAddressOf());
-	m_texture2->GetResource(res.GetAddressOf());
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> text2D;
-	res.As(&text2D);
-	text2D->GetDesc(&pDesc);
+	//m_texture->GetResource(res.GetAddressOf());
+	//m_texture2->GetResource(res.GetAddressOf());
+	//Microsoft::WRL::ComPtr<ID3D11Texture2D> text2D;
+	//res.As(&text2D);
+	//text2D->GetDesc(&pDesc);
 
-	auto height = pDesc.Height; //texture height
-	auto width = pDesc.Width; //texture width
+	//auto height = pDesc.Height; //texture height
+	//auto width = pDesc.Width; //texture width
 
 	auto windowSize = m_deviceResources->GetOutputSize(); // physical screen resolution
 	auto logicalSize = m_deviceResources->GetLogicalSize(); //DPI dependent resolution
 
-	if ((centerPosition.x != logicalSize.Width / 2) || (centerPosition.y != logicalSize.Height / 2))
+	if ((this->logicalSize.Width != logicalSize.Width) || (this->logicalSize.Height != logicalSize.Height))
 	{
-		screenManager->resize((logicalSize.Height/600));
-		centerPosition.y = logicalSize.Height/2;
-		centerPosition.x = logicalSize.Width/2;
+		screenManager->resize(logicalSize.Width / (32.0 * 25.0), logicalSize.Height / (19.0 * 25.0));
 	}
 	
-
 	// Draw sprites
 	m_sprites->Begin();
 	screenManager->Draw(m_sprites.get());
 	m_sprites->End();
-}
-
-//this is the LOAD function
-void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
-{
-	flagFromPressToRelasedClick = true;
-	// Create DirectXTK objects
-	auto device = m_deviceResources->GetD3DDevice();
-
-	auto context = m_deviceResources->GetD3DDeviceContext();
-
-	auto windowSize = m_deviceResources->GetOutputSize(); // physical screen resolution
-	auto logicalSize = m_deviceResources->GetLogicalSize(); //DPI dependent resolution
-
-	m_sprites.reset(new SpriteBatch(context));
-
-
-	m_font.reset(new SpriteFont(device, L"assets\\italic.spritefont"));
-	
-	int scale;
-
-	scale = logicalSize.Width / 600;
-
-	//player.reset(new Player(m_texture.Get()));
-
-	/*DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\background.dds", nullptr, backgroundTexture.ReleaseAndGetAddressOf())
-		);
-	background.reset(new ScrollingBackground);
-	background->Load(backgroundTexture.Get());*/
-	
-	//Adding walls to vector
-	//wallsVector.push_back(Wall(logicalSize, XMFLOAT2(300, 0), pipeTexture.Get()));
-	//wallsVector.emplace_back(Wall(logicalSize, XMFLOAT2(logicalSize.Width, 0), pipeTexture.Get()));
-	screenManager.reset(new ScreenManager(L"Main", logicalSize.Width, logicalSize.Height));
-
-	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\button.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
-		);
-
-	centerPosition.x = logicalSize.Width / 2.0;
-	centerPosition.y = logicalSize.Height / 2.0;
-	float oneUnitHeight = logicalSize.Height / 7.0;
-	Screen* screen = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Main");
-	std::wstring name[] = { L"Start",L"Options",L"Exit" };
-	std::wstring id[] = { L"StartMain",L"OptionsMain",L"ExitMain" };
-	XMFLOAT2 position[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
-	screen->addMenu(name, id, position, 3,scale);
-	screenManager->addScreen(screen);
-
-	Screen* screen1 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Options");
-	std::wstring name1[] = { L"Musicv",L"Back",L"Exit" };
-	std::wstring id1[] = { L"MusicOptions",L"AuthorOptions",L"BackOptions" };
-	XMFLOAT2 position1[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
-	screen1->addMenu(name1, id1, position1, 3, scale);
-	screenManager->addScreen(screen1);
-
-	Screen* screen2 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Level");
-	std::wstring name2[] = { L"Offline",L"Online",L"Back" };
-	std::wstring id2[] = { L"OfflineLevel",L"OnlineLevel",L"BackLevel" };
-	XMFLOAT2 position2[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
-	screen2->addMenu(name2, id2, position2, 3, scale);
-	screenManager->addScreen(screen2);
-
-	Screen* screen4 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Pause");
-	std::wstring name4[] = { L"Return",L"Exit"};
-	std::wstring id4[] = { L"ReturnPause",L"ExitPause"};
-	XMFLOAT2 position4[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y)};
-	screen4->addMenu(name4, id4, position4, 2, scale);
-	screenManager->addScreen(screen4);
-
-	Screen* screen5= new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Author");
-	std::wstring name5[] = { L"It's me ;)",L"Back"};
-	std::wstring id5[] = { L"DescriptionAuthor",L"BackAuthor"};
-	XMFLOAT2 position5[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y)};
-	screen5->addMenu(name5, id5, position5, 2, scale);
-	screenManager->addScreen(screen5);
-
-	Screen* screen3 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"Play");
-	std::wstring name3[] = { L"Pause"};
-	std::wstring id3[] = { L"PausePlay"};
-	XMFLOAT2 position3[] = {XMFLOAT2(centerPosition.x, 40)};
-	screen3->addMenu(name3, id3, position3, 1, scale);
-	screenManager->addScreen(screen3);
-
-	Screen* screen6 = new Screen(m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"), L"GameOver");
-	std::wstring name6[] = {L"Score",  L"Continue"};
-	std::wstring id6[] = { L"ScoreGameOver" , L"ContinueGameOver"};
-	XMFLOAT2 position6[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight),XMFLOAT2(centerPosition.x, centerPosition.y) };
-	screen6->addMenu(name6, id6, position6, 2, scale);
-	screenManager->addScreen(screen6);
-
-	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\brick2.dds", nullptr, m_texture2.ReleaseAndGetAddressOf())
-		);
-
-	screenManager->addBrickTexture(m_texture2.Get());
-
-	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\brick.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
-		);
-
-	int x1 = 32;
-	int y1 = 19;
-	int tab1[] = {
-		1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-	};
-
-		
-	screenManager->addBrickTexture2(m_texture.Get());
-	screenManager->setMapLevel(x1,y1, tab1, logicalSize.Width, logicalSize.Height, scale, m_texture.Get(), new SpriteFont(device, L"assets\\italic.spritefont"));
-
-	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\person.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
-		);
-	screenManager->game->addPlayer(m_texture.Get(), XMFLOAT2(1, 17), scale);
-
-	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\enemy.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
-		);
-	screenManager->game->addEnemy(m_texture.Get(), XMFLOAT2(5, 17), scale, 1);
-
-	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\bonus.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
-		);
-
-	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(10, 17), scale);
-	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(15, 3), scale);
-	screenManager->game->addBonus(m_texture.Get(), XMFLOAT2(23, 3), scale);
-
-	//set windows size for drawing the background
-	//clouds2->SetWindow(logicalSize.Width, logicalSize.Height);
-
-	//Gamepad
-	//GamePad.reset(new GamePad);
 }
 
 void DirectXTK3DSceneRenderer::ReleaseDeviceDependentResources()
@@ -581,9 +545,5 @@ void DirectXTK3DSceneRenderer::ReleaseDeviceDependentResources()
     m_sprites.reset();
     m_font.reset();
     m_texture.Reset();
-	//backgroundTexture.Reset();
-	//cloudsTexture.Reset();
-	//cloudsTexture2.Reset();
-	//pipeTexture.Reset();
-	//enemyTexture.Reset();
+	screenManager.reset();
 }

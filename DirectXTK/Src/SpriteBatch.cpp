@@ -976,9 +976,9 @@ void XM_CALLCONV SpriteBatch::Draw(_In_ ID3D11ShaderResourceView* texture, XMFLO
 }
 
 
-void XM_CALLCONV SpriteBatch::Draw(_In_ ID3D11ShaderResourceView* texture, XMFLOAT2 const& position, _In_opt_ RECT const* sourceRectangle, FXMVECTOR color, float rotation, XMFLOAT2 const& origin, float scale, SpriteEffects effects, float layerDepth)
+void XM_CALLCONV SpriteBatch::Draw(_In_ ID3D11ShaderResourceView* texture, XMFLOAT2 const& position, _In_opt_ RECT const* sourceRectangle, FXMVECTOR color, float rotation, XMFLOAT2 const& origin, float scaleX, SpriteEffects effects, float layerDepth)
 {
-    XMVECTOR destination = XMVectorPermute<0, 1, 4, 4>(XMLoadFloat2(&position), XMLoadFloat(&scale)); // x, y, scale, scale
+    XMVECTOR destination = XMVectorPermute<0, 1, 4, 4>(XMLoadFloat2(&position), XMLoadFloat(&scaleX)); // x, y, scale, scale
     
     XMVECTOR originRotationDepth = XMVectorSet(origin.x, origin.y, rotation, layerDepth);
 
@@ -986,9 +986,9 @@ void XM_CALLCONV SpriteBatch::Draw(_In_ ID3D11ShaderResourceView* texture, XMFLO
 }
 
 
-void XM_CALLCONV SpriteBatch::Draw(_In_ ID3D11ShaderResourceView* texture, XMFLOAT2 const& position, _In_opt_ RECT const* sourceRectangle, FXMVECTOR color, float rotation, XMFLOAT2 const& origin, XMFLOAT2 const& scale, SpriteEffects effects, float layerDepth)
+void XM_CALLCONV SpriteBatch::Draw(_In_ ID3D11ShaderResourceView* texture, XMFLOAT2 const& position, _In_opt_ RECT const* sourceRectangle, FXMVECTOR color, float rotation, XMFLOAT2 const& origin, XMFLOAT2 const& scaleX, SpriteEffects effects, float layerDepth)
 {
-    XMVECTOR destination = XMVectorPermute<0, 1, 4, 5>(XMLoadFloat2(&position), XMLoadFloat2(&scale)); // x, y, scale.x, scale.y
+    XMVECTOR destination = XMVectorPermute<0, 1, 4, 5>(XMLoadFloat2(&position), XMLoadFloat2(&scaleX)); // x, y, scale.x, scale.y
     
     XMVECTOR originRotationDepth = XMVectorSet(origin.x, origin.y, rotation, layerDepth);
     
@@ -1004,9 +1004,9 @@ void XM_CALLCONV SpriteBatch::Draw(_In_ ID3D11ShaderResourceView* texture, FXMVE
 }
 
 
-void XM_CALLCONV SpriteBatch::Draw(_In_ ID3D11ShaderResourceView* texture, FXMVECTOR position, _In_opt_ RECT const* sourceRectangle, FXMVECTOR color, float rotation, FXMVECTOR origin, float scale, SpriteEffects effects, float layerDepth)
+void XM_CALLCONV SpriteBatch::Draw(_In_ ID3D11ShaderResourceView* texture, FXMVECTOR position, _In_opt_ RECT const* sourceRectangle, FXMVECTOR color, float rotation, FXMVECTOR origin, float scaleX, SpriteEffects effects, float layerDepth)
 {
-    XMVECTOR destination = XMVectorPermute<0, 1, 4, 4>(position, XMLoadFloat(&scale)); // x, y, scale, scale
+    XMVECTOR destination = XMVectorPermute<0, 1, 4, 4>(position, XMLoadFloat(&scaleX)); // x, y, scale, scale
 
     XMVECTOR rotationDepth = XMVectorMergeXY(XMVectorReplicate(rotation), XMVectorReplicate(layerDepth));
 
@@ -1016,9 +1016,9 @@ void XM_CALLCONV SpriteBatch::Draw(_In_ ID3D11ShaderResourceView* texture, FXMVE
 }
 
 
-void XM_CALLCONV SpriteBatch::Draw(_In_ ID3D11ShaderResourceView* texture, FXMVECTOR position, _In_opt_ RECT const* sourceRectangle, FXMVECTOR color, float rotation, FXMVECTOR origin, GXMVECTOR scale, SpriteEffects effects, float layerDepth)
+void XM_CALLCONV SpriteBatch::Draw(_In_ ID3D11ShaderResourceView* texture, FXMVECTOR position, _In_opt_ RECT const* sourceRectangle, FXMVECTOR color, float rotation, FXMVECTOR origin, GXMVECTOR scaleX, SpriteEffects effects, float layerDepth)
 {
-    XMVECTOR destination = XMVectorPermute<0, 1, 4, 5>(position, scale); // x, y, scale.x, scale.y
+    XMVECTOR destination = XMVectorPermute<0, 1, 4, 5>(position, scaleX); // x, y, scale.x, scale.y
     
     XMVECTOR rotationDepth = XMVectorMergeXY(XMVectorReplicate(rotation), XMVectorReplicate(layerDepth));
 

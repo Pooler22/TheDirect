@@ -11,44 +11,26 @@
 class TextButton : public Button
 {
 public:
-	TextButton(ID3D11ShaderResourceView* buttonSpriteSheet, SpriteFont *spriteFont, std::wstring inString, std::wstring inId, XMFLOAT2 inPosition, float scaleIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
+	TextButton(ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<DirectX::SpriteFont> spriteFont, std::wstring inString, std::wstring inId, XMFLOAT2 inPosition, float scaleX, float scaleY) :
+		Button(buttonSpriteSheet,  inPosition, scaleX, scaleY)
 	{
-		float rotation = 0.f;
-		scale = scaleIn;
-		id = inId;
-		string = inString;
-		
-
-		texture = buttonSpriteSheet;
-		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scaleIn, 0.0f));
-		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
-
-		color = Colors::Black;
-		
-		m_font.reset(spriteFont);
-		colorNormal = Colors::Black;
-		colorOver = Colors::Blue;
-
-		dimensions.x = animation->getFrameWidth();
-		dimensions.y = animation->getFrameHeight();
-
-		position = inPosition;
-		position.x -= (dimensions.x / 2.0);
-		position.y -= (dimensions.y / 2.0);
-
-		updateBoundingRect();
+		this->id = inId;
+		this->string = inString;
+		this->colorNormal = this->color = Colors::Black;
+		this->colorOver = Colors::Blue;
+		this->m_font = spriteFont;
 	}
 
-	bool isOver(float x, float y) 
+	bool isOver(Windows::Foundation::Rect rect)
 	{
-		if (x > (boundingRectangle.X) && y > (boundingRectangle.Y) && x < (boundingRectangle.X + boundingRectangle.Width) && y < (boundingRectangle.Y + boundingRectangle.Height))
+		if(this->boundingRectangle.IntersectsWith(rect))
 		{
-			color = colorOver;
+			this->color = this->colorOver;
 			return true;
 		}
 		else
 		{
-			color = colorNormal;
+			this->color = this->colorNormal;
 			return false;
 		}
 	}
@@ -59,36 +41,31 @@ public:
 		m_font->DrawString(batch, string.c_str(), position, color);
 	}
 
-	void setString(std::wstring in)
+	void setString(std::wstring string)
 	{
-		string = in;
+		this->string = string;
 	}
 
 	std::wstring getString()
 	{
-		return string;
+		return this->string;
 	}
 
-	void setId(std::wstring in)
+	void setId(std::wstring string)
 	{
-		id = in;
+		this->id = string;
 	}
 
 	std::wstring getId()
 	{
-		return id;
+		return this->id;
 	}
 
 public:
-
-	int													framesOfAnimation;
-	int													framesToBeShownPerSecond;
-	
-	std::unique_ptr<DirectX::SpriteFont>				m_font;
-	DirectX::XMVECTOR									color;
-	DirectX::XMVECTOR									colorNormal;
-	DirectX::XMVECTOR									colorOver;
-	std::wstring										string;
-	std::wstring										id;
-	
+	std::wstring							id;
+	std::wstring							string;
+	DirectX::XMVECTOR						color;
+	DirectX::XMVECTOR						colorNormal;
+	DirectX::XMVECTOR						colorOver;
+	std::shared_ptr<DirectX::SpriteFont>	m_font;
 };

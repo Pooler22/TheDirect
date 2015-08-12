@@ -8,24 +8,56 @@
 #include "SpriteFont.h"
 #include "Person.h"
 #include "Button.h"
+#include "Skill.h"
 
 class Player : public Person
 {
 public:
-	Player::Player()
-	{}
-
-	Player::Player(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn ) : framesOfAnimation(4), framesToBeShownPerSecond(4), Person(buttonSpriteSheet, positionIn, scaleIn)
+	Player::Player() :
+		Person()
 	{
-		life = 3;
-		score = 0;
+		this->scaleX = 1;
+	}
+
+	Player::Player(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY) :
+		Person(buttonSpriteSheet, positionIn, scaleX, scaleY)
+	{
+		lastGoodPosition = positionIn;
+		this->scaleX = scaleX;
+		shots.reset(new std::vector<Button>());
+		skill.reset(new Skill(3, 1, 0, 5, 1));
 		over = false;
+		blockLeft = false;
+		blockRight = false;
+		blockTop = false;
+		blockButtom = false;
+		stand = false;
+	}
+
+	void  Draw(DirectX::SpriteBatch* batch)
+	{
+		for (std::vector<Button>::iterator it = shots->begin(); it != shots->end(); ++it)
+		{
+			it->Draw(batch);
+		}
+		animation->Draw(batch, position);
+	}
+
+
+
+	void  Update(float elapsed)
+	{
+		for (std::vector<Button>::iterator it = shots->begin(); it != shots->end(); ++it)
+		{
+			it->Update(elapsed);
+		}
+		animation->Update(elapsed);
 	}
 
 	void  Player::die()
 	{
-		life--; // TODO check value of life
-		if (life == 0)
+		skill->life = skill->life - 1;
+		if (skill->life == 0)
 		{
 			this->over = true;
 		}
@@ -37,23 +69,19 @@ public:
 		if (this->over)
 		{
 			this->over = false;
-			reset();
+			resetLevel();
 			return true;
 		}
 		return false;
 	}
-	void  Player::reset()
-	{
-		life = 3;
-	}
-	
+
 	int getLife()
 	{
-		return life;
+		return skill->life;
 	}
 	void setLife(int life)
 	{
-		this->life = life;
+		this->skill->life = life;
 	}
 
 	int getScore()
@@ -67,61 +95,24 @@ public:
 	}
 	void resetLevel()
 	{
-		life = 3;
+		skill->life = 3;
 		score = 0;
 		position = startPosition;
 		updateBoundingRect();
 	}
 
-	virtual void  Player::move(float x, float y)
+	void fire()
 	{
-		if (!moveDown)
-		{
-			if (y * speed > 0)
-			{
-				if (blockDirection == 1 && x < 0)
-					position.x = position.x + (x * speed);
-				if (blockDirection == 2 && x < 0)
-					position.x = position.x + (x * speed);
-				position.y = position.y - (y * speed);
-			}
-			else
-			{
-				position.x = position.x + (x * speed);
-			}
-		}
-		else
-		{
-			position.x = position.x + (x * speed);
-			position.y = position.y - (y * speed);
-		}
-
-		updateBoundingRect();
-	}
-
-	void setBlockDirection(int direction)
-	{
-		blockDirection = direction;
-		if (direction == 0)
-		{
-
-		}
-		else if (direction == 1)
-		{
-
-		}
-		else if (direction == 2)
-		{
-
-		}
+		shots->push_back(Button(texture.Get(), position,1.0f, 1.0f));
 	}
 
 public:
-	int		blockDirection;
-	bool	over;
-	int		life;
-	int		score;
-	int		framesOfAnimation;
-	int		framesToBeShownPerSecond;
+
+	DirectX::XMFLOAT2									lastGoodPosition;
+	bool												over;
+	int													score;
+	std::unique_ptr<Skill>								skill;
+	std::shared_ptr<std::vector<Button>>				shots;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	bubbleTexture;
 
 };

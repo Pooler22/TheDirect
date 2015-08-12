@@ -1469,14 +1469,14 @@ namespace
 
 
 // Tessellates the specified bezier patch.
-static void XM_CALLCONV TessellatePatch(VertexCollection& vertices, IndexCollection& indices, TeapotPatch const& patch, size_t tessellation, FXMVECTOR scale, bool isMirrored)
+static void XM_CALLCONV TessellatePatch(VertexCollection& vertices, IndexCollection& indices, TeapotPatch const& patch, size_t tessellation, FXMVECTOR scaleX, bool isMirrored)
 {
     // Look up the 16 control points for this patch.
     XMVECTOR controlPoints[16];
 
     for (int i = 0; i < 16; i++)
     {
-        controlPoints[i] = TeapotControlPoints[patch.indices[i]] * scale;
+        controlPoints[i] = TeapotControlPoints[patch.indices[i]] * scaleX;
     }
 
     // Create the index data.

@@ -11,106 +11,112 @@ class Person : public Button
 {
 public:
 	Person::Person()
-	{}
-
-	Person::Person(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleIn) : framesOfAnimation(4), framesToBeShownPerSecond(4)
 	{
-		float rotation = 0.f;
-		scale = scaleIn;
-
-		texture = buttonSpriteSheet;
-		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scaleIn, 0.5f));
-		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
-
-		bubbles = std::vector<Button>();
-		
-		dimensions.x = animation->getFrameWidth();
-		dimensions.y = animation->getFrameHeight();
-		startPosition.x = position.x = positionIn.x;
-		startPosition.y = position.y = positionIn.y - dimensions.y;
-		updateBoundingRect();
-		speed = 10;
-		gravity = 1;
-		stand = false;
-		jumpTime = 10;
 	}
 
-	virtual void  Person::Draw(DirectX::SpriteBatch* batch)
+	Person::Person(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY) :
+		Button(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
-		for (auto &bubble : bubbles)
-		{
-			bubble.Draw(batch);
-		}
+		this->startPosition = positionIn;
+		this->scaleX = scaleX;
+		this->speed = 10;
+		blockLeft = blockRight = blockTop =  blockButtom = stand = false;
+	}
+
+	void  Person::Draw(DirectX::SpriteBatch* batch)
+	{
 		animation->Draw(batch, position);
 	}
 
-	virtual void  Person::Update(float elapsed)
+	void  Person::Update(float elapsed)
 	{
-		if(stand && jumpTime > 0)
-			jumpTime--;
-
-		if (!stand)
-		{
-			move(0, -gravity);
-		}
-		for (auto &bubble : bubbles)
-		{
-			bubble.Update(elapsed);
-		}
+		//position.y += force;
+		updateBoundingRect();
 		animation->Update(elapsed);
 	}
 
-	virtual void  Person::setStand(bool standIn)
+	void  move(float x, float y)
 	{
-		stand = standIn;
-	}
+		if (blockRight && x > 0)
+		{
+			x = 0;
+		}
+		if (blockLeft && x < 0)
+		{
+			x = 0;
+		}
+		if (stand && y <= 0)
+		{
+			force = 0;
+			y = 0;
+		}
+		else 
+		{
+			if (jumpFlag)
+			{
+				force = -force;
+			}
+			force = 5;
+		}
+		position.x += (x * speed * scaleX);
+		position.y -= (y * speed * scaleX) - force * scaleX;
 
-	virtual void  Person::move(float x, float y)
-	{
-		if (!moveDown)
-		{
-			if (y * speed > 0)
-			{
-				position.x = position.x + (x * speed);
-				position.y = position.y - (y * speed);
-			}
-			else
-			{
-				position.x = position.x + (x * speed);
-			}
-		}
-		else
-		{
-			position.x = position.x + (x * speed);
-			position.y = position.y - (y * speed);
-		}
-		
+		blockRight = false;
+		blockLeft = false;
+		stand = false;
 		updateBoundingRect();
 	}
 
-	void  Person::jump()
+	void colision(Windows::Foundation::Rect rect, BRICK_BEHAVIOR behavior)
 	{
-		if(stand && jumpTime > 0)
-			move(0, 2);
+		if (boundingRectangle.IntersectsWith(rect))
+			{
+			if (boundingRectangle.Right > rect.Left &&
+				boundingRectangle.Left < rect.Left - boundingRectangle.Width / 2 &&
+				boundingRectangle.Bottom > rect.Top
+				)
+			{
+				blockRight = true;
+			}
+			if (boundingRectangle.Left < rect.Right &&
+				boundingRectangle.Right > rect.Left + boundingRectangle.Width / 2 &&
+				boundingRectangle.Bottom > rect.Top
+				)
+			{
+				blockLeft = true;
+			}
+			if (boundingRectangle.Right - 1 > rect.Left &&
+				boundingRectangle.Right + 1 < rect.Right + boundingRectangle.Width &&
+				boundingRectangle.Bottom >= rect.Top &&
+				boundingRectangle.Top < rect.Top)
+			{
+				position.y = rect.Y - dimensions.y;
+				stand = true;
+			}
+			if (boundingRectangle.Left + boundingRectangle.Width - 1 > rect.Left &&
+				boundingRectangle.Left + boundingRectangle.Width + 1 < rect.Left + rect.Width + boundingRectangle.Width &&
+				boundingRectangle.Top <= rect.Bottom&&
+				boundingRectangle.Bottom > rect.Bottom)
+			{
+				position.y = rect.Y + rect.Height;
+			}
+			updateBoundingRect();
+		}
 	}
-
-	void  Person::setMoveDown(bool flag)
-	{
-		moveDown = flag;
-	}
+	
 
 	void  Person::setStartPosition()
 	{
 		position = startPosition;
 		updateBoundingRect();
 	}
-	
-	/*void  Person::addBonus(std::shared_ptr<Bonus_struct> bs)
-	{
-		score += bs->score;
-		speed += bs->speed;
-	}*/
 
+	void jump()
+	{
+		this->force = this->gravity;
+		this->jumpFlag = true;
+	}
+	
 	void resetLevel()
 	{
 		position = startPosition;
@@ -118,15 +124,16 @@ public:
 	}
 
 public:
-	DirectX::XMFLOAT2	startPosition;
-	bool		jumpFlag;
-	int			jumpTime;
-	bool		moveDown;
-	bool		stand;
-	int			speed;
-	float		gravity;
-	int			framesOfAnimation;
-	int			framesToBeShownPerSecond;
-	std::vector<Button> bubbles;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	bubbleTexture;
+	int gravity;
+	int force;
+	bool jumpFlag;
+	bool stand;
+	bool blockRight;
+	bool blockLeft;
+	bool blockTop;
+	bool blockButtom;
+	float												scaleX;
+	int													speed;
+	DirectX::XMFLOAT2									startPosition;
+	
 };
