@@ -93,7 +93,12 @@ public:
         Draw( batch, mFrame, screenPos );
     }
 
-    void Draw( DirectX::SpriteBatch* batch, int frame, const DirectX::XMFLOAT2& screenPos ) const
+	void Draw(DirectX::SpriteBatch* batch, const DirectX::XMFLOAT2& screenPos, DirectX::SpriteEffects spriteEffect) const
+	{
+		Draw(batch, mFrame, screenPos,spriteEffect);
+	}
+
+    void Draw( DirectX::SpriteBatch* batch, int frame, const DirectX::XMFLOAT2& screenPos) const
     {
         int frameWidth = mTextureWidth / mFrameCount;
 
@@ -106,6 +111,20 @@ public:
         batch->Draw( mTexture.Get(), screenPos, &sourceRect, DirectX::Colors::White,
                      mRotation, mOrigin, mScale, DirectX::SpriteEffects_None, mDepth );
     }
+
+	void Draw(DirectX::SpriteBatch* batch, int frame, const DirectX::XMFLOAT2& screenPos, DirectX::SpriteEffects spriteEffect) const
+	{
+		int frameWidth = mTextureWidth / mFrameCount;
+
+		RECT sourceRect;
+		sourceRect.left = frameWidth * frame;
+		sourceRect.top = 0;
+		sourceRect.right = sourceRect.left + frameWidth;
+		sourceRect.bottom = mTextureHeight;
+
+		batch->Draw(mTexture.Get(), screenPos, &sourceRect, DirectX::Colors::White,
+			mRotation, mOrigin, mScale, spriteEffect, mDepth);
+	}
 
     void Reset()
     {

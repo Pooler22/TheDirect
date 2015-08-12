@@ -200,7 +200,6 @@ public:
 	int										screenHeight;
 	float									scaleX;
 	float									scaleY;
-
 	std::unique_ptr<Map>					map;
 	std::unique_ptr<Player>					player;
 	std::unique_ptr<std::vector<Enemy>>		enemies;

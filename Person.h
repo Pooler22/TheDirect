@@ -20,7 +20,15 @@ public:
 
 	void  Person::Draw(DirectX::SpriteBatch* batch)
 	{
-		animation->Draw(batch, position);
+		if (direction)
+		{
+			animation->Draw(batch, position, DirectX::SpriteEffects::SpriteEffects_FlipHorizontally);
+		}
+		else 
+		{
+			animation->Draw(batch, position);
+		}
+		
 	}
 
 	void  Person::Update(float elapsed)
