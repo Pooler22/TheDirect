@@ -48,21 +48,34 @@ public:
 
 	void Game::Update(float elapsed)
 	{
-		getColision();
+		for (auto brick : map->bricks)
+		{
+			if (brick->getBehavior() == BRICK_BEHAVIOR_BLOCK) 
+			{
+				player->colision(brick->getBoundingRectangle(), brick->getBehavior());
+				for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
+				{
+					it->colision(brick->getBoundingRectangle(), brick->getBehavior());
+				}
+				for (std::vector<Bonus>::iterator it = bonus->begin(); it != bonus->end(); ++it)
+				{
+					it->colision(brick->getBoundingRectangle(), brick->getBehavior());
+				}
+			}
+		}
+			
+		
 		playerVsEnemyColision();
 		playerVsBonusColision();
 		correctPlayerPosition();
 		
 		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
 		{
-
-			isColision(it);
 			correctPlayerPosition(it);
 			it->Update(elapsed);
 		}
 		for (std::vector<Bonus>::iterator it = bonus->begin(); it != bonus->end(); ++it)
 		{
-			isColision(it);
 			correctPlayerPosition(it);
 			it->Update(elapsed);
 		}
@@ -162,83 +175,6 @@ public:
 		else if (player->getPosition().x < 0.0 - player->getDimension().x)
 		{
 			player->setPosition(XMFLOAT2(screenWidth, player->getPosition().y));
-		}
-	}
-
-	void Game::isColision()
-	{
-		if (map->isStanding(player->boundingRectangle))
-		{
-			player->setStand(true);
-			player->setMoveDown(false);
-		}
-		else 
-		{
-			player->setStand(false);
-			player->setMoveDown(true);
-		}
-	}
-
-	void Game::getColision()
-	{
-		unsigned int colision = map->getColision(player->boundingRectangle);
-		if ((colision & COLISION_TYPE::COLISION_TYPE_LEFT) == COLISION_TYPE::COLISION_TYPE_LEFT)
-		{
-			player->setBlockDirection(1);
-			//player->speed = 0;
-		}
-		else
-		{
-			player->setBlockDirection(0);
-		}
-
-		if ((colision & COLISION_TYPE::COLISION_TYPE_RIGHT) == COLISION_TYPE::COLISION_TYPE_RIGHT)
-		{
-			//player->speed = 0;
-			player->setBlockDirection(2);
-		}
-		else
-		{
-			player->setBlockDirection(0);
-		}
-
-		if ((colision & COLISION_TYPE::COLISION_TYPE_TRUE) == COLISION_TYPE::COLISION_TYPE_TRUE)
-		{
-			player->setStand(true);
-			player->setMoveDown(false);
-		}
-		else
-		{
-			player->setStand(false);
-			player->setMoveDown(true);
-		}
-	}
-
-	void Game::isColision(std::vector<Bonus>::iterator person)
-	{
-		if (map->isStanding(person->boundingRectangle))
-		{
-			person->setStand(true);
-			person->setMoveDown(false);
-		}
-		else
-		{
-			person->setStand(false);
-			person->setMoveDown(true);
-		}
-	}
-	
-	void Game::isColision(std::vector<Enemy>::iterator person)
-	{
-		if (map->isStanding(person->boundingRectangle))
-		{
-			person->setStand(true);
-			person->setMoveDown(false);
-		}
-		else
-		{
-			person->setStand(false);
-			person->setMoveDown(true);
 		}
 	}
 

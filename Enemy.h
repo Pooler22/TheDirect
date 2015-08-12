@@ -23,21 +23,11 @@ public:
 
 	void Update(float elapsed) override
 	{
-		if (stand && jumpTime > 0)
-			jumpTime--;
+		if (blockRight || blockLeft)
+			moveDirection = -moveDirection;
 
-		if (!stand)
-		{
-			move(0, -gravity);
-		}
-		if(moveDirection == 1)
-		{
-			move(1,0);
-		}
-		else
-		{
-			move(-1, 0);
-		}
+			move(moveDirection, 0);
+
 		animation->Update(elapsed);
 	}
 

@@ -57,7 +57,7 @@ public:
 	unsigned int getColision(Windows::Foundation::Rect rect)
 	{
 		unsigned int ct;
-		rect.Y += 1;
+
 		if (this->behavior == BRICK_BEHAVIOR::BRICK_BEHAVIOR_BLOCK && this->boundingRectangle.IntersectsWith(rect))
 		{
 			if (this->boundingRectangle.Right > rect.Left)
