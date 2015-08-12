@@ -20,7 +20,7 @@ public:
 		this->startPosition = positionIn;
 		this->scaleX = scaleX;
 		this->speed = 10;
-		blockLeft = blockRight = blockTop =  blockButtom = stand = false;
+		this->direction = blockLeft = blockRight = blockTop =  blockButtom = stand = false;
 	}
 
 	void  Person::Draw(DirectX::SpriteBatch* batch)
@@ -58,6 +58,16 @@ public:
 			}
 			force = 5;
 		}
+
+		if (x > 0)
+		{
+			direction = false;
+		}
+		else if (x < 0)
+		{
+			direction = true;
+		}
+
 		position.x += (x * speed * scaleX);
 		position.y -= (y * speed * scaleX) - force * scaleX;
 
@@ -145,6 +155,7 @@ public:
 	}
 
 public:
+	bool direction; //0 lat, 1 right
 	int gravity;
 	int force;
 	bool jumpFlag;

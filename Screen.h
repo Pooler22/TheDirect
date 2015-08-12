@@ -69,7 +69,7 @@ public:
 	{
 		for (auto &button : this->buttons)
 		{
-			if (button->isOver(Windows::Foundation::Rect(x, y,1,1)))
+			if (button->getBoundingRectangle().IntersectsWith(Windows::Foundation::Rect(x, y,1,1)))
 			{
 				return button->getId();
 			}

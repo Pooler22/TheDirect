@@ -18,11 +18,11 @@ public:
 		this->scaleY = scaleY;
 		this->screenWidth = screenWidth;
 		this->screenHeight = screenHeight;
-		this->screens = std::vector<std::shared_ptr<Screen>>();
-		this->game.reset(new Game(screenWidth, screenHeight, scaleX, scaleY));
 		this->nameCurrentScreen = nameIn;
 		this->buttonSpriteSheet = buttonSpriteSheet;
 		this->textSprite = textSprite;
+		this->screens = std::vector<std::shared_ptr<Screen>>();
+		this->game.reset(new Game(screenWidth, screenHeight, scaleX, scaleY));
 	}
 
 	void addScreen(Screen* screen)
@@ -47,9 +47,9 @@ public:
 		this->game->addBrickTexture2(spriteSheet);
 	}
 
-	void addPlayer(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn)
+	void addPlayer(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, ID3D11ShaderResourceView* shotSpriteSheet)
 	{
-		game->addPlayer(buttonSpriteSheet, positionIn);
+		game->addPlayer(buttonSpriteSheet, positionIn, shotSpriteSheet);
 	}
 
 	void addEnemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, int i)
@@ -130,6 +130,11 @@ public:
 	bool gameOver()
 	{
 		return this->game->gameOver();
+	}
+
+	bool win()
+	{
+		return this->game->win();
 	}
 
 	void resetLevel()

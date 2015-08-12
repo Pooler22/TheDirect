@@ -117,6 +117,9 @@
     <ClInclude Include="Content\SampleVirtualControllerRenderer.h">
       <Filter>Content\Renderers</Filter>
     </ClInclude>
+    <ClInclude Include="Shot.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

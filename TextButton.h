@@ -21,20 +21,6 @@ public:
 		this->m_font = spriteFont;
 	}
 
-	bool isOver(Windows::Foundation::Rect rect)
-	{
-		if(this->boundingRectangle.IntersectsWith(rect))
-		{
-			this->color = this->colorOver;
-			return true;
-		}
-		else
-		{
-			this->color = this->colorNormal;
-			return false;
-		}
-	}
-
 	void Draw(DirectX::SpriteBatch* batch)
 	{
 		animation->Draw(batch, position);

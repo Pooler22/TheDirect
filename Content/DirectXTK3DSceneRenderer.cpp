@@ -130,7 +130,12 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\person.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
-	screenManager->addPlayer(m_texture.Get(), XMFLOAT2(1, 15));
+
+	DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\bonus.dds", nullptr, m_texture2.ReleaseAndGetAddressOf())
+		);
+
+	screenManager->addPlayer(m_texture.Get(), XMFLOAT2(1, 15), m_texture2.Get());
 
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\enemy.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
@@ -218,7 +223,7 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 		m_retryDefault = true;
 	}
 
-	if (screenManager->gameOver())
+	if (screenManager->gameOver() || screenManager->win())
 	{
 		screenManager->setString(L"GameOver", L"ScoreGameOver", std::to_wstring(screenManager->game->getScore()));
 		screenManager->setName(L"GameOver");

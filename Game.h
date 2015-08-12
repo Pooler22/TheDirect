@@ -33,9 +33,9 @@ public:
 		this->map->setMapLevel(x, y, numberTestureVectorIn, this->screenWidth, this->screenHeight, scaleX, scaleY, playerSpriteSheetIn, spriteFontIn);
 	}
 	
-	void Game::addPlayer(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn)
+	void Game::addPlayer(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, ID3D11ShaderResourceView* shotSpriteSheet)
 	{
-		this->player = std::unique_ptr<Player>(new Player(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), scaleX, scaleY));
+		this->player = std::unique_ptr<Player>(new Player(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), scaleX, scaleY, shotSpriteSheet));
 	}
 
 	void Game::addEnemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, int moveDirection)
@@ -70,10 +70,18 @@ public:
 		playerVsBonusColision();
 		player->correctPersonPosition(screenWidth, screenHeight);
 		
-		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
+		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end();)
 		{
-			it->correctPersonPosition(screenWidth, screenHeight);
-			it->Update(elapsed);
+			if (player->shotColision(it->getBoundingRectangle()))
+			{
+				it = enemies->erase(it);
+			}
+			else
+			{
+				it->correctPersonPosition(screenWidth, screenHeight);
+				it->Update(elapsed);
+				++it;
+			}
 		}
 		for (std::vector<Bonus>::iterator it = bonus->begin(); it != bonus->end(); ++it)
 		{
@@ -131,8 +139,8 @@ public:
 		{
 			it->resize(scaleX, scaleY);
 		}
-		//TODO: ?
-		screenHeight *= scaleX;
+		screenWidth*= scaleX;
+		screenHeight *= scaleY;
 	}
 
 	void Game::Draw(DirectX::SpriteBatch* batch)
@@ -152,6 +160,11 @@ public:
 	bool gameOver()
 	{
 		return player->gameOver();
+	}
+
+	bool win()
+	{
+		return (enemies->size() == 0);
 	}
 
 	int getScore()
@@ -183,11 +196,10 @@ public:
 		this->map->addBrickTexture2(buttonSpriteSheet);
 	}
 
-	bool									moveDown;
 	int										screenWidth;
 	int										screenHeight;
-	float scaleX;
-	float scaleY;
+	float									scaleX;
+	float									scaleY;
 
 	std::unique_ptr<Map>					map;
 	std::unique_ptr<Player>					player;
