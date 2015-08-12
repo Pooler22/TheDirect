@@ -12,9 +12,10 @@
 class Screen
 {
 public:
-
-	Screen(ID3D11ShaderResourceView* playerSpriteSheetIn, std::shared_ptr<DirectX::SpriteFont>  spriteFontIn, std::wstring nameIn)
+	Screen(ID3D11ShaderResourceView* playerSpriteSheetIn, std::shared_ptr<DirectX::SpriteFont>  spriteFontIn, std::wstring nameIn, float scaleX, float scaleY)
 	{
+		this->scaleX = scaleX;
+		this->scaleY = scaleY;
 		this->buttonSpriteSheet = playerSpriteSheetIn;
 		this->spriteFont = spriteFontIn;
 		this->name = nameIn;
@@ -26,12 +27,12 @@ public:
 		this->buttons.push_back(std::shared_ptr<TextButton>(button));
 	}
 
-	void addButton(std::wstring name, std::wstring id, XMFLOAT2 position, float scaleX, float scaleY)
+	void addButton(std::wstring name, std::wstring id, XMFLOAT2 position)
 	{
 		this->buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet, spriteFont, name, id, position, scaleX, scaleY)));
 	}
 
-	void addMenu(std::wstring* names, std::wstring* ids, XMFLOAT2* position, int size, float scaleX, float scaleY)
+	void addMenu(std::wstring* names, std::wstring* ids, XMFLOAT2* position, int size)
 	{
 		for (int i = 0; i < size; i++)
 		{
@@ -69,7 +70,7 @@ public:
 	{
 		for (auto &button : this->buttons)
 		{
-			if (button->getBoundingRectangle().IntersectsWith(Windows::Foundation::Rect(x, y,1,1)))
+			if (button->isOver(Windows::Foundation::Rect(x, y, 1, 1)))
 			{
 				return button->getId();
 			}
@@ -79,6 +80,8 @@ public:
 
 	void resize(float scaleX, float scaleY)
 	{
+		this->scaleX = scaleX;
+		this->scaleY = scaleY;
 		for (auto &button : this->buttons)
 		{
 			button->resize(scaleX, scaleY);
@@ -95,7 +98,8 @@ public:
 	}
 
 private:
-
+	float										scaleX;
+	float										scaleY;
 	ID3D11ShaderResourceView*					buttonSpriteSheet;
 	std::shared_ptr<DirectX::SpriteFont> 		spriteFont;
 	std::wstring								name;

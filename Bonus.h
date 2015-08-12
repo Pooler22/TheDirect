@@ -13,9 +13,6 @@
 class Bonus : public Person
 {
 public:
-	Bonus::Bonus()
-	{}
-
 	Bonus::Bonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, std::shared_ptr<Skill> bonus) :
 		Person(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
@@ -32,6 +29,6 @@ public:
 		this->bonus = bonus;
 	}
 
-public:
+private:
 	std::shared_ptr<Skill> bonus;
 };

@@ -12,25 +12,42 @@
 class Enemy : public Person
 {
 public:
-	Enemy::Enemy()
-	{}
-
-	Enemy::Enemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, int moveDirectionIn) :
+	Enemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, int moveDirectionIn) :
 		Person(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
-		moveDirection = moveDirectionIn;
+		this->moveDirection = moveDirectionIn;
+		this->point = 11;
 	}
 
 	void Update(float elapsed) override
 	{
 		if (blockRight || blockLeft)
 			moveDirection = -moveDirection;
-
-			move(moveDirection, 0);
-
+		move(moveDirection, 0);
 		animation->Update(elapsed);
 	}
 
-public:
-	int		moveDirection;
+	void setMoveDirection(int moveDirection)
+	{
+		this->moveDirection = moveDirection;
+	}
+
+	int getMoveDirection()
+	{
+		return this->moveDirection;
+	}
+
+	void setPoint(int point)
+	{
+		this->point = point;
+	}
+
+	int getPoint()
+	{
+		return this->point;
+	}
+
+private:
+	int	moveDirection;
+	int	point;
 };

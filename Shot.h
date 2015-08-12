@@ -13,9 +13,6 @@
 class Shot : public Person
 {
 public:
-	Shot::Shot()
-	{}
-
 	Shot::Shot(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, bool direction, int speed) :
 		Person(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
@@ -25,7 +22,7 @@ public:
 
 	bool getDirection()
 	{
-		return direction;
+		return this->direction;
 	}
 
 	void setDirection(bool direction)
@@ -35,7 +32,7 @@ public:
 
 	int getSpeed()
 	{
-		return speed;
+		return this->speed;
 	}
 
 	void setSpeed(int speed)
@@ -54,13 +51,7 @@ public:
 		animation->Update(elapsed);
 	}
 
-	void Draw(DirectX::SpriteBatch* batch)
-	{
-		animation->Draw(batch, position);
-	}
-
-
-public:
-	bool	direction;
-	int		speed;
+private:
+	bool direction;
+	int speed;
 };

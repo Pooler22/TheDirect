@@ -34,6 +34,6 @@ public:
 		return this->behavior;
 	}
 
-public:
+private:
 	BRICK_BEHAVIOR		behavior;
 };

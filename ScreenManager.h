@@ -32,8 +32,8 @@ public:
 
 	void addScreen(std::wstring nameIn, int size, std::wstring name[], std::wstring id[], XMFLOAT2 position[])
 	{
-		Screen* screen = new Screen(buttonSpriteSheet, textSprite, nameIn);
-		screen->addMenu(name, id, position, size, scaleX, scaleY);
+		Screen* screen = new Screen(buttonSpriteSheet, textSprite, nameIn, scaleX, scaleY);
+		screen->addMenu(name, id, position, size);
 		this->screens.push_back(std::shared_ptr<Screen>(screen));
 	}
 

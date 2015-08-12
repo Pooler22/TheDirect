@@ -10,17 +10,12 @@
 class Person : public Button
 {
 public:
-	Person::Person()
-	{
-	}
-
 	Person::Person(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY) :
 		Button(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
 		this->startPosition = positionIn;
-		this->scaleX = scaleX;
-		this->speed = 10;
 		this->direction = blockLeft = blockRight = blockTop =  blockButtom = stand = false;
+		this->speed = 10;
 	}
 
 	void  Person::Draw(DirectX::SpriteBatch* batch)
@@ -30,8 +25,6 @@ public:
 
 	void  Person::Update(float elapsed)
 	{
-		//position.y += force;
-		updateBoundingRect();
 		animation->Update(elapsed);
 	}
 
@@ -164,7 +157,6 @@ public:
 	bool blockLeft;
 	bool blockTop;
 	bool blockButtom;
-	float												scaleX;
 	int													speed;
 	DirectX::XMFLOAT2									startPosition;
 	

@@ -72,7 +72,7 @@ public:
 		
 		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end();)
 		{
-			if (player->shotColision(it->getBoundingRectangle()))
+			if (player->shotColision(it->getBoundingRectangle(), it->getPoint()))
 			{
 				it = enemies->erase(it);
 			}

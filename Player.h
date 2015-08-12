@@ -14,12 +14,6 @@
 class Player : public Person
 {
 public:
-	Player::Player() :
-		Person()
-	{
-		this->scaleX = 1;
-	}
-
 	Player::Player(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, ID3D11ShaderResourceView* shotSpriteSheet) :
 		Person(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
@@ -28,16 +22,16 @@ public:
 		shots.reset(new std::vector<Shot>());
 		skill.reset(new Skill(3, 1, 0, 5, 1));
 		over = blockLeft = blockRight = blockTop = blockButtom = stand = false;
-		skill->shotspeed = 12;
+		skill->shotSpeed = 12;
 	}
 
-	bool shotColision(Windows::Foundation::Rect rect)
+	bool shotColision(Windows::Foundation::Rect rect, int point)
 	{
 		for (std::vector<Shot>::iterator it = shots->begin(); it != shots->end(); ++it)
 		{
 			if (it->getBoundingRectangle().IntersectsWith(rect))
 			{
-				score += 10;
+				score += point;
 				shots->erase(it);
 				return true;
 			}
@@ -106,15 +100,14 @@ public:
 
 	void resetLevel()
 	{
-		skill->life = 3;
-		//score = 0;
+		//skill.reset(new Skill(startSkill.get));
 		position = startPosition;
 		updateBoundingRect();
 	}
 
 	void fire()
 	{
-		shots->push_back(Shot(shotSpriteSheet, position, this->scaleX, this->scaleY, this->direction, this->skill->shotspeed));
+		shots->push_back(Shot(shotSpriteSheet, position, this->scaleX, this->scaleY, this->direction, this->skill->shotSpeed));
 	}
 
 	void addBonus(std::shared_ptr<Skill> bonus)
@@ -122,7 +115,7 @@ public:
 		skill->life += bonus->life;
 		skill->point += bonus->point;
 		skill->shotDistance += bonus->shotDistance;
-		skill->shotspeed += bonus->shotspeed;
+		skill->shotSpeed += bonus->shotSpeed;
 		skill->speedMove += bonus->speedMove;
 	}
 
@@ -131,7 +124,7 @@ public:
 	int													score;
 	DirectX::XMFLOAT2									lastGoodPosition;
 	std::unique_ptr<Skill>								skill;
-	std::shared_ptr<std::vector<Shot>>				shots;
+	std::shared_ptr<std::vector<Shot>>					shots;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	bubbleTexture;
 	ID3D11ShaderResourceView*							shotSpriteSheet;
 };

@@ -12,23 +12,23 @@
 class Skill
 {
 public:
-	Skill::Skill()
+	Skill()
 	{
-		this->life = this->speedMove = this->point = this->shotDistance = this->shotspeed = 0;
+		this->life = this->speedMove = this->point = this->shotDistance = this->shotSpeed = 0;
 	}
 
-	Skill::Skill(int life, int speedMove, int point, int shotDistance, int shotspeed)
+	Skill(int life, int speedMove, int point, int shotDistance, int shotSpeed)
 	{
 		this->life = life;
 		this->speedMove = speedMove;
 		this->point = point;
 		this->shotDistance = shotDistance;
-		this->shotspeed = shotspeed;
+		this->shotSpeed = shotSpeed;
 	}
 
 	int life;
 	int speedMove;
 	int point;
 	int shotDistance;
-	int shotspeed;	
+	int shotSpeed;	
 };
