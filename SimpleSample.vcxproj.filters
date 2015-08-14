@@ -120,6 +120,7 @@
     <ClInclude Include="Shot.h">
       <Filter>Content\GameElements</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -135,6 +136,9 @@
       <Filter>Assets</Filter>
     </None>
     <None Include="SimpleSample_TemporaryKey.pfx" />
+    <None Include="Assets\myfile.spritefont">
+      <Filter>Assets</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\seafloor.dds">
@@ -226,5 +230,8 @@
     <Media Include="Assets\musicmono_adpcm.wav">
       <Filter>Assets</Filter>
     </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SimpleSample.rc" />
   </ItemGroup>
 </Project>
