@@ -19,6 +19,14 @@ public:
 		this->colorNormal = this->color = Colors::Black;
 		this->colorOver = Colors::Blue;
 		this->m_font = spriteFont;
+		centerHorizontally();
+		updateBoundingRect();
+	}
+
+	void centerHorizontally()
+	{
+		position.x -= dimensions.x / 2.;
+		position.y -= dimensions.y / 2.;
 	}
 
 	bool isOver(Windows::Foundation::Rect rect)
@@ -38,7 +46,7 @@ public:
 	void Draw(DirectX::SpriteBatch* batch)
 	{
 		animation->Draw(batch, position);
-		m_font->DrawString(batch, string.c_str(), position, color);
+		m_font->DrawString(batch, string.c_str(), XMFLOAT2(position.x + 16 * scaleX, position.y + 4 * scaleY), color);
 	}
 
 	void setString(std::wstring string)
