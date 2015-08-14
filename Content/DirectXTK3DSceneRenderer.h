@@ -52,15 +52,11 @@ namespace SimpleSample
         void CreateAudioResources();
 		void ReleaseDeviceDependentResources();
 		void Update(DX::StepTimer const& timer, std::vector<PlayerInputData>* playerInput, unsigned int playersAttached);
-		void Update(std::vector<PlayerInputData>* playerInput, unsigned int playersAttached);
 		void Render();
 		// Signals a new audio device is available
 		void NewAudioDevice();
-		
-		
-                
-	private:
 
+	private:
 		// Cached player metadata.
 		unsigned int m_playersAttached;
 
@@ -71,7 +67,7 @@ namespace SimpleSample
 		//void XM_CALLCONV DrawGrid(DirectX::FXMVECTOR xAxis, DirectX::FXMVECTOR yAxis, DirectX::FXMVECTOR origin, size_t xdivs, size_t ydivs, DirectX::GXMVECTOR color);
 		
 		//Sound
-		bool																	playMusic;
+		bool																	m_playMusic;
         float                                                                   m_audioTimerAcc;
         uint32_t                                                                m_audioEvent;
 		std::unique_ptr<DirectX::AudioEngine>                                   m_audEngine;

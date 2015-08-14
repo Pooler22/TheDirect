@@ -16,6 +16,7 @@
 #include "pch.h"
 #include "DirectXTK3DSceneRenderer.h"
 #include "DDSTextureLoader.h"
+#include "WICTextureLoader.h"
 #include "..\Common\DirectXHelper.h"	// For ThrowIfFailed and ReadDataAsync
 
 using namespace SimpleSample;
@@ -43,13 +44,13 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	m_font.reset(new SpriteFont(device, L"assets\\italic.spritefont"));
 
 	flagFromPressToRelasedClick = true;
-	playMusic = false;
+	m_playMusic = false;
 
 	scaleX = (float)logicalSize.Width / (32.0 * 25.0);
 	scaleY = (float) logicalSize.Height / (19.0 * 25.0);
 	centerPosition.x = logicalSize.Width / 2.0;
 	centerPosition.y = logicalSize.Height / 2.0;
-	float oneUnitHeight = logicalSize.Height / 7.0;
+	float oneUnitHeight = logicalSize.Height / 8.0;
 
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\button.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
@@ -93,6 +94,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	screenManager->addScreen(L"GameOver", 2, name6, id6, position6);
 
 	DX::ThrowIfFailed(
+
 		CreateDDSTextureFromFile(device, L"assets\\brick2.dds", nullptr, m_texture2.ReleaseAndGetAddressOf())
 		);
 	screenManager->addBrickTexture(m_texture2.Get());
@@ -127,12 +129,16 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 
 	screenManager->setMapLevel(x1, y1, tab1, m_texture.Get(), m_font);
 
-	DX::ThrowIfFailed(
+	/*DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\person.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);*/
+
+	DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\shot.dds", nullptr, m_texture2.ReleaseAndGetAddressOf())
 		);
 
 	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\bonus.dds", nullptr, m_texture2.ReleaseAndGetAddressOf())
+		CreateWICTextureFromFile(device, L"assets\\person.png", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 
 	screenManager->addPlayer(m_texture.Get(), XMFLOAT2(1, 15), m_texture2.Get());
@@ -140,7 +146,13 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\enemy.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
+
+	DX::ThrowIfFailed(
+		CreateWICTextureFromFile(device, L"assets\\enemy.png", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
+
 	screenManager->addEnemy(m_texture.Get(), XMFLOAT2(5, 17), 1);
+	screenManager->addEnemy(m_texture.Get(), XMFLOAT2(10, 5), 1);
 
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\bonus.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
@@ -341,8 +353,8 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 					}
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"MusicOptions"))
 					{
-						playMusic = !playMusic;
-						if (playMusic)
+						m_playMusic = !m_playMusic;
+						if (m_playMusic)
 						{
 							m_effect1->Play(true);
 							m_effect2->Play();

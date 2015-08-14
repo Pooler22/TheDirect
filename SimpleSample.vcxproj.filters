@@ -212,6 +212,15 @@
     <Image Include="Assets\enemy.dds">
       <Filter>Assets</Filter>
     </Image>
+    <Image Include="Assets\shot.dds">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\enemy.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\person.png">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Assets\musicmono_adpcm.wav">
