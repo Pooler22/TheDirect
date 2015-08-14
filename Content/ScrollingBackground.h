@@ -25,16 +25,18 @@ using namespace DirectX;
 class ScrollingBackground
 {
 public:
-	ScrollingBackground() :
+	ScrollingBackground(ID3D11ShaderResourceView* texture, int screenWidth, int screenHeight) :
 		mScreenHeight(0),
 		mScreenWidth(0),
 		mTextureWidth(0),
-        mTextureHeight(0),
-        mScreenPos( 0, 0 ),
-        mTextureSize( 0, 0 ),
-        mOrigin( 0, 0 )
-    {
-    }
+		mTextureHeight(0),
+		mScreenPos(0, 0),
+		mTextureSize(0, 0),
+		mOrigin(0, 0)
+	{
+		this->Load(texture);
+		this->SetWindow(screenWidth, screenHeight);
+	}
 
     void Load(ID3D11ShaderResourceView* texture )
     {

@@ -256,7 +256,7 @@ bool SimpleSampleMain::Render()
 
 	// Render the scene objects.
 	m_sceneRenderer->Render();
-	m_overlayManager->Render();
+	//m_overlayManager->Render();
 
 	return true;
 }

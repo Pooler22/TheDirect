@@ -12,7 +12,7 @@
 class ScreenManager
 {
 public:
-	ScreenManager(std::wstring nameIn, float screenWidth, float screenHeight, float scaleX, float scaleY, ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<SpriteFont> textSprite)
+	ScreenManager(std::wstring nameIn, float screenWidth, float screenHeight, float scaleX, float scaleY, ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<SpriteFont> textSprite, ID3D11ShaderResourceView* backgorund)
 	{
 		this->scaleX = scaleX;
 		this->scaleY = scaleY;
@@ -23,6 +23,7 @@ public:
 		this->textSprite = textSprite;
 		this->screens = std::vector<std::shared_ptr<Screen>>();
 		this->game.reset(new Game(screenWidth, screenHeight, scaleX, scaleY));
+		this->background.reset(new ScrollingBackground(backgorund, screenWidth, screenHeight));
 	}
 
 	void addScreen(Screen* screen)
@@ -69,6 +70,7 @@ public:
 
 	void Update(float elapsed)
 	{
+		background->Update(elapsed);
 		if (nameCurrentScreen.compare(L"Play") == 0)
 			game->Update(elapsed);
 		for (auto &screen : this->screens)
@@ -80,6 +82,7 @@ public:
 
 	void Draw(DirectX::SpriteBatch* batch)
 	{
+		background->Draw(batch);
 		if (nameCurrentScreen.compare(L"Play") == 0)
 			game->Draw(batch);
 		for (auto &screen : this->screens)
@@ -120,6 +123,7 @@ public:
 
 	void resize(float scaleX, float scaleY)
 	{
+		//TODO background->resize(); 
 		game->resize(scaleX, scaleY);
 		for (auto &screen : this->screens)
 		{
@@ -153,4 +157,5 @@ public:
 	std::wstring								nameCurrentScreen;
 	std::unique_ptr<Game>						game;
 	std::vector<std::shared_ptr<Screen>>		screens;
+	std::unique_ptr<ScrollingBackground>		background;
 };

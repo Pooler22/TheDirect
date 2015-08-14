@@ -55,8 +55,11 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\button.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
+	DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\background.dds", nullptr, m_texture2.ReleaseAndGetAddressOf())
+		);
 
-	screenManager.reset(new ScreenManager(L"Main", logicalSize.Width, logicalSize.Height, scaleX, scaleY, m_texture.Get(), m_font));
+	screenManager.reset(new ScreenManager(L"Main", logicalSize.Width, logicalSize.Height, scaleX, scaleY, m_texture.Get(), m_font, m_texture2.Get()));
 
 	std::wstring name[] = { L"Start",L"Options",L"Exit" };
 	std::wstring id[] = { L"StartMain",L"OptionsMain",L"ExitMain" };
