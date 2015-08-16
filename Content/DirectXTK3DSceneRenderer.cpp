@@ -66,7 +66,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	XMFLOAT2 position[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
 	screenManager->addScreen(L"Main", 3, name, id, position);
 
-	std::wstring name1[] = { L"Music",L"Author",L"Exit" };
+	std::wstring name1[] = { L"Music: on",L"Author",L"Back" };
 	std::wstring id1[] = { L"MusicOptions",L"AuthorOptions",L"BackOptions" };
 	XMFLOAT2 position1[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
 	screenManager->addScreen(L"Options", 3, name1, id1, position1);
@@ -76,12 +76,12 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	XMFLOAT2 position2[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
 	screenManager->addScreen(L"Level", 3, name2, id2, position2);
 
-	std::wstring name4[] = { L"Return",L"Exit" };
-	std::wstring id4[] = { L"ReturnPause",L"ExitPause" };
+	std::wstring name4[] = { L"Return", L"Restart Level", L"Exit to menu" };
+	std::wstring id4[] = { L"ReturnPause",L"RestartPause",L"ExitPause" };
 	XMFLOAT2 position4[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y) };
-	screenManager->addScreen(L"Pause", 2, name4, id4, position4);
+	screenManager->addScreen(L"Pause", 3, name4, id4, position4);
 
-	std::wstring name5[] = { L"It's me ;)",L"Back" };
+	std::wstring name5[] = { L"Pawel Rutkowski",L"Back" };
 	std::wstring id5[] = { L"DescriptionAuthor",L"BackAuthor" };
 	XMFLOAT2 position5[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y) };
 	screenManager->addScreen(L"Author", 2, name5, id5, position5);
@@ -154,7 +154,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		CreateWICTextureFromFile(device, L"assets\\enemy.png", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 
-	screenManager->addEnemy(m_texture.Get(), XMFLOAT2(5, 17), 1);
+	//screenManager->addEnemy(m_texture.Get(), XMFLOAT2(5, 17), 1);
 	screenManager->addEnemy(m_texture.Get(), XMFLOAT2(10, 5), 1);
 
 	DX::ThrowIfFailed(
@@ -164,8 +164,8 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	std::shared_ptr<Skill> bonus;
 	bonus.reset(new Skill(0, 0, 0, 0, 0));
 	XMFLOAT2 positionB[] = { XMFLOAT2(10, 17) ,XMFLOAT2(15, 3), XMFLOAT2(23, 3)};
-	screenManager->addBonus(m_texture.Get(), positionB[0], bonus);
-	screenManager->addBonus(m_texture.Get(), positionB[1], bonus);
+	//screenManager->addBonus(m_texture.Get(), positionB[0], bonus);
+	//screenManager->addBonus(m_texture.Get(), positionB[1], bonus);
 	screenManager->addBonus(m_texture.Get(), positionB[2], bonus);
 
 	//Gamepad
@@ -361,11 +361,13 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 						{
 							m_effect1->Play(true);
 							m_effect2->Play();
+							screenManager->setString(L"Options", L"MusicOptions", L"Music: on");
 						}
 						else
 						{
 							m_effect1->Pause();
 							m_effect2->Pause();
+							screenManager->setString(L"Options", L"MusicOptions", L"Music: off");
 						}
 					}
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"AuthorOptions"))

@@ -103,7 +103,7 @@ public:
 	{
 		if (boundingRectangle.IntersectsWith(rect))
 			{
-			if (boundingRectangle.Right > rect.Left &&
+			if (boundingRectangle.Right >= rect.Left &&
 				boundingRectangle.Left < rect.Left - boundingRectangle.Width / 2 &&
 				boundingRectangle.Bottom > rect.Top
 				)
@@ -118,16 +118,16 @@ public:
 				blockLeft = true;
 			}
 			if (boundingRectangle.Right - 1 > rect.Left &&
-				boundingRectangle.Right + 1 < rect.Right + boundingRectangle.Width &&
+				boundingRectangle.Left + 1 < rect.Right &&
 				boundingRectangle.Bottom >= rect.Top &&
 				boundingRectangle.Top < rect.Top)
 			{
 				position.y = rect.Y - dimensions.y;
 				stand = true;
 			}
-			if (boundingRectangle.Left + boundingRectangle.Width - 1 > rect.Left &&
-				boundingRectangle.Left + boundingRectangle.Width + 1 < rect.Left + rect.Width + boundingRectangle.Width &&
-				boundingRectangle.Top <= rect.Bottom&&
+			if (boundingRectangle.Right - 1 > rect.Left &&
+				boundingRectangle.Left + 1 < rect.Right &&
+				boundingRectangle.Top <= rect.Bottom &&
 				boundingRectangle.Bottom > rect.Bottom)
 			{
 				position.y = rect.Y + rect.Height;
