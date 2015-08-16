@@ -101,34 +101,34 @@ public:
 
 	void colision(Windows::Foundation::Rect rect)
 	{
-		if (boundingRectangle.Top + 1 <= rect.Bottom &&
-			boundingRectangle.Bottom - 1 >= rect.Top &&
-			boundingRectangle.Right + 1 >= rect.Left &&
+		if (boundingRectangle.Top < rect.Bottom &&
+			boundingRectangle.Bottom > rect.Top &&
+			boundingRectangle.Right >= rect.Left &&
 			boundingRectangle.Left < rect.Left
 			)
 		{
 			position.x = rect.X - dimensions.x;
 			blockRight = true;
 		}
-		if (boundingRectangle.Top + 1 <= rect.Bottom &&
-			boundingRectangle.Bottom - 1 >= rect.Top &&
-			boundingRectangle.Left - 1 <= rect.Right &&
+		if (boundingRectangle.Top < rect.Bottom &&
+			boundingRectangle.Bottom > rect.Top &&
+			boundingRectangle.Left <= rect.Right &&
 			boundingRectangle.Right > rect.Right
 			)
 		{
 			position.x = rect.X + rect.Width;
 			blockLeft = true;
 		}
-		if (boundingRectangle.Right - 1 > rect.Left &&
-			boundingRectangle.Left + 1 < rect.Right &&
+		if (boundingRectangle.Right> rect.Left &&
+			boundingRectangle.Left < rect.Right &&
 			boundingRectangle.Bottom >= rect.Top &&
 			boundingRectangle.Top < rect.Top)
 		{
 			position.y = rect.Y - dimensions.y;
 			stand = true;
 		}
-		if (boundingRectangle.Right - 1 > rect.Left &&
-			boundingRectangle.Left + 1 < rect.Right &&
+		if (boundingRectangle.Right > rect.Left &&
+			boundingRectangle.Left  < rect.Right &&
 			boundingRectangle.Top <= rect.Bottom &&
 			boundingRectangle.Bottom > rect.Bottom)
 		{
