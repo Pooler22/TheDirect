@@ -219,15 +219,27 @@
     <Image Include="Assets\shot.dds">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\enemy.png">
+    <Image Include="Assets\shipanimated — kopia.dds">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\person.png">
+    <Image Include="Assets\StoreLogo — kopia.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo1.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo2.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo3.png">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Assets\musicmono_adpcm.wav">
+      <Filter>Assets</Filter>
+    </Media>
+    <Media Include="Assets\musicmono_adpcm — kopia.wav">
       <Filter>Assets</Filter>
     </Media>
   </ItemGroup>

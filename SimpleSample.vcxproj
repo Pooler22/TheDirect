@@ -264,17 +264,16 @@
     <Image Include="Assets\clouds.dds" />
     <Image Include="Assets\clouds2.dds" />
     <Image Include="Assets\enemy.dds" />
-    <Image Include="Assets\enemy.png" />
     <Image Include="Assets\person.dds" />
     <Image Include="Assets\enemyanimated.dds" />
     <Image Include="Assets\Logo.scale-100.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="Assets\person.png" />
     <Image Include="Assets\pipe.dds" />
     <Image Include="Assets\pipe.png" />
     <Image Include="Assets\player.dds" />
     <Image Include="Assets\seafloor.dds" />
+    <Image Include="Assets\shipanimated — kopia.dds" />
     <Image Include="Assets\shipanimated1.dds" />
     <Image Include="Assets\shipanimated.dds" />
     <Image Include="Assets\shot.dds" />
@@ -286,9 +285,13 @@
     <Image Include="Assets\Square44x44Logo.scale-150.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
+    <Image Include="Assets\StoreLogo — kopia.png" />
     <Image Include="Assets\StoreLogo.scale-100.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
+    <Image Include="Assets\StoreLogo1.png" />
+    <Image Include="Assets\StoreLogo2.png" />
+    <Image Include="Assets\StoreLogo3.png" />
     <Image Include="Assets\Tiny_skin.dds" />
     <Image Include="Assets\windowslogo.dds" />
   </ItemGroup>
@@ -385,6 +388,7 @@
     <None Include="SimpleSample_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Media Include="Assets\musicmono_adpcm — kopia.wav" />
     <Media Include="Assets\musicmono_adpcm.wav" />
   </ItemGroup>
   <ItemGroup>

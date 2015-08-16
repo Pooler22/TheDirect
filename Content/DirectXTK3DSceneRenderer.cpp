@@ -76,9 +76,9 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	XMFLOAT2 position2[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
 	screenManager->addScreen(L"Level", 3, name2, id2, position2);
 
-	std::wstring name4[] = { L"Return", L"Restart Level", L"Exit to menu" };
+	std::wstring name4[] = { L"Return", L"Restart Level", L"Main menu" };
 	std::wstring id4[] = { L"ReturnPause",L"RestartPause",L"ExitPause" };
-	XMFLOAT2 position4[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y) };
+	XMFLOAT2 position4[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y),XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
 	screenManager->addScreen(L"Pause", 3, name4, id4, position4);
 
 	std::wstring name5[] = { L"Pawel Rutkowski",L"Back" };
@@ -140,8 +140,11 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		CreateDDSTextureFromFile(device, L"assets\\shot.dds", nullptr, m_texture2.ReleaseAndGetAddressOf())
 		);
 
-	DX::ThrowIfFailed(
+	/*DX::ThrowIfFailed(
 		CreateWICTextureFromFile(device, L"assets\\person.png", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);*/
+	DX::ThrowIfFailed(
+		CreateDDSTextureFromFile(device, L"assets\\person.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 
 	screenManager->addPlayer(m_texture.Get(), XMFLOAT2(1, 15), m_texture2.Get());
@@ -150,9 +153,9 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		CreateDDSTextureFromFile(device, L"assets\\enemy.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 
-	DX::ThrowIfFailed(
+	/*DX::ThrowIfFailed(
 		CreateWICTextureFromFile(device, L"assets\\enemy.png", nullptr, m_texture.ReleaseAndGetAddressOf())
-		);
+		);*/
 
 	//screenManager->addEnemy(m_texture.Get(), XMFLOAT2(5, 17), 1);
 	screenManager->addEnemy(m_texture.Get(), XMFLOAT2(10, 5), 1);
