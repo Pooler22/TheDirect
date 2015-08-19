@@ -39,6 +39,7 @@
 #include "DirectXTK\Inc\SimpleMath.h"
 #include "ScreenManager.h"
 #include "Game.h"
+#include "Level.h"
 
 
 namespace SimpleSample
@@ -87,6 +88,7 @@ namespace SimpleSample
 		std::unique_ptr<ScreenManager>											screenManager;
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>                        m_texture;
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>                        m_texture2;
+		std::shared_ptr<Level>													level;
 		//std::unique_ptr<GamePad>												GamePad;
 	};
 }

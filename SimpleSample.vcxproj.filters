@@ -145,6 +145,9 @@
       <Filter>Content\GameElements</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Level.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

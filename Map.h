@@ -137,6 +137,11 @@ public:
 		}
 	}
 
+	void reset()
+	{
+	//	bricks.clear();
+	}
+
 	int*																	numberTestureVector;
 	float																	standingPlatformHeight;
 	XMFLOAT2																size;

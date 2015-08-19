@@ -96,28 +96,18 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	XMFLOAT2 position6[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight),XMFLOAT2(centerPosition.x, centerPosition.y) };
 	screenManager->addScreen(L"GameOver", 2, name6, id6, position6);
 
-	DX::ThrowIfFailed(
-		CreateWICTextureFromFile(device, L"assets\\brick\\brick.png", nullptr, m_texture2.ReleaseAndGetAddressOf())
-	);
-
-	screenManager->addBrickTexture(m_texture2.Get());
-
-	DX::ThrowIfFailed(
-		CreateWICTextureFromFile(device, L"assets\\brick\\brick2.png", nullptr, m_texture.ReleaseAndGetAddressOf())
-		);
-	screenManager->addBrickTexture2(m_texture.Get());
-
 	int x1 = 32;
-	int y1 = 18;
+	int y1 = 18;	
+	
 	int tab1[] = {
 		1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,4,0,0,0,4,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -126,12 +116,55 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1
 	};
 
-	screenManager->setMapLevel(x1, y1, tab1, m_texture.Get(), m_font);
+	std::shared_ptr<int> tab1a;
+	tab1a.reset(tab1);
 
+	int tab2[] = {
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+	};
+
+	std::shared_ptr<int> tab2a;
+	tab2a.reset(tab2);
+
+	screenManager->addLevel(L"1", L"2", DirectX::XMINT2(x1, y1), tab1a);
+	screenManager->addLevel(L"2", L"1", DirectX::XMINT2(x1, y1), tab2a);
+
+	DX::ThrowIfFailed(
+		CreateWICTextureFromFile(device, L"assets\\brick\\brick.png", nullptr, m_texture2.ReleaseAndGetAddressOf())
+		);
+
+	screenManager->addBrickTexture(m_texture2.Get());
+
+	DX::ThrowIfFailed(
+		CreateWICTextureFromFile(device, L"assets\\brick\\brick2.png", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
+	screenManager->addBrickTexture2(m_texture.Get());
+
+	
+	//screenManager->setMapLevel(x1, y1, tab1, m_texture.Get(), m_font);
+	screenManager->prepareMap(m_texture.Get(), m_font);
+	screenManager->loadLevel(L"1");
 
 	DX::ThrowIfFailed(
 		CreateWICTextureFromFile(device, L"assets\\bubble\\bubble.png", nullptr, m_texture2.ReleaseAndGetAddressOf())
@@ -229,10 +262,14 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 		m_retryDefault = true;
 	}
 
-	if (screenManager->gameOver() || screenManager->win())
+	if (screenManager->win())
 	{
-		screenManager->setString(L"GameOver", L"ScoreGameOver", std::to_wstring(screenManager->game->getScore()));
-		screenManager->setName(L"GameOver");
+		screenManager->loadNextLevel();
+	}
+	if (screenManager->gameOver())
+	{
+		//screenManager->setString(L"GameOver", L"ScoreGameOver", std::to_wstring(screenManager->game->getScore()));
+		//screenManager->setName(L"GameOver");
 	}
 	
 	//#pragma region Gamepad

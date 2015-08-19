@@ -38,6 +38,21 @@ public:
 		this->screens.push_back(std::shared_ptr<Screen>(screen));
 	}
 
+	void addLevel(std::wstring name, std::wstring next, DirectX::XMINT2 dimension, std::shared_ptr<int> tab)
+	{
+		this->game->addLevel(name, next, dimension, tab);
+	}
+
+	void loadLevel(std::wstring name)
+	{
+		this->game->loadLevel(name);
+	}
+
+	void prepareMap(ID3D11ShaderResourceView* playerSpriteSheetIn, std::shared_ptr<SpriteFont> spriteFontIn)
+	{
+		this->game->prepareMap(playerSpriteSheetIn, spriteFontIn);
+	}
+
 	void addBrickTexture(ID3D11ShaderResourceView* spriteSheet)
 	{
 		this->game->addBrickTexture(spriteSheet);
@@ -129,6 +144,10 @@ public:
 		{
 			screen->resize(scaleX, scaleY);
 		}
+	}
+	void loadNextLevel()
+	{
+		this->game->loadNextLevel();
 	}
 
 	bool gameOver()
