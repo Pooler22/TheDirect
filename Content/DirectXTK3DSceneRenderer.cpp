@@ -53,7 +53,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	float oneUnitHeight = logicalSize.Height / 8.0;
 
 	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\button.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		CreateWICTextureFromFile(device, L"assets\\ui\\button.png", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 	DX::ThrowIfFailed(
 		CreateWICTextureFromFile(device, L"assets\\background\\background.png", nullptr, m_texture2.ReleaseAndGetAddressOf())
@@ -97,13 +97,13 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	screenManager->addScreen(L"GameOver", 2, name6, id6, position6);
 
 	DX::ThrowIfFailed(
-		CreateWICTextureFromFile(device, L"assets\\brick\\brick2.png", nullptr, m_texture2.ReleaseAndGetAddressOf())
+		CreateWICTextureFromFile(device, L"assets\\brick\\brick.png", nullptr, m_texture2.ReleaseAndGetAddressOf())
 	);
 
 	screenManager->addBrickTexture(m_texture2.Get());
 
 	DX::ThrowIfFailed(
-		CreateWICTextureFromFile(device, L"assets\\brick\\brick.png", nullptr, m_texture.ReleaseAndGetAddressOf())
+		CreateWICTextureFromFile(device, L"assets\\brick\\brick2.png", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 	screenManager->addBrickTexture2(m_texture.Get());
 
@@ -138,20 +138,20 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		);
 
 	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\person.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		CreateWICTextureFromFile(device, L"assets\\person\\player\\player.png", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 
 	screenManager->addPlayer(m_texture.Get(), XMFLOAT2(1, 15), m_texture2.Get());
 
 	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\enemy.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		CreateWICTextureFromFile(device, L"assets\\person\\enemy\\enemy.png", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 
 	screenManager->addEnemy(m_texture.Get(), XMFLOAT2(5, 17), 1);
 	screenManager->addEnemy(m_texture.Get(), XMFLOAT2(10, 4), 1);
 
 	DX::ThrowIfFailed(
-		CreateWICTextureFromFile(device, L"assets\\bonus\\bonus.png", nullptr, m_texture.ReleaseAndGetAddressOf())
+		CreateWICTextureFromFile(device, L"assets\\person\\bonus\\bonus.png", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 
 	std::shared_ptr<Skill> bonus;
@@ -188,8 +188,8 @@ void DirectXTK3DSceneRenderer::CreateAudioResources()
     m_audioTimerAcc = 10.f;
     m_retryDefault = false;
 
-    m_waveBank.reset(new WaveBank(m_audEngine.get(), L"assets\\ADPCMdroid.xwb"));
-    m_soundEffect.reset(new SoundEffect(m_audEngine.get(), L"assets\\musicmono_adpcm.wav"));
+    m_waveBank.reset(new WaveBank(m_audEngine.get(), L"assets\\music\\ADPCMdroid.xwb"));
+    m_soundEffect.reset(new SoundEffect(m_audEngine.get(), L"assets\\music\\musicmono_adpcm.wav"));
     m_effect1 = m_soundEffect->CreateInstance();
     m_effect2 = m_waveBank->CreateInstance(10);
 

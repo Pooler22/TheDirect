@@ -255,18 +255,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Image Include="Assets\background\background.png" />
-    <Image Include="Assets\bonus\bonus.png" />
     <Image Include="Assets\brick\brick.png" />
     <Image Include="Assets\brick\brick2.png" />
     <Image Include="Assets\bubble\bubble.png" />
-    <Image Include="Assets\button.dds" />
-    <Image Include="Assets\enemy.dds" />
     <Image Include="Assets\Logo.scale-100.png" />
     <Image Include="Assets\Logo.scale-200.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="Assets\person.dds" />
-    <Image Include="Assets\shot.dds" />
+    <Image Include="Assets\person\bonus\bonus.png" />
+    <Image Include="Assets\person\enemy\enemy.png" />
+    <Image Include="Assets\person\player\player.png" />
     <Image Include="Assets\SmallLogo.scale-100.png" />
     <Image Include="Assets\SplashScreen.scale-100.png">
       <DeploymentContent>true</DeploymentContent>
@@ -275,6 +273,7 @@
       <DeploymentContent>true</DeploymentContent>
     </Image>
     <Image Include="Assets\StoreLogo.scale-100.png" />
+    <Image Include="Assets\ui\button.png" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -332,9 +331,10 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <Media Include="Assets\ADPCMdroid.xwb">
-      <FileType>Document</FileType>
-    </Media>
+    <None Include="Assets\background\background.xcf" />
+    <None Include="Assets\brick\brick.xcf" />
+    <None Include="Assets\brick\brick2.xcf" />
+    <None Include="Assets\bubble\bubble.xcf" />
     <None Include="Assets\italic.spritefont">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='New|Win32'">true</DeploymentContent>
@@ -346,7 +346,16 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='New|x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
     </None>
-    <None Include="Assets\myfile.spritefont" />
+    <Media Include="Assets\music\ADPCMdroid.xwb">
+      <FileType>Document</FileType>
+    </Media>
+    <None Include="Assets\person\bonus\bonus.xcf" />
+    <None Include="Assets\person\enemy\enemy_move.xcf" />
+    <None Include="Assets\person\enemy\enemy_stand.xcf" />
+    <None Include="Assets\person\player\bubble.xcf" />
+    <None Include="Assets\person\player\player_move.xcf" />
+    <None Include="Assets\person\player\player_stand.xcf" />
+    <None Include="Assets\ui\button.xcf" />
     <None Include="SimpleSample_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -363,7 +372,7 @@
     <ResourceCompile Include="SimpleSample.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Media Include="Assets\musicmono_adpcm.wav" />
+    <Media Include="Assets\music\musicmono_adpcm.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
