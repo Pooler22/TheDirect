@@ -41,26 +41,19 @@ public:
 
 	void  Update(float elapsed)
 	{
+		Person::Update(elapsed);
 		for (std::vector<Shot>::iterator it = shots->begin(); it != shots->end(); ++it)
 		{
 			it->Update(elapsed);
 		}
-		animation->Update(elapsed);
 	}
 
 	void  Draw(DirectX::SpriteBatch* batch)
 	{
+		Person::Draw(batch);
 		for (std::vector<Shot>::iterator it = shots->begin(); it != shots->end(); ++it)
 		{
 			it->Draw(batch);
-		}
-		if (direction)
-		{
-			animation->Draw(batch, position, DirectX::SpriteEffects::SpriteEffects_FlipHorizontally);
-		}
-		else
-		{
-			animation->Draw(batch, position);
 		}
 	}
 

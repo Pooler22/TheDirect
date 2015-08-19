@@ -254,46 +254,27 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Image Include="Assets\background.dds" />
-    <Image Include="Assets\bonus.dds" />
-    <Image Include="Assets\brick.dds" />
-    <Image Include="Assets\brick2.dds" />
+    <Image Include="Assets\background\background.png" />
+    <Image Include="Assets\bonus\bonus.png" />
+    <Image Include="Assets\brick\brick.png" />
+    <Image Include="Assets\brick\brick2.png" />
+    <Image Include="Assets\bubble\bubble.png" />
     <Image Include="Assets\button.dds" />
-    <Image Include="Assets\cloud.dds" />
-    <Image Include="Assets\cloud2.dds" />
-    <Image Include="Assets\clouds.dds" />
-    <Image Include="Assets\clouds2.dds" />
     <Image Include="Assets\enemy.dds" />
+    <Image Include="Assets\Logo.scale-100.png" />
+    <Image Include="Assets\Logo.scale-200.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
     <Image Include="Assets\person.dds" />
-    <Image Include="Assets\enemyanimated.dds" />
-    <Image Include="Assets\Logo.scale-100.png">
-      <DeploymentContent>true</DeploymentContent>
-    </Image>
-    <Image Include="Assets\pipe.dds" />
-    <Image Include="Assets\pipe.png" />
-    <Image Include="Assets\player.dds" />
-    <Image Include="Assets\seafloor.dds" />
-    <Image Include="Assets\shipanimated — kopia.dds" />
-    <Image Include="Assets\shipanimated1.dds" />
-    <Image Include="Assets\shipanimated.dds" />
     <Image Include="Assets\shot.dds" />
-    <Image Include="Assets\SmallLogo.dds" />
-    <Image Include="Assets\SmallLogo.scale-100.png">
+    <Image Include="Assets\SmallLogo.scale-100.png" />
+    <Image Include="Assets\SplashScreen.scale-100.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="Assets\SplashScreen.png" />
-    <Image Include="Assets\Square44x44Logo.scale-150.png">
+    <Image Include="Assets\Square71x71Logo.scale-100.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="Assets\StoreLogo — kopia.png" />
-    <Image Include="Assets\StoreLogo.scale-100.png">
-      <DeploymentContent>true</DeploymentContent>
-    </Image>
-    <Image Include="Assets\StoreLogo1.png" />
-    <Image Include="Assets\StoreLogo2.png" />
-    <Image Include="Assets\StoreLogo3.png" />
-    <Image Include="Assets\Tiny_skin.dds" />
-    <Image Include="Assets\windowslogo.dds" />
+    <Image Include="Assets\StoreLogo.scale-100.png" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -351,17 +332,9 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="Assets\ADPCMdroid.xwb">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='New|ARM'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='New|Win32'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='New|x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
-    </None>
+    <Media Include="Assets\ADPCMdroid.xwb">
+      <FileType>Document</FileType>
+    </Media>
     <None Include="Assets\italic.spritefont">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='New|Win32'">true</DeploymentContent>
@@ -374,22 +347,7 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
     </None>
     <None Include="Assets\myfile.spritefont" />
-    <None Include="Assets\tiny.sdkmesh">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='New|Win32'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='New|ARM'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='New|x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
-    </None>
     <None Include="SimpleSample_TemporaryKey.pfx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="Assets\musicmono_adpcm — kopia.wav" />
-    <Media Include="Assets\musicmono_adpcm.wav" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="DirectXTK\DirectXTK_Windows81.vcxproj">
@@ -403,6 +361,9 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SimpleSample.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\musicmono_adpcm.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

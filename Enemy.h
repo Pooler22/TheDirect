@@ -24,7 +24,7 @@ public:
 		if (blockRight || blockLeft)
 			moveDirection = -moveDirection;
 		move(moveDirection, 0);
-		animation->Update(elapsed);
+		Person::Update(elapsed);
 	}
 
 	void setMoveDirection(int moveDirection)

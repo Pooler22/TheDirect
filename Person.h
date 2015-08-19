@@ -14,50 +14,63 @@ public:
 		Button(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
 		this->startPosition = positionIn;
-		this->direction = blockLeft = blockRight = blockTop =  blockButtom = stand = false;
-		this->speed = 10;
+		this->direction = blockLeft = blockRight = blockTop = blockButtom = stand = false;
+		this->speed = 8;
+		x = 1;
+		y = 1;
+		force = 8;
+		left = right = jumpFlag = blockTop = blockRight = blockLeft = false;
 	}
 
 	void  Person::Draw(DirectX::SpriteBatch* batch)
 	{
+		updateBoundingRect();
 		if (direction)
 		{
 			animation->Draw(batch, position, DirectX::SpriteEffects::SpriteEffects_FlipHorizontally);
 		}
-		else 
+		else
 		{
 			animation->Draw(batch, position);
 		}
-		
+
 	}
 
 	void  Person::Update(float elapsed)
 	{
+		if (right && !blockRight)
+			position.x += (speed * scaleX);
+		else if (left && !blockLeft)
+			position.x -= (speed * scaleX);
+		if (jumpFlag)
+		{
+			position.y += (0 * speed * scaleY) - force * scaleY;
+			force--;
+			stand = false;
+			if (force == 8)
+			{
+				jumpFlag = false;
+			}
+		}
+		else if (stand) {}
+		else if (!stand)
+			position.y += force * scaleY;
+
+		updateBoundingRect();
 		animation->Update(elapsed);
+		left = right = stand = blockRight = blockTop = blockRight = blockLeft = false;
 	}
 
 	void  move(float x, float y)
 	{
-		if (blockRight && x > 0)
+		if (x > 0)
+			right = true;
+		else if (x < 0)
+			left = true;
+		if (!jumpFlag && y > 0 && stand)
 		{
-			x = 0;
-		}
-		if (blockLeft && x < 0)
-		{
-			x = 0;
-		}
-		if (stand && y <= 0)
-		{
-			force = 0;
-			y = 0;
-		}
-		else 
-		{
-			if (jumpFlag)
-			{
-				force = -force;
-			}
-			force = 5;
+			jumpFlag = true;
+			force = gravity;
 		}
 
 		if (x > 0)
@@ -68,14 +81,6 @@ public:
 		{
 			direction = true;
 		}
-
-		position.x += (x * speed * scaleX);
-		position.y -= (y * speed * scaleX) - force * scaleX;
-
-		blockRight = false;
-		blockLeft = false;
-		stand = false;
-		updateBoundingRect();
 	}
 
 	void correctPersonPosition(float screenWidth, float screenHeight)
@@ -101,42 +106,40 @@ public:
 
 	void colision(Windows::Foundation::Rect rect)
 	{
-		if (boundingRectangle.Top < rect.Bottom &&
-			boundingRectangle.Bottom > rect.Top &&
-			boundingRectangle.Right >= rect.Left &&
-			boundingRectangle.Left < rect.Left
-			)
-		{
-			position.x = rect.X - dimensions.x;
-			blockRight = true;
-		}
-		if (boundingRectangle.Top < rect.Bottom &&
-			boundingRectangle.Bottom > rect.Top &&
-			boundingRectangle.Left <= rect.Right &&
-			boundingRectangle.Right > rect.Right
-			)
-		{
-			position.x = rect.X + rect.Width;
-			blockLeft = true;
-		}
-		if (boundingRectangle.Right> rect.Left &&
+		if (boundingRectangle.Right > rect.Left &&
 			boundingRectangle.Left < rect.Right &&
 			boundingRectangle.Bottom >= rect.Top &&
 			boundingRectangle.Top < rect.Top)
 		{
 			position.y = rect.Y - dimensions.y;
+			updateBoundingRect();
 			stand = true;
 		}
-		if (boundingRectangle.Right > rect.Left &&
-			boundingRectangle.Left  < rect.Right &&
-			boundingRectangle.Top <= rect.Bottom &&
-			boundingRectangle.Bottom > rect.Bottom)
+		if (boundingRectangle.Bottom <= rect.Bottom + 1 &&
+			boundingRectangle.Bottom > rect.Top + 1 &&
+			boundingRectangle.Right >= rect.Left &&
+			boundingRectangle.Left < rect.Left
+			)
 		{
-			position.y = rect.Y + rect.Height;
+			position.x = rect.X - dimensions.x;
+			updateBoundingRect();
+			blockRight = true;
+			direction = true;
 		}
-		updateBoundingRect();
+		if (boundingRectangle.Bottom <= rect.Bottom + 1 &&
+			boundingRectangle.Bottom > rect.Top + 1 &&
+			boundingRectangle.Left <= rect.Right &&
+			boundingRectangle.Right > rect.Right
+			)
+		{
+			position.x = rect.X + rect.Width;
+			updateBoundingRect();
+			blockLeft = true;
+			direction = false;
+		}
+
 	}
-	
+
 
 	void  Person::setStartPosition()
 	{
@@ -149,7 +152,7 @@ public:
 		this->force = this->gravity;
 		this->jumpFlag = true;
 	}
-	
+
 	void resetLevel()
 	{
 		position = startPosition;
@@ -157,8 +160,12 @@ public:
 	}
 
 public:
+	bool right;
+	bool left;
+	int x;
+	int y;
 	bool direction; //0 lat, 1 right
-	int gravity;
+	int gravity = 15;
 	int force;
 	bool jumpFlag;
 	bool stand;
@@ -166,7 +173,7 @@ public:
 	bool blockLeft;
 	bool blockTop;
 	bool blockButtom;
-	int													speed;
-	DirectX::XMFLOAT2									startPosition;
-	
+	int					speed;
+	DirectX::XMFLOAT2	startPosition;
+
 };

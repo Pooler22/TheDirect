@@ -56,7 +56,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		CreateDDSTextureFromFile(device, L"assets\\button.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\background.dds", nullptr, m_texture2.ReleaseAndGetAddressOf())
+		CreateWICTextureFromFile(device, L"assets\\background\\background.png", nullptr, m_texture2.ReleaseAndGetAddressOf())
 		);
 
 	screenManager.reset(new ScreenManager(L"Main", logicalSize.Width, logicalSize.Height, scaleX, scaleY, m_texture.Get(), m_font, m_texture2.Get()));
@@ -97,13 +97,13 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	screenManager->addScreen(L"GameOver", 2, name6, id6, position6);
 
 	DX::ThrowIfFailed(
+		CreateWICTextureFromFile(device, L"assets\\brick\\brick2.png", nullptr, m_texture2.ReleaseAndGetAddressOf())
+	);
 
-		CreateDDSTextureFromFile(device, L"assets\\brick2.dds", nullptr, m_texture2.ReleaseAndGetAddressOf())
-		);
 	screenManager->addBrickTexture(m_texture2.Get());
 
 	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\brick.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		CreateWICTextureFromFile(device, L"assets\\brick\\brick.png", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 	screenManager->addBrickTexture2(m_texture.Get());
 
@@ -132,17 +132,11 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 
 	screenManager->setMapLevel(x1, y1, tab1, m_texture.Get(), m_font);
 
-	/*DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\person.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
-		);*/
 
 	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\shot.dds", nullptr, m_texture2.ReleaseAndGetAddressOf())
+		CreateWICTextureFromFile(device, L"assets\\bubble\\bubble.png", nullptr, m_texture2.ReleaseAndGetAddressOf())
 		);
 
-	/*DX::ThrowIfFailed(
-		CreateWICTextureFromFile(device, L"assets\\person.png", nullptr, m_texture.ReleaseAndGetAddressOf())
-		);*/
 	DX::ThrowIfFailed(
 		CreateDDSTextureFromFile(device, L"assets\\person.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
@@ -153,22 +147,16 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		CreateDDSTextureFromFile(device, L"assets\\enemy.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 
-	/*DX::ThrowIfFailed(
-		CreateWICTextureFromFile(device, L"assets\\enemy.png", nullptr, m_texture.ReleaseAndGetAddressOf())
-		);*/
-
-	//screenManager->addEnemy(m_texture.Get(), XMFLOAT2(5, 17), 1);
-	screenManager->addEnemy(m_texture.Get(), XMFLOAT2(10, 5), 1);
+	screenManager->addEnemy(m_texture.Get(), XMFLOAT2(5, 17), 1);
+	screenManager->addEnemy(m_texture.Get(), XMFLOAT2(10, 4), 1);
 
 	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\bonus.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		CreateWICTextureFromFile(device, L"assets\\bonus\\bonus.png", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 
 	std::shared_ptr<Skill> bonus;
 	bonus.reset(new Skill(0, 0, 0, 0, 0));
 	XMFLOAT2 positionB[] = { XMFLOAT2(10, 17) ,XMFLOAT2(15, 3), XMFLOAT2(23, 3)};
-	//screenManager->addBonus(m_texture.Get(), positionB[0], bonus);
-	//screenManager->addBonus(m_texture.Get(), positionB[1], bonus);
 	screenManager->addBonus(m_texture.Get(), positionB[2], bonus);
 
 	//Gamepad
@@ -200,8 +188,8 @@ void DirectXTK3DSceneRenderer::CreateAudioResources()
     m_audioTimerAcc = 10.f;
     m_retryDefault = false;
 
-    m_waveBank.reset(new WaveBank(m_audEngine.get(), L"assets\\adpcmdroid.xwb"));
-    m_soundEffect.reset(new SoundEffect(m_audEngine.get(), L"assets\\MusicMono_adpcm.wav"));
+    m_waveBank.reset(new WaveBank(m_audEngine.get(), L"assets\\ADPCMdroid.xwb"));
+    m_soundEffect.reset(new SoundEffect(m_audEngine.get(), L"assets\\musicmono_adpcm.wav"));
     m_effect1 = m_soundEffect->CreateInstance();
     m_effect2 = m_waveBank->CreateInstance(10);
 
