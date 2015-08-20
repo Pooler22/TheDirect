@@ -99,15 +99,19 @@ public:
 
 	void reset()
 	{
-	//	bricks.clear();
+		bricks.clear();
+	}
+
+	void hardReset()
+	{
+		bricks.clear();
+
 	}
 
 	int*																				numberTestureVector;
 	float																				standingPlatformHeight;
 	XMFLOAT2																			size;
 	XMFLOAT2																			textPosition;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>									texture;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>									texture2;
 	std::wstring																		scoreText;
 	std::shared_ptr<DirectX::SpriteFont>												m_font;
 	std::vector<std::shared_ptr<Brick>>													bricks;

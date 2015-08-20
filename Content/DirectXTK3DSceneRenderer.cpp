@@ -99,7 +99,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	int x1 = 32;
 	int y1 = 18;	
 	
-	int tab1[] = {
+	int tab2[] = {
 		1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,
 		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
 		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
@@ -120,7 +120,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		2,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2
 	};
 
-	int tab2[] = {
+	int tab1[] = {
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -135,10 +135,10 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 	};
 	
 	std::shared_ptr<int> tab1a;
@@ -176,7 +176,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 
 	std::shared_ptr<std::vector<DirectX::XMINT4>> enemyStartPositionL1;
 	enemyStartPositionL1.reset(new std::vector<DirectX::XMINT4>());
-	//enemyStartPositionL1->push_back(DirectX::XMINT4(1, 2, 1, 10));
+	enemyStartPositionL1->push_back(DirectX::XMINT4(1, 2, 1, 10));
 	//enemyStartPositionL1->push_back(DirectX::XMINT4(10, 5, 1, 11));
 	enemyStartPositionL1->push_back(DirectX::XMINT4(5, 7, 1, 12));
 	screenManager->addLevel(L"1", L"2", DirectX::XMINT2(x1, y1), tab1a, XMINT2(3,15), enemyStartPositionL1);
@@ -184,7 +184,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	std::shared_ptr<std::vector<DirectX::XMINT4>> enemyStartPositionL2;
 	enemyStartPositionL2.reset(new std::vector<DirectX::XMINT4>());
 	//enemyStartPositionL2->push_back(DirectX::XMINT4(1, 2, 1,2));
-	//enemyStartPositionL2->push_back(DirectX::XMINT4(10, 5, 1,3));
+	enemyStartPositionL2->push_back(DirectX::XMINT4(10, 5, 1,3));
 	enemyStartPositionL2->push_back(DirectX::XMINT4(5, 7, 1,4));
 	screenManager->addLevel(L"2", L"1", DirectX::XMINT2(x1, y1), tab2a, XMINT2(3, 15), enemyStartPositionL2);
 
@@ -262,9 +262,9 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 
 	if (screenManager->win())
 	{
-		//screenManager->loadNextLevel();
-		screenManager->setString(L"GameOver", L"ScoreGameOver", std::to_wstring(screenManager->game->getScore()));
-		screenManager->setName(L"GameOver");
+		screenManager->loadNextLevel();
+		//screenManager->setString(L"GameOver", L"ScoreGameOver", std::to_wstring(screenManager->game->getScore()));
+		//screenManager->setName(L"GameOver");
 	}
 	if (screenManager->gameOver())
 	{

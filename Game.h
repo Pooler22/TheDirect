@@ -20,6 +20,7 @@ class Game
 public:
 	Game::Game(int screenWidth, int screenHeight, float scaleX, float scaleY)
 	{
+		this->textureVector.reset(new std::vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>());
 		this->levels.reset(new std::vector<Level>());
 		this->map.reset(new Map());
 		this->enemies.reset(new std::vector<Enemy>());
@@ -62,12 +63,22 @@ public:
 
 	void resetLevel()
 	{
-		//this->map->reset();
+		this->player->reset();
+		enemies->clear();
+	}
+
+	void loadNextLevel()
+	{
 		this->player->reset();
 		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
 		{
 			it->reset();
 		}
+		map.reset(new Map());
+
+		for (std::vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>::iterator it = textureVector.get()->begin(); it != textureVector.get()->end(); ++it)
+			map->addBrickTexture(it->Get());
+		loadLevel(nextLevelName);
 	}
 
 	void Game::addPlayerTexture(ID3D11ShaderResourceView* buttonSpriteSheet, ID3D11ShaderResourceView* shotSpriteSheet)
@@ -204,21 +215,6 @@ public:
 		return (enemies->size() == 0);
 	}
 
-	void loadNextLevel()
-	{
-		for (std::vector<Level>::iterator it = levels->begin(); it != levels->end(); ++it)
-		{
-			
-			if (nextLevelName.compare(it->getName()) == 0)
-			{
-				nextLevelName = it->getNext();
-				this->map.reset(new Map());
-				break;
-			}
-		}
-		loadLevel(nextLevelName);
-	}
-
 	int getScore()
 	{
 		return player->getScore();
@@ -227,6 +223,7 @@ public:
 	void Game::addBrickTexture(ID3D11ShaderResourceView* buttonSpriteSheet)
 	{
 		this->map->addBrickTexture(buttonSpriteSheet);
+		this->textureVector->push_back(buttonSpriteSheet);
 	}
 
 	int										screenWidth;
@@ -242,6 +239,7 @@ public:
 	std::unique_ptr<std::vector<Level>>		levels;
 	
 	std::shared_ptr<SpriteFont>				spriteFontIn;
+	std::shared_ptr<std::vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>>		textureVector;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>				playerSpriteSheetIn;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>				brickSpriteSheet;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>				enemySpriteSheet;
