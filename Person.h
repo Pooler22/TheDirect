@@ -147,6 +147,12 @@ public:
 		updateBoundingRect();
 	}
 
+	void setStartPositionExt(DirectX::XMFLOAT2 position)
+	{
+		this->position = this->startPosition = position;
+		setStartPosition();
+	}
+
 	void jump()
 	{
 		this->force = this->gravity;

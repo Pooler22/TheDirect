@@ -179,14 +179,14 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	enemyStartPositionL1->push_back(DirectX::XMINT3(1, 2, 1));
 	enemyStartPositionL1->push_back(DirectX::XMINT3(10, 5, 1));
 	enemyStartPositionL1->push_back(DirectX::XMINT3(5, 7, 1));
-	screenManager->addLevel(L"1", L"2", DirectX::XMINT2(x1, y1), tab1a, XMINT2(10,5), enemyStartPositionL1);
+	screenManager->addLevel(L"1", L"2", DirectX::XMINT2(x1, y1), tab1a, XMINT2(13,5), enemyStartPositionL1);
 	
 	std::shared_ptr<std::vector<DirectX::XMINT3>> enemyStartPositionL2;
 	enemyStartPositionL2.reset(new std::vector<DirectX::XMINT3>());
 	enemyStartPositionL2->push_back(DirectX::XMINT3(1, 2, 1));
 	enemyStartPositionL2->push_back(DirectX::XMINT3(10, 5, 1));
 	enemyStartPositionL2->push_back(DirectX::XMINT3(5, 7, 1));
-	screenManager->addLevel(L"2", L"1", DirectX::XMINT2(x1, y1), tab2a, XMINT2(10, 5), enemyStartPositionL2);
+	screenManager->addLevel(L"2", L"1", DirectX::XMINT2(x1, y1), tab2a, XMINT2(13, 5), enemyStartPositionL2);
 
 	screenManager->loadLevel(L"1");
 

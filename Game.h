@@ -49,12 +49,12 @@ public:
 			{
 				nextLevelName = it->getNext();
 				this->map->setMapLevel(it->getDimension().x, it->getDimension().y, it->getTab().get(), this->screenWidth, this->screenHeight, scaleX, scaleY, playerSpriteSheetIn, spriteFontIn);
-				this->player->setPosition(DirectX::XMFLOAT2(it->getPlayerStartPosition().x * (screenWidth / map->getSzie().x), it->getPlayerStartPosition().y * (screenHeight / map->getSzie().y)));
+				this->player->setStartPositionExt(DirectX::XMFLOAT2(it->getPlayerStartPosition().x * (screenWidth / map->getSzie().x), it->getPlayerStartPosition().y * (screenHeight / map->getSzie().y)));
 
-				//for (std::vector<DirectX::XMINT3>::iterator it1 = it->getVectorEnemyStartPosition()->begin(); it1 != it->getVectorEnemyStartPosition()->end(); ++it1)
-				//{
-					//this->enemies->push_back(Enemy(enemySpriteSheet,DirectX::XMFLOAT2(it1->x, it1->y), scaleX, scaleY, it1->z)); // todo move direction 
-				//}
+				for (std::vector<DirectX::XMINT3>::iterator it1 = it->getVectorEnemyStartPosition().get()->begin(); it1 != it->getVectorEnemyStartPosition().get()->end(); ++it1)
+				{
+					this->enemies->push_back(Enemy(enemySpriteSheet,DirectX::XMFLOAT2(it1->x * (screenWidth / map->getSzie().x), it1->y * (screenHeight / map->getSzie().y)), scaleX, scaleY, it1->z));
+				}
 				break;
 			}
 		}	

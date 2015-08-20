@@ -47,7 +47,7 @@ public:
 			it->Update(elapsed);
 		}
 	}
-
+	
 	void  Draw(DirectX::SpriteBatch* batch)
 	{
 		Person::Draw(batch);
