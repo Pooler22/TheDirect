@@ -58,11 +58,6 @@ public:
 		this->game->addBrickTexture(spriteSheet);
 	}
 
-	void addBrickTexture2(ID3D11ShaderResourceView* spriteSheet)
-	{
-		this->game->addBrickTexture2(spriteSheet);
-	}
-
 	void addPlayerTexture(ID3D11ShaderResourceView* buttonSpriteSheet, ID3D11ShaderResourceView* shotSpriteSheet)
 	{
 		game->addPlayerTexture(buttonSpriteSheet, shotSpriteSheet);

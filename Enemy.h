@@ -27,6 +27,11 @@ public:
 		Person::Update(elapsed);
 	}
 
+	void reset()
+	{
+		Person::reset();
+	}
+
 	void setMoveDirection(int moveDirection)
 	{
 		this->moveDirection = moveDirection;

@@ -159,7 +159,7 @@ public:
 		this->jumpFlag = true;
 	}
 
-	void resetLevel()
+	void reset()
 	{
 		position = startPosition;
 		updateBoundingRect();

@@ -71,7 +71,7 @@ public:
 	{
 		if (this->over)
 		{
-			resetLevel();
+			reset();
 			this->over = false;
 			return true;
 		}
@@ -98,10 +98,11 @@ public:
 		this->score = score;
 	}
 
-	void resetLevel()
+	void reset()
 	{
 		//skill.reset(new Skill(startSkill.get));
-		position = startPosition;
+		Person::reset();
+		shots->clear();
 		updateBoundingRect();
 	}
 
