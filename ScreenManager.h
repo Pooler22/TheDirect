@@ -38,7 +38,7 @@ public:
 		this->screens.push_back(std::shared_ptr<Screen>(screen));
 	}
 
-	void addLevel(std::wstring name, std::wstring next, DirectX::XMINT2 dimension, std::shared_ptr<int> tab, DirectX::XMINT2 playerStartPosition,std::shared_ptr<std::vector<DirectX::XMINT3>> vectorEnemyStartPosition)
+	void addLevel(std::wstring name, std::wstring next, DirectX::XMINT2 dimension, std::shared_ptr<int> tab, DirectX::XMINT2 playerStartPosition,std::shared_ptr<std::vector<DirectX::XMINT4>> vectorEnemyStartPosition)
 	{
 		this->game->addLevel(name, next, dimension, tab, playerStartPosition, vectorEnemyStartPosition);
 	}
@@ -63,11 +63,6 @@ public:
 		this->game->addBrickTexture2(spriteSheet);
 	}
 
-	void addPlayer(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, ID3D11ShaderResourceView* shotSpriteSheet)
-	{
-		game->addPlayer(buttonSpriteSheet, positionIn, shotSpriteSheet);
-	}
-
 	void addPlayerTexture(ID3D11ShaderResourceView* buttonSpriteSheet, ID3D11ShaderResourceView* shotSpriteSheet)
 	{
 		game->addPlayerTexture(buttonSpriteSheet, shotSpriteSheet);
@@ -81,16 +76,6 @@ public:
 	void addBonusTexture(ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<Skill> bonus)
 	{
 		game->addBonusTexture(buttonSpriteSheet, bonus);
-	}
-
-	void addEnemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, int i)
-	{
-		game->addEnemy(buttonSpriteSheet, positionIn, i);
-	}
-
-	void addBonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, std::shared_ptr<Skill> bonus)
-	{
-		game->addBonus(buttonSpriteSheet, positionIn, bonus);
 	}
 
 	void Update(float elapsed)
@@ -169,11 +154,6 @@ public:
 	bool win()
 	{
 		return this->game->win();
-	}
-
-	void resetLevel()
-	{
-		this->game->resetLevel();
 	}
 
 public:

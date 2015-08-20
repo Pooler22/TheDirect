@@ -42,10 +42,10 @@ public:
 
 	virtual void Update(float elapsed)
 	{
-		if(direction)
-			position.x -= speed * scaleX;
+		if (direction)
+			position.x -= speed * scale.x;
 		else
-			position.x += speed * scaleX;
+			position.x += speed * scale.x;
 
 		updateBoundingRect();
 		animation->Update(elapsed);
@@ -53,5 +53,5 @@ public:
 
 private:
 	bool direction;
-	int speed;
+	int	speed;
 };

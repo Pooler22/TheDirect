@@ -46,7 +46,7 @@ public:
 	void Draw(DirectX::SpriteBatch* batch)
 	{
 		animation->Draw(batch, position);
-		m_font->DrawString(batch, string.c_str(), XMFLOAT2(position.x + 16 * scaleX, position.y + 4 * scaleY), color);
+		m_font->DrawString(batch, string.c_str(), XMFLOAT2(position.x + 16 * scale.x, position.y + 4 * scale.y), color);
 	}
 
 	void setString(std::wstring string)

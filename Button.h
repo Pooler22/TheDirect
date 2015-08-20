@@ -16,8 +16,8 @@ public:
 		framesToBeShownPerSecond(4)
 	{
 		float rotation = 0.0f;
-		this->scaleX = scaleX;
-		this->scaleY = scaleY;
+		this->scale.x = scaleX;
+		this->scale.y = scaleY;
 		texture = buttonSpriteSheet;
 		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scaleX, scaleY, 0.0f));
 		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
@@ -62,14 +62,14 @@ public:
 
 	void Button::resize(float scaleX, float scaleY)
 	{
-		float tmpScaleX = scaleX / this->scaleX;
-		float tmpScaleY = scaleY / this->scaleY;
+		float tmpScaleX = scaleX / this->scale.x;
+		float tmpScaleY = scaleY / this->scale.y;
 		this->dimensions.x *= tmpScaleX;
 		this->dimensions.y *= tmpScaleY;
 		this->position.x *= tmpScaleX;
 		this->position.y *= tmpScaleY;
-		this->scaleX = scaleX;
-		this->scaleY = scaleY;
+		this->scale.x = scaleX;
+		this->scale.y = scaleY;
 		this->animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), 0.0f, scaleX, scaleY, 0.0f));
 		this->animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
 		updateBoundingRect();
@@ -77,7 +77,7 @@ public:
 
 	virtual void Button::updateBoundingRect()
 	{
-		//TODO: proper updating when rotating player object
+		//TODO: updating when rotate
 		boundingRectangle.X = position.x;
 		boundingRectangle.Y = position.y;
 		boundingRectangle.Width = dimensions.x;
@@ -87,14 +87,10 @@ public:
 public:
 	int													framesOfAnimation;
 	int													framesToBeShownPerSecond;
-	
-	float												scaleX;
-	float												scaleY;
+	DirectX::XMFLOAT2									scale;
 	DirectX::XMFLOAT2									position;
 	DirectX::XMFLOAT2									dimensions;
-	
 	Windows::Foundation::Rect							boundingRectangle;
-	
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	texture;
 	std::unique_ptr<AnimatedTexture>					animation;
 };

@@ -107,7 +107,7 @@ public:
 
 	void fire()
 	{
-		shots->push_back(Shot(shotSpriteSheet, position, this->scaleX, this->scaleY, this->direction, this->skill->shotSpeed));
+		shots->push_back(Shot(shotSpriteSheet, position, this->scale.x, this->scale.y, this->direction, this->skill->shotSpeed));
 	}
 
 	void addBonus(std::shared_ptr<Skill> bonus)

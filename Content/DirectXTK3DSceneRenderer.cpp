@@ -157,7 +157,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		CreateWICTextureFromFile(device, L"assets\\brick\\brick2.png", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
 
-	screenManager->addBrickTexture2(m_texture.Get());
+	//screenManager->addBrickTexture2(m_texture.Get());
 
 	screenManager->prepareMap(m_texture.Get(), m_font);
 
@@ -174,18 +174,18 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		);
 	screenManager->addEnemyTexture(m_texture.Get());
 
-	std::shared_ptr<std::vector<DirectX::XMINT3>> enemyStartPositionL1;
-	enemyStartPositionL1.reset(new std::vector<DirectX::XMINT3>());
-	enemyStartPositionL1->push_back(DirectX::XMINT3(1, 2, 1));
-	enemyStartPositionL1->push_back(DirectX::XMINT3(10, 5, 1));
-	enemyStartPositionL1->push_back(DirectX::XMINT3(5, 7, 1));
+	std::shared_ptr<std::vector<DirectX::XMINT4>> enemyStartPositionL1;
+	enemyStartPositionL1.reset(new std::vector<DirectX::XMINT4>());
+	//enemyStartPositionL1->push_back(DirectX::XMINT4(1, 2, 1, 10));
+	//enemyStartPositionL1->push_back(DirectX::XMINT4(10, 5, 1, 11));
+	enemyStartPositionL1->push_back(DirectX::XMINT4(5, 7, 1, 12));
 	screenManager->addLevel(L"1", L"2", DirectX::XMINT2(x1, y1), tab1a, XMINT2(13,5), enemyStartPositionL1);
 	
-	std::shared_ptr<std::vector<DirectX::XMINT3>> enemyStartPositionL2;
-	enemyStartPositionL2.reset(new std::vector<DirectX::XMINT3>());
-	enemyStartPositionL2->push_back(DirectX::XMINT3(1, 2, 1));
-	enemyStartPositionL2->push_back(DirectX::XMINT3(10, 5, 1));
-	enemyStartPositionL2->push_back(DirectX::XMINT3(5, 7, 1));
+	std::shared_ptr<std::vector<DirectX::XMINT4>> enemyStartPositionL2;
+	enemyStartPositionL2.reset(new std::vector<DirectX::XMINT4>());
+	//enemyStartPositionL2->push_back(DirectX::XMINT4(1, 2, 1,2));
+	//enemyStartPositionL2->push_back(DirectX::XMINT4(10, 5, 1,3));
+	enemyStartPositionL2->push_back(DirectX::XMINT4(5, 7, 1,4));
 	screenManager->addLevel(L"2", L"1", DirectX::XMINT2(x1, y1), tab2a, XMINT2(13, 5), enemyStartPositionL2);
 
 	screenManager->loadLevel(L"1");
@@ -263,8 +263,8 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 	if (screenManager->win())
 	{
 		//screenManager->loadNextLevel();
-		//screenManager->setString(L"GameOver", L"ScoreGameOver", std::to_wstring(screenManager->game->getScore()));
-		//screenManager->setName(L"GameOver");
+		screenManager->setString(L"GameOver", L"ScoreGameOver", std::to_wstring(screenManager->game->getScore()));
+		screenManager->setName(L"GameOver");
 	}
 	if (screenManager->gameOver())
 	{
@@ -429,7 +429,7 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"ExitPause"))
 					{
 						screenManager->setName(L"Main");
-						screenManager->resetLevel();
+						//screenManager->resetLevel();
 					}
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"DescriptionAuthor"))
 					{
@@ -442,7 +442,7 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"ContinueGameOver"))
 					{
 						screenManager->setName(L"Main");
-						screenManager->resetLevel();
+						//screenManager->resetLevel();
 					}
 					flagFromPressToRelasedClick = false;
 				}
@@ -463,7 +463,7 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 			case PLAYER_ACTION_TYPES::INPUT_MOVE:
 				screenManager->game->player->move(playerAction.X, playerAction.Y);
 				if (playerAction.Y == 1)
-					//screenManager->game->player->jump();
+					screenManager->game->player->jump();
 				break;
 			case PLAYER_ACTION_TYPES::INPUT_AIM:
 				break;

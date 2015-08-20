@@ -30,7 +30,7 @@ public:
 		this->scaleY = scaleY;
 	};
 
-	void Game::addLevel(std::wstring name, std::wstring next, DirectX::XMINT2 dimension, std::shared_ptr<int>  tab, DirectX::XMINT2 playerStartPosition, std::shared_ptr<std::vector<DirectX::XMINT3>> vectorEnemyStartPosition)
+	void Game::addLevel(std::wstring name, std::wstring next, DirectX::XMINT2 dimension, std::shared_ptr<int>  tab, DirectX::XMINT2 playerStartPosition, std::shared_ptr<std::vector<DirectX::XMINT4>> vectorEnemyStartPosition)
 	{
 		this->levels->push_back(Level(name,next, dimension, tab, playerStartPosition, vectorEnemyStartPosition));
 	}
@@ -48,21 +48,16 @@ public:
 			if (name.compare(it->getName()) == 0)
 			{
 				nextLevelName = it->getNext();
-				this->map->setMapLevel(it->getDimension().x, it->getDimension().y, it->getTab().get(), this->screenWidth, this->screenHeight, scaleX, scaleY, playerSpriteSheetIn, spriteFontIn);
-				this->player->setStartPositionExt(DirectX::XMFLOAT2(it->getPlayerStartPosition().x * (screenWidth / map->getSzie().x), it->getPlayerStartPosition().y * (screenHeight / map->getSzie().y)));
+				this->map->setMapLevel(it->getDimension().x, it->getDimension().y, it->getTab().get(), this->screenWidth, this->screenHeight, scaleX, scaleY, brickSpriteSheet, spriteFontIn);
+				this->player->setStartPositionExt(DirectX::XMINT2(it->getPlayerStartPosition().x * (screenWidth / map->getSzie().x), it->getPlayerStartPosition().y * (screenHeight / map->getSzie().y)));
 
-				for (std::vector<DirectX::XMINT3>::iterator it1 = it->getVectorEnemyStartPosition().get()->begin(); it1 != it->getVectorEnemyStartPosition().get()->end(); ++it1)
+				for (std::vector<DirectX::XMINT4>::iterator it1 = it->getVectorEnemyStartPosition().get()->begin(); it1 != it->getVectorEnemyStartPosition().get()->end(); ++it1)
 				{
-					this->enemies->push_back(Enemy(enemySpriteSheet,DirectX::XMFLOAT2(it1->x * (screenWidth / map->getSzie().x), it1->y * (screenHeight / map->getSzie().y)), scaleX, scaleY, it1->z));
+					this->enemies->push_back(Enemy(enemySpriteSheet,DirectX::XMFLOAT2(it1->x * (screenWidth / map->getSzie().x), it1->y * (screenHeight / map->getSzie().y)), scaleX, scaleY, it1->z, it1->w));
 				}
 				break;
 			}
 		}	
-	}
-
-	void Game::addPlayer(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, ID3D11ShaderResourceView* shotSpriteSheet)
-	{
-		this->player = std::unique_ptr<Player>(new Player(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), scaleX, scaleY, shotSpriteSheet));
 	}
 
 	void Game::addPlayerTexture(ID3D11ShaderResourceView* buttonSpriteSheet, ID3D11ShaderResourceView* shotSpriteSheet)
@@ -78,16 +73,6 @@ public:
 	void Game::addBonusTexture(ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<Skill> bonus)
 	{
 		this->bonus->push_back(Bonus(buttonSpriteSheet, DirectX::XMFLOAT2(0,0), scaleX, scaleY, bonus));
-	}
-
-	void Game::addEnemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, int moveDirection)
-	{
-		this->enemies->push_back(Enemy(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), scaleX, scaleY, moveDirection));
-	}
-	
-	void Game::addBonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, std::shared_ptr<Skill> bonus)
-	{
-		this->bonus->push_back(Bonus(buttonSpriteSheet, DirectX::XMFLOAT2(positionIn.x * (screenWidth / map->getSzie().x), positionIn.y * (screenHeight / map->getSzie().y)), scaleX, scaleY, bonus));
 	}
 
 	void Game::Update(float elapsed)
@@ -185,7 +170,7 @@ public:
 		screenHeight *= scaleY;
 	}
 
-	void Game::Draw(DirectX::SpriteBatch* batch)
+	void Draw(DirectX::SpriteBatch* batch)
 	{
 		map->Draw(batch);
 		player->Draw(batch);
@@ -213,34 +198,20 @@ public:
 	{
 		for (std::vector<Level>::iterator it = levels->begin(); it != levels->end(); ++it)
 		{
+			
 			if (nextLevelName.compare(it->getName()) == 0)
 			{
 				nextLevelName = it->getNext();
-				this->map->reset();
-				this->map->setMapLevel(it->getDimension().x, it->getDimension().y, it->getTab().get(), this->screenWidth, this->screenHeight, scaleX, scaleY, playerSpriteSheetIn, spriteFontIn);
+				this->map.reset(new Map());
 				break;
 			}
 		}
+		loadLevel(nextLevelName);
 	}
 
 	int getScore()
 	{
 		return player->getScore();
-	}
-
-	void resetLevel()
-	{
-		player->resetLevel();
-		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
-		{
-			it->resetLevel();
-		}
-
-		for (std::vector<Bonus>::iterator it = bonus->begin(); it != bonus->end(); ++it)
-		{
-			it->resetLevel();
-		}
-		map->reset();
 	}
 
 	void Game::addBrickTexture(ID3D11ShaderResourceView* buttonSpriteSheet)
@@ -257,14 +228,16 @@ public:
 	int										screenHeight;
 	float									scaleX;
 	float									scaleY;
+	std::wstring							nextLevelName;
+	
 	std::unique_ptr<Map>					map;
 	std::unique_ptr<Player>					player;
 	std::unique_ptr<std::vector<Enemy>>		enemies;
 	std::unique_ptr<std::vector<Bonus>>		bonus;
 	std::unique_ptr<std::vector<Level>>		levels;
-	ID3D11ShaderResourceView*				playerSpriteSheetIn;
+	
 	std::shared_ptr<SpriteFont>				spriteFontIn;
-	std::wstring							nextLevelName;
+	ID3D11ShaderResourceView*				playerSpriteSheetIn;
 	ID3D11ShaderResourceView*				brickSpriteSheet;
-	ID3D11ShaderResourceView* enemySpriteSheet;
+	ID3D11ShaderResourceView*				enemySpriteSheet;
 };

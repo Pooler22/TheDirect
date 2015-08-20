@@ -39,12 +39,12 @@ public:
 	void  Person::Update(float elapsed)
 	{
 		if (right && !blockRight)
-			position.x += (speed * scaleX);
+			position.x += (speed * scale.x);
 		else if (left && !blockLeft)
-			position.x -= (speed * scaleX);
+			position.x -= (speed * scale.x);
 		if (jumpFlag)
 		{
-			position.y += (0 * speed * scaleY) - force * scaleY;
+			position.y += (0 * speed * scale.y) - force * scale.y;
 			force--;
 			stand = false;
 			if (force == 8)
@@ -54,7 +54,7 @@ public:
 		}
 		else if (stand) {}
 		else if (!stand)
-			position.y += force * scaleY;
+			position.y += force * scale.y;
 
 		updateBoundingRect();
 		animation->Update(elapsed);
@@ -147,9 +147,9 @@ public:
 		updateBoundingRect();
 	}
 
-	void setStartPositionExt(DirectX::XMFLOAT2 position)
+	void setStartPositionExt(DirectX::XMINT2 position)
 	{
-		this->position = this->startPosition = position;
+		this->position = this->startPosition = DirectX::XMFLOAT2(position.x, position.y);
 		setStartPosition();
 	}
 
