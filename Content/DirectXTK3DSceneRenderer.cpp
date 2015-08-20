@@ -120,9 +120,6 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1
 	};
 
-	std::shared_ptr<int> tab1a;
-	tab1a.reset(tab1);
-
 	int tab2[] = {
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -143,12 +140,12 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		1,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
 	};
-
+	
+	std::shared_ptr<int> tab1a;
+	tab1a.reset(tab1);
+	
 	std::shared_ptr<int> tab2a;
 	tab2a.reset(tab2);
-
-	screenManager->addLevel(L"1", L"2", DirectX::XMINT2(x1, y1), tab1a);
-	screenManager->addLevel(L"2", L"1", DirectX::XMINT2(x1, y1), tab2a);
 
 	DX::ThrowIfFailed(
 		CreateWICTextureFromFile(device, L"assets\\brick\\brick.png", nullptr, m_texture2.ReleaseAndGetAddressOf())
@@ -159,38 +156,39 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	DX::ThrowIfFailed(
 		CreateWICTextureFromFile(device, L"assets\\brick\\brick2.png", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
+
 	screenManager->addBrickTexture2(m_texture.Get());
 
-	
-	//screenManager->setMapLevel(x1, y1, tab1, m_texture.Get(), m_font);
 	screenManager->prepareMap(m_texture.Get(), m_font);
-	screenManager->loadLevel(L"1");
 
 	DX::ThrowIfFailed(
 		CreateWICTextureFromFile(device, L"assets\\bubble\\bubble.png", nullptr, m_texture2.ReleaseAndGetAddressOf())
 		);
-
 	DX::ThrowIfFailed(
 		CreateWICTextureFromFile(device, L"assets\\person\\player\\player.png", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
-
-	screenManager->addPlayer(m_texture.Get(), XMFLOAT2(1, 15), m_texture2.Get());
+	screenManager->addPlayerTexture(m_texture.Get(), m_texture2.Get());
 
 	DX::ThrowIfFailed(
 		CreateWICTextureFromFile(device, L"assets\\person\\enemy\\enemy.png", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
+	screenManager->addEnemyTexture(m_texture.Get());
 
-	screenManager->addEnemy(m_texture.Get(), XMFLOAT2(5, 17), 1);
-	screenManager->addEnemy(m_texture.Get(), XMFLOAT2(10, 4), 1);
+	std::shared_ptr<std::vector<DirectX::XMINT3>> enemyStartPositionL1;
+	enemyStartPositionL1.reset(new std::vector<DirectX::XMINT3>());
+	enemyStartPositionL1->push_back(DirectX::XMINT3(1, 2, 1));
+	enemyStartPositionL1->push_back(DirectX::XMINT3(10, 5, 1));
+	enemyStartPositionL1->push_back(DirectX::XMINT3(5, 7, 1));
+	screenManager->addLevel(L"1", L"2", DirectX::XMINT2(x1, y1), tab1a, XMINT2(10,5), enemyStartPositionL1);
+	
+	std::shared_ptr<std::vector<DirectX::XMINT3>> enemyStartPositionL2;
+	enemyStartPositionL2.reset(new std::vector<DirectX::XMINT3>());
+	enemyStartPositionL2->push_back(DirectX::XMINT3(1, 2, 1));
+	enemyStartPositionL2->push_back(DirectX::XMINT3(10, 5, 1));
+	enemyStartPositionL2->push_back(DirectX::XMINT3(5, 7, 1));
+	screenManager->addLevel(L"2", L"1", DirectX::XMINT2(x1, y1), tab2a, XMINT2(10, 5), enemyStartPositionL2);
 
-	DX::ThrowIfFailed(
-		CreateWICTextureFromFile(device, L"assets\\person\\bonus\\bonus.png", nullptr, m_texture.ReleaseAndGetAddressOf())
-		);
-
-	std::shared_ptr<Skill> bonus;
-	bonus.reset(new Skill(0, 0, 0, 0, 0));
-	XMFLOAT2 positionB[] = { XMFLOAT2(10, 17) ,XMFLOAT2(15, 3), XMFLOAT2(23, 3)};
-	screenManager->addBonus(m_texture.Get(), positionB[2], bonus);
+	screenManager->loadLevel(L"1");
 
 	//Gamepad
 	//GamePad.reset(new GamePad);
@@ -264,12 +262,14 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 
 	if (screenManager->win())
 	{
-		screenManager->loadNextLevel();
+		//screenManager->loadNextLevel();
+		//screenManager->setString(L"GameOver", L"ScoreGameOver", std::to_wstring(screenManager->game->getScore()));
+		//screenManager->setName(L"GameOver");
 	}
 	if (screenManager->gameOver())
 	{
-		//screenManager->setString(L"GameOver", L"ScoreGameOver", std::to_wstring(screenManager->game->getScore()));
-		//screenManager->setName(L"GameOver");
+		screenManager->setString(L"GameOver", L"ScoreGameOver", std::to_wstring(screenManager->game->getScore()));
+		screenManager->setName(L"GameOver");
 	}
 	
 	//#pragma region Gamepad

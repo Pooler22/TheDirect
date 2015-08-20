@@ -10,8 +10,11 @@
 class Level
 {
 public:
-	Level(std::wstring name, std::wstring next, DirectX::XMINT2 dimension, std::shared_ptr<int> tab)
+	Level(std::wstring name, std::wstring next, DirectX::XMINT2 dimension, std::shared_ptr<int> tab, DirectX::XMINT2 playerStartPosition, std::shared_ptr<std::vector<DirectX::XMINT3>> vectorEnemyStartPosition)
 	{
+		this->vectorEnemyStartPosition.reset((new std::vector<DirectX::XMINT3>()));
+		this->vectorEnemyStartPosition = std::move(vectorEnemyStartPosition);
+		this->playerStartPosition = playerStartPosition;
 		this->next = next;
 		this->name = name;
 		this->dimension = dimension;
@@ -59,9 +62,32 @@ public:
 		return this->dimension;
 	}
 
+	void setVectorEnemyStartPosition(std::shared_ptr<std::vector<DirectX::XMINT3>> vectorEnemyStartPosition)
+	{
+		this->vectorEnemyStartPosition = vectorEnemyStartPosition;
+	}
+
+	std::shared_ptr<std::vector<DirectX::XMINT3>> getVectorEnemyStartPosition()
+	{
+		return this->vectorEnemyStartPosition;
+	}
+
+	void setPlayerStartPosition(DirectX::XMINT2 playerStartPosition)
+	{
+		this->playerStartPosition = playerStartPosition;
+	}
+
+	DirectX::XMINT2 getPlayerStartPosition()
+	{
+		return this->playerStartPosition;
+	}
+
 private:
 	std::shared_ptr<int> tab;
 	std::wstring	name;
 	std::wstring	next;
 	DirectX::XMINT2 dimension;
+	DirectX::XMINT2 playerStartPosition;
+	std::shared_ptr<std::vector<DirectX::XMINT3>> vectorEnemyStartPosition;
+
 };

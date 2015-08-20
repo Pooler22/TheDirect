@@ -38,9 +38,9 @@ public:
 		this->screens.push_back(std::shared_ptr<Screen>(screen));
 	}
 
-	void addLevel(std::wstring name, std::wstring next, DirectX::XMINT2 dimension, std::shared_ptr<int> tab)
+	void addLevel(std::wstring name, std::wstring next, DirectX::XMINT2 dimension, std::shared_ptr<int> tab, DirectX::XMINT2 playerStartPosition,std::shared_ptr<std::vector<DirectX::XMINT3>> vectorEnemyStartPosition)
 	{
-		this->game->addLevel(name, next, dimension, tab);
+		this->game->addLevel(name, next, dimension, tab, playerStartPosition, vectorEnemyStartPosition);
 	}
 
 	void loadLevel(std::wstring name)
@@ -48,9 +48,9 @@ public:
 		this->game->loadLevel(name);
 	}
 
-	void prepareMap(ID3D11ShaderResourceView* playerSpriteSheetIn, std::shared_ptr<SpriteFont> spriteFontIn)
+	void prepareMap(ID3D11ShaderResourceView* brickSpriteSheetIn, std::shared_ptr<SpriteFont> spriteFontIn)
 	{
-		this->game->prepareMap(playerSpriteSheetIn, spriteFontIn);
+		this->game->prepareMap(brickSpriteSheetIn, spriteFontIn);
 	}
 
 	void addBrickTexture(ID3D11ShaderResourceView* spriteSheet)
@@ -68,6 +68,21 @@ public:
 		game->addPlayer(buttonSpriteSheet, positionIn, shotSpriteSheet);
 	}
 
+	void addPlayerTexture(ID3D11ShaderResourceView* buttonSpriteSheet, ID3D11ShaderResourceView* shotSpriteSheet)
+	{
+		game->addPlayerTexture(buttonSpriteSheet, shotSpriteSheet);
+	}
+
+	void addEnemyTexture(ID3D11ShaderResourceView* buttonSpriteSheet)
+	{
+		game->addEnemyTexture(buttonSpriteSheet);
+	}
+
+	void addBonusTexture(ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<Skill> bonus)
+	{
+		game->addBonusTexture(buttonSpriteSheet, bonus);
+	}
+
 	void addEnemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, int i)
 	{
 		game->addEnemy(buttonSpriteSheet, positionIn, i);
@@ -76,11 +91,6 @@ public:
 	void addBonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, std::shared_ptr<Skill> bonus)
 	{
 		game->addBonus(buttonSpriteSheet, positionIn, bonus);
-	}
-
-	void setMapLevel(int x, int y, int* numberTestureVector,ID3D11ShaderResourceView* playerSpriteSheetIn, std::shared_ptr<SpriteFont> spriteFontIn)
-	{
-		this->game->setMapLevel(x,y, numberTestureVector, playerSpriteSheetIn, spriteFontIn);
 	}
 
 	void Update(float elapsed)
@@ -145,6 +155,7 @@ public:
 			screen->resize(scaleX, scaleY);
 		}
 	}
+	
 	void loadNextLevel()
 	{
 		this->game->loadNextLevel();
