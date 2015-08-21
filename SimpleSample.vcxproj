@@ -48,6 +48,7 @@
     <ApplicationTypeRevision>8.1</ApplicationTypeRevision>
     <WindowsTargetPlatformVersion>10.0.10075.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.10075.0</WindowsTargetPlatformMinVersion>
+    <ProjectName>MindBuster</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -254,48 +255,37 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Image Include="Assets\background.dds" />
-    <Image Include="Assets\bonus.dds" />
-    <Image Include="Assets\brick.dds" />
-    <Image Include="Assets\brick2.dds" />
-    <Image Include="Assets\button.dds" />
-    <Image Include="Assets\cloud.dds" />
-    <Image Include="Assets\cloud2.dds" />
-    <Image Include="Assets\clouds.dds" />
-    <Image Include="Assets\clouds2.dds" />
-    <Image Include="Assets\enemy.dds" />
-    <Image Include="Assets\person.dds" />
-    <Image Include="Assets\enemyanimated.dds" />
-    <Image Include="Assets\Logo.scale-100.png">
+    <Image Include="Assets\background\background.png" />
+    <Image Include="Assets\brick\brick.png" />
+    <Image Include="Assets\brick\brick2.png" />
+    <Image Include="Assets\bubble\bubble.png" />
+    <Image Include="Assets\Logo.scale-100.png" />
+    <Image Include="Assets\Logo.scale-200.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="Assets\pipe.dds" />
-    <Image Include="Assets\pipe.png" />
-    <Image Include="Assets\player.dds" />
-    <Image Include="Assets\seafloor.dds" />
-    <Image Include="Assets\shipanimated1.dds" />
-    <Image Include="Assets\shipanimated.dds" />
-    <Image Include="Assets\SmallLogo.dds" />
-    <Image Include="Assets\SmallLogo.scale-100.png">
+    <Image Include="Assets\person\bonus\bonus.png" />
+    <Image Include="Assets\person\enemy\enemy.png" />
+    <Image Include="Assets\person\player\player.png" />
+    <Image Include="Assets\SmallLogo.scale-100.png" />
+    <Image Include="Assets\SplashScreen.scale-100.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="Assets\SplashScreen.png" />
-    <Image Include="Assets\Square44x44Logo.scale-150.png">
+    <Image Include="Assets\Square71x71Logo.scale-100.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="Assets\StoreLogo.scale-100.png">
-      <DeploymentContent>true</DeploymentContent>
-    </Image>
-    <Image Include="Assets\Tiny_skin.dds" />
-    <Image Include="Assets\windowslogo.dds" />
+    <Image Include="Assets\StoreLogo.scale-100.png" />
+    <Image Include="Assets\ui\button.png" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="Bonus.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="Player.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="Skill.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Shot.h" />
     <ClInclude Include="TextButton.h" />
     <ClInclude Include="Common\DeviceResources.h" />
     <ClInclude Include="Common\InputManager.h" />
@@ -311,12 +301,11 @@
     <ClInclude Include="Person.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="ScreenManager.h" />
-    <ClInclude Include="SimpleSampleMain.h" />
+    <ClInclude Include="MindBusterMain.h" />
     <ClInclude Include="Common\DirectXHelper.h" />
     <ClInclude Include="Common\StepTimer.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="ToDo.h" />
-    <ClInclude Include="Wall.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -326,7 +315,7 @@
     <ClCompile Include="Content\DirectXTK3DSceneRenderer.cpp" />
     <ClCompile Include="Content\SampleDebugTextRenderer.cpp" />
     <ClCompile Include="Content\SampleVirtualControllerRenderer.cpp" />
-    <ClCompile Include="SimpleSampleMain.cpp" />
+    <ClCompile Include="MindBusterMain.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='New|Win32'">Create</PrecompiledHeader>
@@ -343,17 +332,10 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="Assets\ADPCMdroid.xwb">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='New|ARM'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='New|Win32'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='New|x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
-    </None>
+    <None Include="Assets\background\background.xcf" />
+    <None Include="Assets\brick\brick.xcf" />
+    <None Include="Assets\brick\brick2.xcf" />
+    <None Include="Assets\bubble\bubble.xcf" />
     <None Include="Assets\italic.spritefont">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='New|Win32'">true</DeploymentContent>
@@ -365,21 +347,17 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='New|x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
     </None>
-    <None Include="Assets\tiny.sdkmesh">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='New|Win32'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='New|ARM'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='New|x64'">true</DeploymentContent>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
-    </None>
+    <Media Include="Assets\music\ADPCMdroid.xwb">
+      <FileType>Document</FileType>
+    </Media>
+    <None Include="Assets\person\bonus\bonus.xcf" />
+    <None Include="Assets\person\enemy\enemy_move.xcf" />
+    <None Include="Assets\person\enemy\enemy_stand.xcf" />
+    <None Include="Assets\person\player\bubble.xcf" />
+    <None Include="Assets\person\player\player_move.xcf" />
+    <None Include="Assets\person\player\player_stand.xcf" />
+    <None Include="Assets\ui\button.xcf" />
     <None Include="SimpleSample_TemporaryKey.pfx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="Assets\musicmono_adpcm.wav" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="DirectXTK\DirectXTK_Windows81.vcxproj">
@@ -390,6 +368,12 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SimpleSample.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\music\musicmono_adpcm.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

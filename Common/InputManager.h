@@ -25,7 +25,7 @@ using namespace Windows::Devices::Input;
 
 using namespace DirectX;
 
-namespace SimpleSample
+namespace MindBuster
 {
     //
     // ** Begin enumerations **

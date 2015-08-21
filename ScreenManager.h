@@ -12,17 +12,18 @@
 class ScreenManager
 {
 public:
-	ScreenManager(std::wstring nameIn, float screenWidth, float screenHeight, float scaleX, float scaleY, ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<SpriteFont> textSprite)
+	ScreenManager(std::wstring nameIn, float screenWidth, float screenHeight, float scaleX, float scaleY, ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<SpriteFont> textSprite, ID3D11ShaderResourceView* backgorund)
 	{
 		this->scaleX = scaleX;
 		this->scaleY = scaleY;
 		this->screenWidth = screenWidth;
 		this->screenHeight = screenHeight;
-		this->screens = std::vector<std::shared_ptr<Screen>>();
-		this->game.reset(new Game(screenWidth, screenHeight));
 		this->nameCurrentScreen = nameIn;
 		this->buttonSpriteSheet = buttonSpriteSheet;
 		this->textSprite = textSprite;
+		this->screens = std::vector<std::shared_ptr<Screen>>();
+		this->game.reset(new Game(screenWidth, screenHeight, scaleX, scaleY, textSprite));
+		this->background.reset(new ScrollingBackground(backgorund, screenWidth, screenHeight));
 	}
 
 	void addScreen(Screen* screen)
@@ -32,9 +33,24 @@ public:
 
 	void addScreen(std::wstring nameIn, int size, std::wstring name[], std::wstring id[], XMFLOAT2 position[])
 	{
-		Screen* screen = new Screen(buttonSpriteSheet, textSprite, nameIn);
-		screen->addMenu(name, id, position, size, scaleX, scaleY);
+		Screen* screen = new Screen(buttonSpriteSheet, textSprite, nameIn, scaleX, scaleY);
+		screen->addMenu(name, id, position, size);
 		this->screens.push_back(std::shared_ptr<Screen>(screen));
+	}
+
+	void addLevel(std::wstring name, std::wstring next, DirectX::XMINT2 dimension, std::shared_ptr<int> tab, DirectX::XMINT2 playerStartPosition,std::shared_ptr<std::vector<DirectX::XMINT4>> vectorEnemyStartPosition)
+	{
+		this->game->addLevel(name, next, dimension, tab, playerStartPosition, vectorEnemyStartPosition);
+	}
+
+	void loadLevel(std::wstring name)
+	{
+		this->game->loadLevel(name);
+	}
+
+	void loadNextLevel()
+	{
+		this->game->loadNextLevel();
 	}
 
 	void addBrickTexture(ID3D11ShaderResourceView* spriteSheet)
@@ -42,33 +58,24 @@ public:
 		this->game->addBrickTexture(spriteSheet);
 	}
 
-	void addBrickTexture2(ID3D11ShaderResourceView* spriteSheet)
+	void addPlayerTexture(ID3D11ShaderResourceView* buttonSpriteSheet, ID3D11ShaderResourceView* shotSpriteSheet)
 	{
-		this->game->addBrickTexture2(spriteSheet);
+		game->addPlayerTexture(buttonSpriteSheet, shotSpriteSheet);
 	}
 
-	void addPlayer(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn)
+	void addEnemyTexture(ID3D11ShaderResourceView* buttonSpriteSheet)
 	{
-		game->addPlayer(buttonSpriteSheet, positionIn, scaleX, scaleY);
+		game->addEnemyTexture(buttonSpriteSheet);
 	}
 
-	void addEnemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, int i)
+	void addBonusTexture(ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<Skill> bonus)
 	{
-		game->addEnemy(buttonSpriteSheet, positionIn, scaleX, scaleY, i);
-	}
-
-	void addBonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, std::shared_ptr<Skill> bonus)
-	{
-		game->addBonus(buttonSpriteSheet, positionIn, scaleX, scaleY, bonus);
-	}
-
-	void setMapLevel(int x, int y, int* numberTestureVector,ID3D11ShaderResourceView* playerSpriteSheetIn, std::shared_ptr<SpriteFont> spriteFontIn)
-	{
-		this->game->setMapLevel(x,y, numberTestureVector, screenWidth, screenHeight, scaleX, scaleY, playerSpriteSheetIn, spriteFontIn);
+		game->addBonusTexture(buttonSpriteSheet, bonus);
 	}
 
 	void Update(float elapsed)
 	{
+		background->Update(elapsed);
 		if (nameCurrentScreen.compare(L"Play") == 0)
 			game->Update(elapsed);
 		for (auto &screen : this->screens)
@@ -80,6 +87,7 @@ public:
 
 	void Draw(DirectX::SpriteBatch* batch)
 	{
+		background->Draw(batch);
 		if (nameCurrentScreen.compare(L"Play") == 0)
 			game->Draw(batch);
 		for (auto &screen : this->screens)
@@ -120,21 +128,22 @@ public:
 
 	void resize(float scaleX, float scaleY)
 	{
+		background->resize(scaleX, scaleY);
 		game->resize(scaleX, scaleY);
 		for (auto &screen : this->screens)
 		{
 			screen->resize(scaleX, scaleY);
 		}
 	}
-
+	
 	bool gameOver()
 	{
 		return this->game->gameOver();
 	}
 
-	void resetLevel()
+	bool win()
 	{
-		this->game->resetLevel();
+		return this->game->win();
 	}
 
 public:
@@ -148,4 +157,5 @@ public:
 	std::wstring								nameCurrentScreen;
 	std::unique_ptr<Game>						game;
 	std::vector<std::shared_ptr<Screen>>		screens;
+	std::unique_ptr<ScrollingBackground>		background;
 };

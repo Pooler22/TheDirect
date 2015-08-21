@@ -16,9 +16,10 @@
 #include "pch.h"
 #include "DirectXTK3DSceneRenderer.h"
 #include "DDSTextureLoader.h"
+#include "WICTextureLoader.h"
 #include "..\Common\DirectXHelper.h"	// For ThrowIfFailed and ReadDataAsync
 
-using namespace SimpleSample;
+using namespace MindBuster;
 using namespace DirectX;
 using namespace Windows::Foundation;
 
@@ -43,27 +44,29 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	m_font.reset(new SpriteFont(device, L"assets\\italic.spritefont"));
 
 	flagFromPressToRelasedClick = true;
-	playMusic = false;
+	m_playMusic = false;
 
 	scaleX = (float)logicalSize.Width / (32.0 * 25.0);
 	scaleY = (float) logicalSize.Height / (19.0 * 25.0);
 	centerPosition.x = logicalSize.Width / 2.0;
 	centerPosition.y = logicalSize.Height / 2.0;
-	float oneUnitHeight = logicalSize.Height / 7.0;
+	float oneUnitHeight = logicalSize.Height / 8.0;
 
 	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\button.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		CreateWICTextureFromFile(device, L"assets\\ui\\button.png", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
+	DX::ThrowIfFailed(
+		CreateWICTextureFromFile(device, L"assets\\background\\background.png", nullptr, m_texture2.ReleaseAndGetAddressOf())
 		);
 
-	screenManager.reset(new ScreenManager(L"Main", logicalSize.Width, logicalSize.Height, scaleX, scaleY, m_texture.Get(), m_font));
+	screenManager.reset(new ScreenManager(L"Main", logicalSize.Width, logicalSize.Height, scaleX, scaleY, m_texture.Get(), m_font, m_texture2.Get()));
 
 	std::wstring name[] = { L"Start",L"Options",L"Exit" };
 	std::wstring id[] = { L"StartMain",L"OptionsMain",L"ExitMain" };
 	XMFLOAT2 position[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
 	screenManager->addScreen(L"Main", 3, name, id, position);
 
-
-	std::wstring name1[] = { L"Music",L"Author",L"Exit" };
+	std::wstring name1[] = { L"Music: on",L"Author",L"Back" };
 	std::wstring id1[] = { L"MusicOptions",L"AuthorOptions",L"BackOptions" };
 	XMFLOAT2 position1[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
 	screenManager->addScreen(L"Options", 3, name1, id1, position1);
@@ -73,12 +76,12 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	XMFLOAT2 position2[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
 	screenManager->addScreen(L"Level", 3, name2, id2, position2);
 
-	std::wstring name4[] = { L"Return",L"Exit" };
-	std::wstring id4[] = { L"ReturnPause",L"ExitPause" };
-	XMFLOAT2 position4[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y) };
-	screenManager->addScreen(L"Pause", 2, name4, id4, position4);
+	std::wstring name4[] = { L"Return", L"Restart Level", L"Main menu" };
+	std::wstring id4[] = { L"ReturnPause",L"RestartPause",L"ExitPause" };
+	XMFLOAT2 position4[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y),XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
+	screenManager->addScreen(L"Pause", 3, name4, id4, position4);
 
-	std::wstring name5[] = { L"It's me ;)",L"Back" };
+	std::wstring name5[] = { L"Pawel Rutkowski",L"Back" };
 	std::wstring id5[] = { L"DescriptionAuthor",L"BackAuthor" };
 	XMFLOAT2 position5[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y) };
 	screenManager->addScreen(L"Author", 2, name5, id5, position5);
@@ -94,60 +97,90 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	screenManager->addScreen(L"GameOver", 2, name6, id6, position6);
 
 	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\brick2.dds", nullptr, m_texture2.ReleaseAndGetAddressOf())
+		CreateWICTextureFromFile(device, L"assets\\brick\\brick.png", nullptr, m_texture2.ReleaseAndGetAddressOf())
 		);
 	screenManager->addBrickTexture(m_texture2.Get());
 
 	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\brick.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
+		CreateWICTextureFromFile(device, L"assets\\brick\\brick2.png", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
-	screenManager->addBrickTexture2(m_texture.Get());
+	screenManager->addBrickTexture(m_texture.Get());
+
+	DX::ThrowIfFailed(
+		CreateWICTextureFromFile(device, L"assets\\bubble\\bubble.png", nullptr, m_texture2.ReleaseAndGetAddressOf())
+		);
+	DX::ThrowIfFailed(
+		CreateWICTextureFromFile(device, L"assets\\person\\player\\player.png", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
+	screenManager->addPlayerTexture(m_texture.Get(), m_texture2.Get());
+
+	DX::ThrowIfFailed(
+		CreateWICTextureFromFile(device, L"assets\\person\\enemy\\enemy.png", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
+	screenManager->addEnemyTexture(m_texture.Get());
 
 	int x1 = 32;
 	int y1 = 18;
+
+	int tab2[] = {
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+	};
 	int tab1[] = {
 		1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,4,0,0,0,4,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,2,
+		2,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1
+		2,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2
 	};
 
-	screenManager->setMapLevel(x1, y1, tab1, m_texture.Get(), m_font);
+	std::shared_ptr<int> tab1a;
+	tab1a.reset(tab1);
+	std::shared_ptr<int> tab2a;
+	tab2a.reset(tab2);
 
-	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\person.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
-		);
-	screenManager->addPlayer(m_texture.Get(), XMFLOAT2(1, 15));
+	std::shared_ptr<std::vector<DirectX::XMINT4>> enemyStartPositionL1;
+	enemyStartPositionL1.reset(new std::vector<DirectX::XMINT4>());
+	enemyStartPositionL1->push_back(DirectX::XMINT4(1, 2, 1, 10));
+	enemyStartPositionL1->push_back(DirectX::XMINT4(5, 7, 1, 12));
+	screenManager->addLevel(L"1", L"2", DirectX::XMINT2(x1, y1), tab1a, XMINT2(3,15), enemyStartPositionL1);
+	
+	std::shared_ptr<std::vector<DirectX::XMINT4>> enemyStartPositionL2;
+	enemyStartPositionL2.reset(new std::vector<DirectX::XMINT4>());
+	enemyStartPositionL2->push_back(DirectX::XMINT4(10, 5, 1,3));
+	enemyStartPositionL2->push_back(DirectX::XMINT4(5, 7, 1,4));
+	screenManager->addLevel(L"2", L"1", DirectX::XMINT2(x1, y1), tab2a, XMINT2(3, 15), enemyStartPositionL2);
 
-	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\enemy.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
-		);
-	screenManager->addEnemy(m_texture.Get(), XMFLOAT2(5, 17), 1);
-
-	DX::ThrowIfFailed(
-		CreateDDSTextureFromFile(device, L"assets\\bonus.dds", nullptr, m_texture.ReleaseAndGetAddressOf())
-		);
-
-	std::shared_ptr<Skill> bonus;
-	bonus.reset(new Skill(0, 0, 0, 0, 0));
-	XMFLOAT2 positionB[] = { XMFLOAT2(10, 17) ,XMFLOAT2(15, 3), XMFLOAT2(23, 3)};
-	screenManager->addBonus(m_texture.Get(), positionB[0], bonus);
-	screenManager->addBonus(m_texture.Get(), positionB[1], bonus);
-	screenManager->addBonus(m_texture.Get(), positionB[2], bonus);
+	screenManager->loadLevel(L"1");
 
 	//Gamepad
 	//GamePad.reset(new GamePad);
@@ -178,8 +211,8 @@ void DirectXTK3DSceneRenderer::CreateAudioResources()
     m_audioTimerAcc = 10.f;
     m_retryDefault = false;
 
-    m_waveBank.reset(new WaveBank(m_audEngine.get(), L"assets\\adpcmdroid.xwb"));
-    m_soundEffect.reset(new SoundEffect(m_audEngine.get(), L"assets\\MusicMono_adpcm.wav"));
+    m_waveBank.reset(new WaveBank(m_audEngine.get(), L"assets\\music\\ADPCMdroid.xwb"));
+    m_soundEffect.reset(new SoundEffect(m_audEngine.get(), L"assets\\music\\musicmono_adpcm.wav"));
     m_effect1 = m_soundEffect->CreateInstance();
     m_effect2 = m_waveBank->CreateInstance(10);
 
@@ -219,6 +252,12 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 		m_retryDefault = true;
 	}
 
+	if (screenManager->win())
+	{
+		screenManager->loadNextLevel();
+		//screenManager->setString(L"GameOver", L"ScoreGameOver", std::to_wstring(screenManager->game->getScore()));
+		//screenManager->setName(L"GameOver");
+	}
 	if (screenManager->gameOver())
 	{
 		screenManager->setString(L"GameOver", L"ScoreGameOver", std::to_wstring(screenManager->game->getScore()));
@@ -321,7 +360,7 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 				{
 					if (screenManager->getName() == L"Play")
 					{
-						screenManager->game->player->fire();
+						screenManager->game->fire();
 					}
 					if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"StartMain"))
 					{
@@ -337,16 +376,18 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 					}
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"MusicOptions"))
 					{
-						playMusic = !playMusic;
-						if (playMusic)
+						m_playMusic = !m_playMusic;
+						if (m_playMusic)
 						{
 							m_effect1->Play(true);
 							m_effect2->Play();
+							screenManager->setString(L"Options", L"MusicOptions", L"Music: on");
 						}
 						else
 						{
 							m_effect1->Pause();
 							m_effect2->Pause();
+							screenManager->setString(L"Options", L"MusicOptions", L"Music: off");
 						}
 					}
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"AuthorOptions"))
@@ -380,7 +421,7 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"ExitPause"))
 					{
 						screenManager->setName(L"Main");
-						screenManager->resetLevel();
+						//screenManager->resetLevel();
 					}
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"DescriptionAuthor"))
 					{
@@ -393,9 +434,13 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"ContinueGameOver"))
 					{
 						screenManager->setName(L"Main");
-						screenManager->resetLevel();
+						//screenManager->resetLevel();
 					}
-					
+					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"RestartPause"))
+					{
+						screenManager->setName(L"Play");
+						screenManager->game->resetLevel();
+					}
 					flagFromPressToRelasedClick = false;
 				}
 				break;
@@ -415,7 +460,7 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 			case PLAYER_ACTION_TYPES::INPUT_MOVE:
 				screenManager->game->player->move(playerAction.X, playerAction.Y);
 				if (playerAction.Y == 1)
-					//screenManager->game->player->jump();
+					screenManager->game->player->jump();
 				break;
 			case PLAYER_ACTION_TYPES::INPUT_AIM:
 				break;
@@ -460,6 +505,7 @@ void DirectXTK3DSceneRenderer::NewAudioDevice()
         m_retryDefault = true;
     }
 }
+
 // Drawing Grid on screen using primitives (PrimitiveBatch) - not usefull right now
 //void XM_CALLCONV DirectXTK3DSceneRenderer::DrawGrid(FXMVECTOR xAxis, FXMVECTOR yAxis, FXMVECTOR origin, size_t xdivs, size_t ydivs, GXMVECTOR color)
 //{
@@ -500,6 +546,7 @@ void DirectXTK3DSceneRenderer::NewAudioDevice()
 //   m_batch->End();
 //}
 //this is the DRAW function
+
 void DirectXTK3DSceneRenderer::Render()
 {
 	auto context = m_deviceResources->GetD3DDeviceContext();

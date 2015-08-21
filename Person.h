@@ -10,100 +10,136 @@
 class Person : public Button
 {
 public:
-	Person::Person()
-	{
-	}
-
 	Person::Person(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY) :
 		Button(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
 		this->startPosition = positionIn;
-		this->scaleX = scaleX;
-		this->speed = 10;
-		blockLeft = blockRight = blockTop =  blockButtom = stand = false;
+		this->direction = blockLeft = blockRight = blockTop = blockButtom = stand = false;
+		this->speed = 8;
+		x = 1;
+		y = 1;
+		force = 8;
+		left = right = jumpFlag = blockTop = blockRight = blockLeft = false;
 	}
 
-	void  Person::Draw(DirectX::SpriteBatch* batch)
+	void Person::Draw(DirectX::SpriteBatch* batch)
 	{
-		animation->Draw(batch, position);
+		updateBoundingRect();
+		if (direction)
+		{
+			animation->Draw(batch, position, DirectX::SpriteEffects::SpriteEffects_FlipHorizontally);
+		}
+		else
+		{
+			animation->Draw(batch, position);
+		}
+
 	}
 
-	void  Person::Update(float elapsed)
+	void  Update(float elapsed)
 	{
-		//position.y += force;
+		if (right && !blockRight)
+			position.x += (speed * scale.x);
+		else if (left && !blockLeft)
+			position.x -= (speed * scale.x);
+		if (jumpFlag)
+		{
+			position.y += (0 * speed * scale.y) - force * scale.y;
+			force--;
+			stand = false;
+			if (force == 8)
+			{
+				jumpFlag = false;
+			}
+		}
+		else if (stand) {}
+		else if (!stand)
+			position.y += force * scale.y;
+
 		updateBoundingRect();
 		animation->Update(elapsed);
+		left = right = stand = blockRight = blockTop = blockRight = blockLeft = false;
 	}
 
 	void  move(float x, float y)
 	{
-		if (blockRight && x > 0)
+		if (x > 0)
+			right = true;
+		else if (x < 0)
+			left = true;
+		if (!jumpFlag && y > 0 && stand)
 		{
-			x = 0;
+			jumpFlag = true;
+			force = gravity;
 		}
-		if (blockLeft && x < 0)
-		{
-			x = 0;
-		}
-		if (stand && y <= 0)
-		{
-			force = 0;
-			y = 0;
-		}
-		else 
-		{
-			if (jumpFlag)
-			{
-				force = -force;
-			}
-			force = 5;
-		}
-		position.x += (x * speed * scaleX);
-		position.y -= (y * speed * scaleX) - force * scaleX;
 
-		blockRight = false;
-		blockLeft = false;
-		stand = false;
+		if (x > 0)
+		{
+			direction = false;
+		}
+		else if (x < 0)
+		{
+			direction = true;
+		}
+	}
+
+	void correctPersonPosition(float screenWidth, float screenHeight)
+	{
+		if (position.y > screenHeight)
+		{
+			position.y = 0.0 - dimensions.y;
+		}
+		else if (position.y < 0.0 - dimensions.y)
+		{
+			position.y = screenHeight;
+		}
+		if (getPosition().x > screenWidth)
+		{
+			position.x = 0.0 - dimensions.x;
+		}
+		else if (getPosition().x < 0.0 - dimensions.x)
+		{
+			position.x = screenWidth;
+		}
 		updateBoundingRect();
 	}
 
-	void colision(Windows::Foundation::Rect rect, BRICK_BEHAVIOR behavior)
+	void colision(Windows::Foundation::Rect rect)
 	{
-		if (boundingRectangle.IntersectsWith(rect))
-			{
-			if (boundingRectangle.Right > rect.Left &&
-				boundingRectangle.Left < rect.Left - boundingRectangle.Width / 2 &&
-				boundingRectangle.Bottom > rect.Top
-				)
-			{
-				blockRight = true;
-			}
-			if (boundingRectangle.Left < rect.Right &&
-				boundingRectangle.Right > rect.Left + boundingRectangle.Width / 2 &&
-				boundingRectangle.Bottom > rect.Top
-				)
-			{
-				blockLeft = true;
-			}
-			if (boundingRectangle.Right - 1 > rect.Left &&
-				boundingRectangle.Right + 1 < rect.Right + boundingRectangle.Width &&
-				boundingRectangle.Bottom >= rect.Top &&
-				boundingRectangle.Top < rect.Top)
-			{
-				position.y = rect.Y - dimensions.y;
-				stand = true;
-			}
-			if (boundingRectangle.Left + boundingRectangle.Width - 1 > rect.Left &&
-				boundingRectangle.Left + boundingRectangle.Width + 1 < rect.Left + rect.Width + boundingRectangle.Width &&
-				boundingRectangle.Top <= rect.Bottom&&
-				boundingRectangle.Bottom > rect.Bottom)
-			{
-				position.y = rect.Y + rect.Height;
-			}
+		if (boundingRectangle.Right > rect.Left &&
+			boundingRectangle.Left < rect.Right &&
+			boundingRectangle.Bottom >= rect.Top &&
+			boundingRectangle.Top < rect.Top)
+		{
+			position.y = rect.Y - dimensions.y;
 			updateBoundingRect();
+			stand = true;
 		}
+		if (boundingRectangle.Bottom <= rect.Bottom + 1 &&
+			boundingRectangle.Bottom > rect.Top + 1 &&
+			boundingRectangle.Right >= rect.Left &&
+			boundingRectangle.Left < rect.Left
+			)
+		{
+			position.x = rect.X - dimensions.x;
+			updateBoundingRect();
+			blockRight = true;
+			direction = true;
+		}
+		if (boundingRectangle.Bottom <= rect.Bottom + 1 &&
+			boundingRectangle.Bottom > rect.Top + 1 &&
+			boundingRectangle.Left <= rect.Right &&
+			boundingRectangle.Right > rect.Right
+			)
+		{
+			position.x = rect.X + rect.Width;
+			updateBoundingRect();
+			blockLeft = true;
+			direction = false;
+		}
+
 	}
-	
+
 
 	void  Person::setStartPosition()
 	{
@@ -111,20 +147,43 @@ public:
 		updateBoundingRect();
 	}
 
+	void setStartPositionExt(DirectX::XMINT2 position)
+	{
+		this->position = this->startPosition = DirectX::XMFLOAT2(position.x, position.y);
+		setStartPosition();
+	}
+
 	void jump()
 	{
 		this->force = this->gravity;
 		this->jumpFlag = true;
 	}
-	
-	void resetLevel()
+
+	void reset()
 	{
 		position = startPosition;
 		updateBoundingRect();
 	}
 
+	void resize(float scaleX, float scaleY)
+	{
+		float tmpScaleX = scaleX / this->scale.x;
+		float tmpScaleY = scaleY / this->scale.y;
+		this->position.x *= tmpScaleX;
+		this->position.y *= tmpScaleY;
+		this->startPosition.x *= tmpScaleX;
+		this->startPosition.y *= tmpScaleY;
+		Button::resize(scaleX, scaleY);
+		updateBoundingRect();
+	}
+
 public:
-	int gravity;
+	bool right;
+	bool left;
+	int x;
+	int y;
+	bool direction; //0 lat, 1 right
+	int gravity = 15;
 	int force;
 	bool jumpFlag;
 	bool stand;
@@ -132,8 +191,7 @@ public:
 	bool blockLeft;
 	bool blockTop;
 	bool blockButtom;
-	float												scaleX;
-	int													speed;
-	DirectX::XMFLOAT2									startPosition;
-	
+	int	speed;
+	DirectX::XMFLOAT2	startPosition;
+
 };

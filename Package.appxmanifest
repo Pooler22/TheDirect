@@ -14,9 +14,15 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Template10.App">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="TheDirect.App">
       <uap:VisualElements DisplayName="The Direct" Square150x150Logo="Assets\Logo.png" Square44x44Logo="Assets\SmallLogo.png" Description="The Direct" BackgroundColor="#464646">
+        <uap:DefaultTile Square71x71Logo="Assets\Square71x71Logo.png">
+        </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape" />
+          <uap:Rotation Preference="landscapeFlipped" />
+        </uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
   </Applications>

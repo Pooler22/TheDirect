@@ -12,7 +12,7 @@
 #include "Common\DeviceResources.h"
 #include "Common\StepTimer.h"
 
-namespace SimpleSample
+namespace MindBuster
 {
     // Renders an overlay to the screen.
     // Abstract class.

@@ -9,7 +9,7 @@
 #include "SampleVirtualControllerRenderer.h"
 #include "Common/DirectXHelper.h"
 
-using namespace SimpleSample;
+using namespace MindBuster;
 
 // Initializes D2D resources used for rendering.
 SampleVirtualControllerRenderer::SampleVirtualControllerRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources) :

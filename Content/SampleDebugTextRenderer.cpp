@@ -9,7 +9,7 @@
 #include "SampleDebugTextRenderer.h"
 #include "Common/DirectXHelper.h"
 
-using namespace SimpleSample;
+using namespace MindBuster;
 
 SampleDebugTextRenderer::SampleDebugTextRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources) :
 Overlay(deviceResources)

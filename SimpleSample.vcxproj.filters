@@ -16,19 +16,42 @@
     <ClInclude Include="Common\StepTimer.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <Image Include="Assets\SplashScreen.png">
-      <Filter>Assets</Filter>
-    </Image>
     <Filter Include="Content\GameElements">
       <UniqueIdentifier>{9682ce60-9672-460a-8ae6-462656de99eb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Content\Renderers">
       <UniqueIdentifier>{36f224ad-8ef8-46d6-9161-9c77541c6b2e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\brick">
+      <UniqueIdentifier>{6aaa9ac1-d916-417c-b32b-30de1f876582}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\background">
+      <UniqueIdentifier>{21a2b335-8702-42e2-ab04-ed937d3f0770}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\ui">
+      <UniqueIdentifier>{798ba457-c559-48bb-afd9-7effa9495ed1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\music">
+      <UniqueIdentifier>{bb8ad9ca-f7ce-4545-b704-b1278fab80b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\person">
+      <UniqueIdentifier>{510459e2-41bb-4963-b910-5ad1ac5cf887}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\person\enemy">
+      <UniqueIdentifier>{32d497d2-b8b6-4f73-a868-4ffcf55c4f72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\person\player">
+      <UniqueIdentifier>{466bddc5-b96b-411b-b5e3-643deca593c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\person\bonus">
+      <UniqueIdentifier>{f5b241d3-ef71-4709-8d9f-87287ff3717f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\bubble">
+      <UniqueIdentifier>{71eedb67-e793-4767-87da-4ef1f461566a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="SimpleSampleMain.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Common\DeviceResources.cpp">
       <Filter>Common</Filter>
@@ -48,9 +71,9 @@
     <ClCompile Include="Content\SampleVirtualControllerRenderer.cpp">
       <Filter>Content\Renderers</Filter>
     </ClCompile>
+    <ClCompile Include="MindBusterMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SimpleSampleMain.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Common\DeviceResources.h">
       <Filter>Common</Filter>
@@ -99,13 +122,7 @@
     <ClInclude Include="Content\ScrollingBackground.h">
       <Filter>Content\GameElements</Filter>
     </ClInclude>
-    <ClInclude Include="Skill.h">
-      <Filter>Content\GameElements</Filter>
-    </ClInclude>
     <ClInclude Include="TextButton.h">
-      <Filter>Content\GameElements</Filter>
-    </ClInclude>
-    <ClInclude Include="Wall.h">
       <Filter>Content\GameElements</Filter>
     </ClInclude>
     <ClInclude Include="Content\DirectXTK3DSceneRenderer.h">
@@ -117,6 +134,17 @@
     <ClInclude Include="Content\SampleVirtualControllerRenderer.h">
       <Filter>Content\Renderers</Filter>
     </ClInclude>
+    <ClInclude Include="Shot.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="Level.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="MindBusterMain.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -125,94 +153,88 @@
     <None Include="Assets\italic.spritefont">
       <Filter>Assets</Filter>
     </None>
-    <None Include="Assets\tiny.sdkmesh">
-      <Filter>Assets</Filter>
-    </None>
-    <None Include="Assets\ADPCMdroid.xwb">
-      <Filter>Assets</Filter>
-    </None>
     <None Include="SimpleSample_TemporaryKey.pfx" />
+    <None Include="Assets\person\enemy\enemy_move.xcf">
+      <Filter>Assets\person\enemy</Filter>
+    </None>
+    <None Include="Assets\person\enemy\enemy_stand.xcf">
+      <Filter>Assets\person\enemy</Filter>
+    </None>
+    <None Include="Assets\person\bonus\bonus.xcf">
+      <Filter>Assets\person\bonus</Filter>
+    </None>
+    <None Include="Assets\person\player\bubble.xcf">
+      <Filter>Assets\person\player</Filter>
+    </None>
+    <None Include="Assets\person\player\player_move.xcf">
+      <Filter>Assets\person\player</Filter>
+    </None>
+    <None Include="Assets\person\player\player_stand.xcf">
+      <Filter>Assets\person\player</Filter>
+    </None>
+    <None Include="Assets\brick\brick.xcf">
+      <Filter>Assets\brick</Filter>
+    </None>
+    <None Include="Assets\brick\brick2.xcf">
+      <Filter>Assets\brick</Filter>
+    </None>
+    <None Include="Assets\background\background.xcf">
+      <Filter>Assets\background</Filter>
+    </None>
+    <None Include="Assets\bubble\bubble.xcf">
+      <Filter>Assets\bubble</Filter>
+    </None>
+    <None Include="Assets\ui\button.xcf">
+      <Filter>Assets\ui</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="Assets\seafloor.dds">
-      <Filter>Assets</Filter>
+    <Image Include="Assets\brick\brick.png">
+      <Filter>Assets\brick</Filter>
     </Image>
-    <Image Include="Assets\Tiny_skin.dds">
-      <Filter>Assets</Filter>
+    <Image Include="Assets\brick\brick2.png">
+      <Filter>Assets\brick</Filter>
     </Image>
-    <Image Include="Assets\windowslogo.dds">
-      <Filter>Assets</Filter>
+    <Image Include="Assets\background\background.png">
+      <Filter>Assets\background</Filter>
     </Image>
-    <Image Include="Assets\background.dds">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\cloud.dds">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\cloud2.dds">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\clouds.dds">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\clouds2.dds">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\pipe.dds">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\pipe.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\shipanimated.dds">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\SmallLogo.dds">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\enemyanimated.dds">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\shipanimated1.dds">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\StoreLogo.scale-100.png">
+    <Image Include="Assets\Square71x71Logo.scale-100.png" />
+    <Image Include="Assets\Logo.scale-200.png" />
+    <Image Include="Assets\SplashScreen.scale-100.png" />
+    <Image Include="Assets\Logo.scale-100.png">
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\SmallLogo.scale-100.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\Square44x44Logo.scale-150.png">
+    <Image Include="Assets\StoreLogo.scale-100.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\Logo.scale-100.png">
-      <Filter>Assets</Filter>
+    <Image Include="Assets\ui\button.png">
+      <Filter>Assets\ui</Filter>
     </Image>
-    <Image Include="Assets\button.dds">
-      <Filter>Assets</Filter>
+    <Image Include="Assets\person\enemy\enemy.png">
+      <Filter>Assets\person\enemy</Filter>
     </Image>
-    <Image Include="Assets\brick.dds">
-      <Filter>Assets</Filter>
+    <Image Include="Assets\person\bonus\bonus.png">
+      <Filter>Assets\person\bonus</Filter>
     </Image>
-    <Image Include="Assets\brick2.dds">
-      <Filter>Assets</Filter>
+    <Image Include="Assets\person\player\player.png">
+      <Filter>Assets\person\player</Filter>
     </Image>
-    <Image Include="Assets\player.dds">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\person.dds">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\bonus.dds">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\enemy.dds">
-      <Filter>Assets</Filter>
+    <Image Include="Assets\bubble\bubble.png">
+      <Filter>Assets\bubble</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="Assets\musicmono_adpcm.wav">
-      <Filter>Assets</Filter>
+    <ResourceCompile Include="SimpleSample.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\music\musicmono_adpcm.wav">
+      <Filter>Assets\music</Filter>
+    </Media>
+    <Media Include="Assets\music\ADPCMdroid.xwb">
+      <Filter>Assets\music</Filter>
     </Media>
   </ItemGroup>
 </Project>

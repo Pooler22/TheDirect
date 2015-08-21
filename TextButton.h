@@ -19,11 +19,19 @@ public:
 		this->colorNormal = this->color = Colors::Black;
 		this->colorOver = Colors::Blue;
 		this->m_font = spriteFont;
+		centerHorizontally();
+		updateBoundingRect();
+	}
+
+	void centerHorizontally()
+	{
+		position.x -= dimensions.x / 2.;
+		position.y -= dimensions.y / 2.;
 	}
 
 	bool isOver(Windows::Foundation::Rect rect)
 	{
-		if(this->boundingRectangle.IntersectsWith(rect))
+		if (this->boundingRectangle.IntersectsWith(rect))
 		{
 			this->color = this->colorOver;
 			return true;
@@ -38,7 +46,7 @@ public:
 	void Draw(DirectX::SpriteBatch* batch)
 	{
 		animation->Draw(batch, position);
-		m_font->DrawString(batch, string.c_str(), position, color);
+		m_font->DrawString(batch, string.c_str(), XMFLOAT2(position.x + 16 * scale.x, position.y + 4 * scale.y), color);
 	}
 
 	void setString(std::wstring string)
@@ -61,7 +69,7 @@ public:
 		return this->id;
 	}
 
-public:
+private:
 	std::wstring							id;
 	std::wstring							string;
 	DirectX::XMVECTOR						color;

@@ -3,7 +3,7 @@
 
 #include <ppltasks.h>
 
-using namespace SimpleSample;
+using namespace MindBuster;
 using namespace concurrency;
 using namespace Windows::ApplicationModel;
 using namespace Windows::ApplicationModel::Core;

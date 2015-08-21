@@ -9,54 +9,34 @@
 #include "Person.h"
 #include "Button.h"
 #include "Skill.h"
+#include "Shot.h"
 
 class Player : public Person
 {
 public:
-	Player::Player() :
-		Person()
-	{
-		this->scaleX = 1;
-	}
-
-	Player::Player(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY) :
+	Player::Player(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, ID3D11ShaderResourceView* shotSpriteSheet) :
 		Person(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
+		this->shotSpriteSheet = shotSpriteSheet;
 		lastGoodPosition = positionIn;
-		this->scaleX = scaleX;
-		shots.reset(new std::vector<Button>());
 		skill.reset(new Skill(3, 1, 0, 5, 1));
-		over = false;
-		blockLeft = false;
-		blockRight = false;
-		blockTop = false;
-		blockButtom = false;
-		stand = false;
+		over = blockLeft = blockRight = blockTop = blockButtom = stand = false;
+		skill->shotSpeed = 12;
 	}
-
-	void  Draw(DirectX::SpriteBatch* batch)
-	{
-		for (std::vector<Button>::iterator it = shots->begin(); it != shots->end(); ++it)
-		{
-			it->Draw(batch);
-		}
-		animation->Draw(batch, position);
-	}
-
-
 
 	void  Update(float elapsed)
 	{
-		for (std::vector<Button>::iterator it = shots->begin(); it != shots->end(); ++it)
-		{
-			it->Update(elapsed);
-		}
-		animation->Update(elapsed);
+		Person::Update(elapsed);
+	}
+	
+	void  Draw(DirectX::SpriteBatch* batch)
+	{
+		Person::Draw(batch);
 	}
 
 	void  Player::die()
 	{
-		skill->life = skill->life - 1;
+		skill->life -= 1;
 		if (skill->life == 0)
 		{
 			this->over = true;
@@ -68,8 +48,8 @@ public:
 	{
 		if (this->over)
 		{
+			reset();
 			this->over = false;
-			resetLevel();
 			return true;
 		}
 		return false;
@@ -79,6 +59,7 @@ public:
 	{
 		return skill->life;
 	}
+
 	void setLife(int life)
 	{
 		this->skill->life = life;
@@ -93,26 +74,33 @@ public:
 	{
 		this->score = score;
 	}
-	void resetLevel()
+
+	void reset()
 	{
-		skill->life = 3;
-		score = 0;
-		position = startPosition;
+		//skill.reset(new Skill(startSkill.get));
+		Person::reset();
 		updateBoundingRect();
 	}
 
-	void fire()
+	void addBonus(std::shared_ptr<Skill> bonus)
 	{
-		shots->push_back(Button(texture.Get(), position,1.0f, 1.0f));
+		skill->life += bonus->life;
+		skill->point += bonus->point;
+		skill->shotDistance += bonus->shotDistance;
+		skill->shotSpeed += bonus->shotSpeed;
+		skill->speedMove += bonus->speedMove;
+	}
+
+	void resize(float scaleX, float scaleY)
+	{
+		Person::resize(scaleX, scaleY);
 	}
 
 public:
-
-	DirectX::XMFLOAT2									lastGoodPosition;
 	bool												over;
 	int													score;
+	DirectX::XMFLOAT2									lastGoodPosition;
 	std::unique_ptr<Skill>								skill;
-	std::shared_ptr<std::vector<Button>>				shots;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	bubbleTexture;
-
+	ID3D11ShaderResourceView*							shotSpriteSheet;
 };

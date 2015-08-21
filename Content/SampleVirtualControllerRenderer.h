@@ -13,7 +13,7 @@
 #include "Common/InputManager.h"
 #include "Common/OverlayManager.h"
 
-namespace SimpleSample
+namespace MindBuster
 {
     // Displays a virtual stick and buttons for the virtual controller.
     // Derived from the Overlay class and handled by the OverlayManger class.
