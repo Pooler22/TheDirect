@@ -16,8 +16,25 @@ public:
 	Shot::Shot(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, bool direction, int speed) :
 		Person(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
-		this->speed = speed;
+		this->speed = 6;
 		this->direction = direction;
+	}
+
+	void Update(float elapsed)
+	{
+		if (blockLeft || blockRight)
+		{
+			position.y -= (speed * scale.y);
+		}
+		else if (direction)
+			position.x -= speed * scale.x;
+		else
+			position.x += speed * scale.x;
+
+		updateBoundingRect();
+		animation->Update(elapsed);
+		//left = right = stand = blockRight = blockTop = blockRight = blockLeft = false;
+		Button::Update(elapsed);
 	}
 
 	bool getDirection()
@@ -38,16 +55,6 @@ public:
 	void setSpeed(int speed)
 	{
 		this->speed = speed;
-	}
-
-	virtual void Update(float elapsed)
-	{
-		if (direction)
-			position.x -= speed * scale.x;
-		else
-			position.x += speed * scale.x;
-		updateBoundingRect();
-		Button::Update(elapsed);
 	}
 
 private:

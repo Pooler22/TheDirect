@@ -117,10 +117,6 @@ public:
 
 	void Game::Update(float elapsed)
 	{
-		for (std::vector<Shot>::iterator it = shots->begin(); it != shots->end(); ++it)
-		{
-			it->Update(elapsed);
-		}
 		for (auto brick : map->bricks)
 		{
 			if (brick->getBehavior() == BRICK_BEHAVIOR_BLOCK) 
@@ -134,6 +130,10 @@ public:
 				{
 					it->colision(brick->getBoundingRectangle());
 				}
+				for (std::vector<Shot>::iterator it = shots->begin(); it != shots->end(); ++it)
+				{
+					it->colision(brick->getBoundingRectangle());
+				}
 			}
 		}
 
@@ -141,6 +141,13 @@ public:
 		playerVsBonusColision();
 		player->correctPersonPosition(screenWidth, screenHeight);
 		
+		for (std::vector<Shot>::iterator it = shots->begin(); it != shots->end(); ++it)
+		{
+			it->correctPersonPosition(screenWidth, screenHeight);
+			it->Update(elapsed);
+			player->colision(it->getBoundingRectangle());
+		}
+
 		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end();)
 		{
 			if (shotColision(it->getBoundingRectangle(), it->getPoint()))

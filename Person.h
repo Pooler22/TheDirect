@@ -22,7 +22,7 @@ public:
 		left = right = jumpFlag = blockTop = blockRight = blockLeft = false;
 	}
 
-	void  Person::Draw(DirectX::SpriteBatch* batch)
+	void Person::Draw(DirectX::SpriteBatch* batch)
 	{
 		updateBoundingRect();
 		if (direction)
@@ -36,7 +36,7 @@ public:
 
 	}
 
-	void  Person::Update(float elapsed)
+	void  Update(float elapsed)
 	{
 		if (right && !blockRight)
 			position.x += (speed * scale.x);
