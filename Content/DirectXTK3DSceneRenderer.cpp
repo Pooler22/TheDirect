@@ -96,29 +96,31 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	XMFLOAT2 position6[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight),XMFLOAT2(centerPosition.x, centerPosition.y) };
 	screenManager->addScreen(L"GameOver", 2, name6, id6, position6);
 
+	DX::ThrowIfFailed(
+		CreateWICTextureFromFile(device, L"assets\\brick\\brick.png", nullptr, m_texture2.ReleaseAndGetAddressOf())
+		);
+	screenManager->addBrickTexture(m_texture2.Get());
+
+	DX::ThrowIfFailed(
+		CreateWICTextureFromFile(device, L"assets\\brick\\brick2.png", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
+	screenManager->addBrickTexture(m_texture.Get());
+
+	DX::ThrowIfFailed(
+		CreateWICTextureFromFile(device, L"assets\\bubble\\bubble.png", nullptr, m_texture2.ReleaseAndGetAddressOf())
+		);
+	DX::ThrowIfFailed(
+		CreateWICTextureFromFile(device, L"assets\\person\\player\\player.png", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
+	screenManager->addPlayerTexture(m_texture.Get(), m_texture2.Get());
+
+	DX::ThrowIfFailed(
+		CreateWICTextureFromFile(device, L"assets\\person\\enemy\\enemy.png", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
+	screenManager->addEnemyTexture(m_texture.Get());
+
 	int x1 = 32;
-	int y1 = 18;	
-	
-	int tab2[] = {
-		1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,
-		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,4,0,0,0,4,0,0,0,0,0,0,2,
-		2,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,2,
-		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2
-	};
+	int y1 = 18;
 
 	int tab1[] = {
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -140,50 +142,40 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 	};
-	
+	int tab2[] = {
+		1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,4,0,0,0,4,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2
+	};
+
 	std::shared_ptr<int> tab1a;
 	tab1a.reset(tab1);
-	
 	std::shared_ptr<int> tab2a;
 	tab2a.reset(tab2);
-
-	DX::ThrowIfFailed(
-		CreateWICTextureFromFile(device, L"assets\\brick\\brick.png", nullptr, m_texture2.ReleaseAndGetAddressOf())
-		);
-
-	screenManager->addBrickTexture(m_texture2.Get());
-
-	DX::ThrowIfFailed(
-		CreateWICTextureFromFile(device, L"assets\\brick\\brick2.png", nullptr, m_texture.ReleaseAndGetAddressOf())
-		);
-
-	screenManager->addBrickTexture(m_texture.Get());
-
-	screenManager->prepareMap(m_texture.Get(), m_font);
-
-	DX::ThrowIfFailed(
-		CreateWICTextureFromFile(device, L"assets\\bubble\\bubble.png", nullptr, m_texture2.ReleaseAndGetAddressOf())
-		);
-	DX::ThrowIfFailed(
-		CreateWICTextureFromFile(device, L"assets\\person\\player\\player.png", nullptr, m_texture.ReleaseAndGetAddressOf())
-		);
-	screenManager->addPlayerTexture(m_texture.Get(), m_texture2.Get());
-
-	DX::ThrowIfFailed(
-		CreateWICTextureFromFile(device, L"assets\\person\\enemy\\enemy.png", nullptr, m_texture.ReleaseAndGetAddressOf())
-		);
-	screenManager->addEnemyTexture(m_texture.Get());
 
 	std::shared_ptr<std::vector<DirectX::XMINT4>> enemyStartPositionL1;
 	enemyStartPositionL1.reset(new std::vector<DirectX::XMINT4>());
 	enemyStartPositionL1->push_back(DirectX::XMINT4(1, 2, 1, 10));
-	//enemyStartPositionL1->push_back(DirectX::XMINT4(10, 5, 1, 11));
 	enemyStartPositionL1->push_back(DirectX::XMINT4(5, 7, 1, 12));
 	screenManager->addLevel(L"1", L"2", DirectX::XMINT2(x1, y1), tab1a, XMINT2(3,15), enemyStartPositionL1);
 	
 	std::shared_ptr<std::vector<DirectX::XMINT4>> enemyStartPositionL2;
 	enemyStartPositionL2.reset(new std::vector<DirectX::XMINT4>());
-	//enemyStartPositionL2->push_back(DirectX::XMINT4(1, 2, 1,2));
 	enemyStartPositionL2->push_back(DirectX::XMINT4(10, 5, 1,3));
 	enemyStartPositionL2->push_back(DirectX::XMINT4(5, 7, 1,4));
 	screenManager->addLevel(L"2", L"1", DirectX::XMINT2(x1, y1), tab2a, XMINT2(3, 15), enemyStartPositionL2);

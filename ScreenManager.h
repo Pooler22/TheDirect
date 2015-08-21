@@ -22,7 +22,7 @@ public:
 		this->buttonSpriteSheet = buttonSpriteSheet;
 		this->textSprite = textSprite;
 		this->screens = std::vector<std::shared_ptr<Screen>>();
-		this->game.reset(new Game(screenWidth, screenHeight, scaleX, scaleY));
+		this->game.reset(new Game(screenWidth, screenHeight, scaleX, scaleY, textSprite));
 		this->background.reset(new ScrollingBackground(backgorund, screenWidth, screenHeight));
 	}
 
@@ -48,9 +48,9 @@ public:
 		this->game->loadLevel(name);
 	}
 
-	void prepareMap(ID3D11ShaderResourceView* brickSpriteSheetIn, std::shared_ptr<SpriteFont> spriteFontIn)
+	void loadNextLevel()
 	{
-		this->game->prepareMap(brickSpriteSheetIn, spriteFontIn);
+		this->game->loadNextLevel();
 	}
 
 	void addBrickTexture(ID3D11ShaderResourceView* spriteSheet)
@@ -136,11 +136,6 @@ public:
 		}
 	}
 	
-	void loadNextLevel()
-	{
-		this->game->loadNextLevel();
-	}
-
 	bool gameOver()
 	{
 		return this->game->gameOver();

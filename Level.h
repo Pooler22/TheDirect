@@ -19,7 +19,6 @@ public:
 		this->name = name;
 		this->dimension = dimension;
 		this->tab = tab;
-		
 	}
 
 	void setName(std::wstring stringIn)
@@ -83,11 +82,11 @@ public:
 	}
 
 private:
-	std::shared_ptr<int> tab;
-	std::wstring	name;
-	std::wstring	next;
-	DirectX::XMINT2 dimension;
-	DirectX::XMINT2 playerStartPosition;
+	std::shared_ptr<int>	tab;
+	std::wstring			name;
+	std::wstring			next;
+	DirectX::XMINT2			dimension;
+	DirectX::XMINT2			playerStartPosition;
 	std::shared_ptr<std::vector<DirectX::XMINT4>> vectorEnemyStartPosition;
 
 };

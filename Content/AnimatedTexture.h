@@ -128,7 +128,7 @@ public:
 
     void Reset()
     {
-        
+ 
 		mFrame = 0;
         mTotalElapsed = 0.f;
     }
