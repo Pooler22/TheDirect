@@ -109,6 +109,11 @@ public:
                      Colors::White, 0.f, origin, scaleX, SpriteEffects_None, 0.f );
     }
 
+	void resize(float scaleX, float scaleY)
+	{
+		//to do: resize
+	}
+
 private:
 
     int                                                 mScreenHeight;

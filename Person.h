@@ -165,6 +165,18 @@ public:
 		updateBoundingRect();
 	}
 
+	void resize(float scaleX, float scaleY)
+	{
+		float tmpScaleX = scaleX / this->scale.x;
+		float tmpScaleY = scaleY / this->scale.y;
+		this->position.x *= tmpScaleX;
+		this->position.y *= tmpScaleY;
+		this->startPosition.x *= tmpScaleX;
+		this->startPosition.y *= tmpScaleY;
+		Button::resize(scaleX, scaleY);
+		updateBoundingRect();
+	}
+
 public:
 	bool right;
 	bool left;

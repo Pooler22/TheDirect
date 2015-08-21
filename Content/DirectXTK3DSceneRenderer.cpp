@@ -360,7 +360,7 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 				{
 					if (screenManager->getName() == L"Play")
 					{
-						screenManager->game->player->fire();
+						screenManager->game->fire();
 					}
 					if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"StartMain"))
 					{

@@ -20,6 +20,7 @@ class Game
 public:
 	Game::Game(int screenWidth, int screenHeight, float scaleX, float scaleY, std::shared_ptr<SpriteFont> spriteFontIn)
 	{
+		shots.reset(new std::vector<Shot>());
 		this->textureVector.reset(new std::vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>());
 		this->levels.reset(new std::vector<Level>());
 		this->map.reset(new Map());
@@ -31,6 +32,21 @@ public:
 		this->scaleY = scaleY;
 		this->spriteFontIn = spriteFontIn;
 	};
+
+
+	bool shotColision(Windows::Foundation::Rect rect, int point)
+	{
+		for (std::vector<Shot>::iterator it = shots->begin(); it != shots->end(); ++it)
+		{
+			if (it->getBoundingRectangle().IntersectsWith(rect))
+			{
+				player->score += point;
+				shots->erase(it);
+				return true;
+			}
+		}
+		return false;
+	}
 
 	void Game::addLevel(std::wstring name, std::wstring next, DirectX::XMINT2 dimension, std::shared_ptr<int>  tab, DirectX::XMINT2 playerStartPosition, std::shared_ptr<std::vector<DirectX::XMINT4>> vectorEnemyStartPosition)
 	{
@@ -65,6 +81,7 @@ public:
 			it->reset();
 		}
 		map->reset();
+		shots->clear();
 		loadLevel(currentLevelName);
 	}
 
@@ -100,6 +117,10 @@ public:
 
 	void Game::Update(float elapsed)
 	{
+		for (std::vector<Shot>::iterator it = shots->begin(); it != shots->end(); ++it)
+		{
+			it->Update(elapsed);
+		}
 		for (auto brick : map->bricks)
 		{
 			if (brick->getBehavior() == BRICK_BEHAVIOR_BLOCK) 
@@ -122,7 +143,7 @@ public:
 		
 		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end();)
 		{
-			if (player->shotColision(it->getBoundingRectangle(), it->getPoint()))
+			if (shotColision(it->getBoundingRectangle(), it->getPoint()))
 			{
 				it = enemies->erase(it);
 			}
@@ -179,8 +200,8 @@ public:
 	{
 		this->scaleX = scaleX;
 		this->scaleY = scaleY;
-		map->resize(scaleX, scaleY);
-		player->resize(scaleX, scaleY);
+		this->map->resize(scaleX, scaleY);
+		this->player->resize(scaleX, scaleY);
 		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
 		{
 			it->resize(scaleX, scaleY);
@@ -189,8 +210,13 @@ public:
 		{
 			it->resize(scaleX, scaleY);
 		}
-		screenWidth*= scaleX;
-		screenHeight *= scaleY;
+		this->screenWidth*= scaleX;
+		this->screenHeight *= scaleY;
+
+		for (std::vector<Shot>::iterator it = shots->begin(); it != shots->end(); ++it)
+		{
+			it->resize(scaleX, scaleY);
+		}
 	}
 
 	void Draw(DirectX::SpriteBatch* batch)
@@ -202,6 +228,10 @@ public:
 			it->Draw(batch);
 		}
 		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
+		{
+			it->Draw(batch);
+		}
+		for (std::vector<Shot>::iterator it = shots->begin(); it != shots->end(); ++it)
 		{
 			it->Draw(batch);
 		}
@@ -228,6 +258,11 @@ public:
 		this->textureVector->push_back(buttonSpriteSheet);
 	}
 
+	void fire()
+	{
+		shots->push_back(Shot(player->shotSpriteSheet, player->getPosition(), this->scaleX, this->scaleY, player->direction, player->skill->shotSpeed));
+	}
+
 	int										screenWidth;
 	int										screenHeight;
 	float									scaleX;
@@ -240,6 +275,7 @@ public:
 	std::unique_ptr<std::vector<Enemy>>		enemies;
 	std::unique_ptr<std::vector<Bonus>>		bonus;
 	std::unique_ptr<std::vector<Level>>		levels;
+	std::shared_ptr<std::vector<Shot>>		shots;
 	
 	std::shared_ptr<SpriteFont>				spriteFontIn;
 	std::shared_ptr<std::vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>>		textureVector;

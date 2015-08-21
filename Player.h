@@ -19,43 +19,19 @@ public:
 	{
 		this->shotSpriteSheet = shotSpriteSheet;
 		lastGoodPosition = positionIn;
-		shots.reset(new std::vector<Shot>());
 		skill.reset(new Skill(3, 1, 0, 5, 1));
 		over = blockLeft = blockRight = blockTop = blockButtom = stand = false;
 		skill->shotSpeed = 12;
 	}
 
-
-	bool shotColision(Windows::Foundation::Rect rect, int point)
-	{
-		for (std::vector<Shot>::iterator it = shots->begin(); it != shots->end(); ++it)
-		{
-			if (it->getBoundingRectangle().IntersectsWith(rect))
-			{
-				score += point;
-				shots->erase(it);
-				return true;
-			}
-		}
-		return false;
-	}
-
 	void  Update(float elapsed)
 	{
 		Person::Update(elapsed);
-		for (std::vector<Shot>::iterator it = shots->begin(); it != shots->end(); ++it)
-		{
-			it->Update(elapsed);
-		}
 	}
 	
 	void  Draw(DirectX::SpriteBatch* batch)
 	{
 		Person::Draw(batch);
-		for (std::vector<Shot>::iterator it = shots->begin(); it != shots->end(); ++it)
-		{
-			it->Draw(batch);
-		}
 	}
 
 	void  Player::die()
@@ -103,13 +79,7 @@ public:
 	{
 		//skill.reset(new Skill(startSkill.get));
 		Person::reset();
-		shots->clear();
 		updateBoundingRect();
-	}
-
-	void fire()
-	{
-		shots->push_back(Shot(shotSpriteSheet, position, this->scale.x, this->scale.y, this->direction, this->skill->shotSpeed));
 	}
 
 	void addBonus(std::shared_ptr<Skill> bonus)
@@ -121,12 +91,16 @@ public:
 		skill->speedMove += bonus->speedMove;
 	}
 
+	void resize(float scaleX, float scaleY)
+	{
+		Person::resize(scaleX, scaleY);
+	}
+
 public:
 	bool												over;
 	int													score;
 	DirectX::XMFLOAT2									lastGoodPosition;
 	std::unique_ptr<Skill>								skill;
-	std::shared_ptr<std::vector<Shot>>					shots;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	bubbleTexture;
 	ID3D11ShaderResourceView*							shotSpriteSheet;
 };

@@ -128,7 +128,7 @@ public:
 
 	void resize(float scaleX, float scaleY)
 	{
-		//TODO background->resize(); 
+		background->resize(scaleX, scaleY);
 		game->resize(scaleX, scaleY);
 		for (auto &screen : this->screens)
 		{
