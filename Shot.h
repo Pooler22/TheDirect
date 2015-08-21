@@ -46,9 +46,8 @@ public:
 			position.x -= speed * scale.x;
 		else
 			position.x += speed * scale.x;
-
 		updateBoundingRect();
-		animation->Update(elapsed);
+		Button::Update(elapsed);
 	}
 
 private:

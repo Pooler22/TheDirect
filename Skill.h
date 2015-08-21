@@ -12,10 +12,7 @@
 class Skill
 {
 public:
-	Skill()
-	{
-		this->life = this->speedMove = this->point = this->shotDistance = this->shotSpeed = 0;
-	}
+	Skill(){}
 
 	Skill(int life, int speedMove, int point, int shotDistance, int shotSpeed)
 	{

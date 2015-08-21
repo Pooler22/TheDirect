@@ -81,21 +81,6 @@ public:
 			map->addBrickTexture(it->Get());
 
 		loadLevel(currentLevelName);
-		/*for (std::vector<Level>::iterator it = levels->begin(); it != levels->end(); ++it)
-		{
-			if (nextLevelName.compare(it->getName()) == 0)
-			{
-				nextLevelName = it->getNext();
-				this->map->setMapLevel(it->getDimension().x, it->getDimension().y, it->getTab(), this->screenWidth, this->screenHeight, scaleX, scaleY, spriteFontIn);
-				this->player->setStartPositionExt(DirectX::XMINT2(it->getPlayerStartPosition().x * (screenWidth / map->getSzie().x), it->getPlayerStartPosition().y * (screenHeight / map->getSzie().y)));
-
-				for (std::vector<DirectX::XMINT4>::iterator it1 = it->getVectorEnemyStartPosition().get()->begin(); it1 != it->getVectorEnemyStartPosition().get()->end(); ++it1)
-				{
-					this->enemies->push_back(Enemy(enemySpriteSheet.Get(), DirectX::XMFLOAT2(it1->x * (screenWidth / map->getSzie().x), it1->y * (screenHeight / map->getSzie().y)), scaleX, scaleY, it1->z, it1->w));
-				}
-				break;
-			}
-		}*/
 	}
 
 	void Game::addPlayerTexture(ID3D11ShaderResourceView* buttonSpriteSheet, ID3D11ShaderResourceView* shotSpriteSheet)
@@ -258,7 +243,7 @@ public:
 	
 	std::shared_ptr<SpriteFont>				spriteFontIn;
 	std::shared_ptr<std::vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>>		textureVector;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>				playerSpriteSheetIn;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>				brickSpriteSheet;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>				enemySpriteSheet;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>									playerSpriteSheetIn;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>									brickSpriteSheet;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>									enemySpriteSheet;
 };

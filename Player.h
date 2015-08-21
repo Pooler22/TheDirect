@@ -25,6 +25,7 @@ public:
 		skill->shotSpeed = 12;
 	}
 
+
 	bool shotColision(Windows::Foundation::Rect rect, int point)
 	{
 		for (std::vector<Shot>::iterator it = shots->begin(); it != shots->end(); ++it)

@@ -35,7 +35,7 @@ public:
 		{
 			brick->Draw(batch);
 		}
-		this->m_font->DrawString(batch, scoreText.c_str(), textPosition, Colors::Blue);
+		this->m_font->DrawString(batch, scoreText.c_str(), DirectX::XMFLOAT2(0,0), Colors::Blue);
 	}
 	
 	void setSize(XMFLOAT2 sizeIn)
@@ -64,8 +64,6 @@ public:
 
 	void generateMap(int screenWidth, int screenHeight, float scaleX, float scaleY)
 	{
-		textPosition.x = 0;
-		textPosition.y = 0;
 		for (int x = 0; x < size.x; x++)
 		{
 			for (int y = 0; y < size.y -1; y++)
@@ -91,11 +89,10 @@ public:
 		bricks.clear();
 	}
 
-	std::shared_ptr<int>																numberTestureVector;
 	float																				standingPlatformHeight;
 	XMFLOAT2																			size;
-	XMFLOAT2																			textPosition;
 	std::wstring																		scoreText;
+	std::shared_ptr<int>																numberTestureVector;
 	std::shared_ptr<DirectX::SpriteFont>												m_font;
 	std::vector<std::shared_ptr<Brick>>													bricks;
 	std::shared_ptr<std::vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>>		textureVector;

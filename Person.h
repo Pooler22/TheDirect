@@ -179,7 +179,7 @@ public:
 	bool blockLeft;
 	bool blockTop;
 	bool blockButtom;
-	int					speed;
+	int	speed;
 	DirectX::XMFLOAT2	startPosition;
 
 };

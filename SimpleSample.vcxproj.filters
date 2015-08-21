@@ -123,13 +123,7 @@
     <ClInclude Include="Content\ScrollingBackground.h">
       <Filter>Content\GameElements</Filter>
     </ClInclude>
-    <ClInclude Include="Skill.h">
-      <Filter>Content\GameElements</Filter>
-    </ClInclude>
     <ClInclude Include="TextButton.h">
-      <Filter>Content\GameElements</Filter>
-    </ClInclude>
-    <ClInclude Include="Wall.h">
       <Filter>Content\GameElements</Filter>
     </ClInclude>
     <ClInclude Include="Content\DirectXTK3DSceneRenderer.h">
@@ -146,6 +140,9 @@
     </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="Level.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Skill.h">
       <Filter>Content\GameElements</Filter>
     </ClInclude>
   </ItemGroup>

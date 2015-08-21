@@ -28,7 +28,6 @@
 //#include "VertexTypes.h"
 #include "AnimatedTexture.h"
 #include "ScrollingBackground.h"
-#include "Wall.h"
 #include "GamePad.h"
 #include "TextButton.h"
 #include "Screen.h"

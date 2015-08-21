@@ -16,9 +16,9 @@ public:
 	{
 		this->scaleX = scaleX;
 		this->scaleY = scaleY;
-		this->buttonSpriteSheet = playerSpriteSheetIn;
-		this->spriteFont = spriteFontIn;
 		this->name = nameIn;
+		this->spriteFont = spriteFontIn;
+		this->buttonSpriteSheet = playerSpriteSheetIn;
 		this->buttons = std::vector<std::shared_ptr<TextButton>>();
 	};
 
@@ -29,14 +29,14 @@ public:
 
 	void addButton(std::wstring name, std::wstring id, XMFLOAT2 position)
 	{
-		this->buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet, spriteFont, name, id, position, scaleX, scaleY)));
+		this->buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet.Get(), spriteFont, name, id, position, scaleX, scaleY)));
 	}
 
 	void addMenu(std::wstring* names, std::wstring* ids, XMFLOAT2* positions, int conut)
 	{
 		for (int i = 0; i < conut; i++)
 		{
-			this->buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet, spriteFont, names[i], ids[i], positions[i], scaleX, scaleY)));
+			this->buttons.push_back(std::shared_ptr<TextButton>(new TextButton(buttonSpriteSheet.Get(), spriteFont, names[i], ids[i], positions[i], scaleX, scaleY)));
 		}
 	}
 
@@ -56,16 +56,6 @@ public:
 		}
 	}
 
-	void setName(std::wstring stringIn)
-	{
-		this->name = stringIn;
-	}
-
-	std::wstring getName()
-	{
-		return this->name;
-	}
-
 	std::wstring isClicked(float x, float y)
 	{
 		for (auto &button : this->buttons)
@@ -78,14 +68,14 @@ public:
 		return L"false";
 	}
 
-	void resize(float scaleX, float scaleY)
+	void setName(std::wstring stringIn)
 	{
-		this->scaleX = scaleX;
-		this->scaleY = scaleY;
-		for (auto &button : this->buttons)
-		{
-			button->resize(scaleX, scaleY);
-		}
+		this->name = stringIn;
+	}
+
+	std::wstring getName()
+	{
+		return this->name;
 	}
 
 	void setString(std::wstring idButton, std::wstring stinrg)
@@ -96,12 +86,22 @@ public:
 				button->setString(stinrg);
 		}
 	}
+	
+	void resize(float scaleX, float scaleY)
+	{
+		this->scaleX = scaleX;
+		this->scaleY = scaleY;
+		for (auto &button : this->buttons)
+		{
+			button->resize(scaleX, scaleY);
+		}
+	}
 
 private:
-	float										scaleX;
-	float										scaleY;
-	std::wstring								name;
-	ID3D11ShaderResourceView*					buttonSpriteSheet;
-	std::shared_ptr<DirectX::SpriteFont> 		spriteFont;
-	std::vector<std::shared_ptr<TextButton>>	buttons;
+	float												scaleX;
+	float												scaleY;
+	std::wstring										name;
+	std::shared_ptr<DirectX::SpriteFont> 				spriteFont;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	buttonSpriteSheet;
+	std::vector<std::shared_ptr<TextButton>>			buttons;
 };

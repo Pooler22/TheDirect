@@ -35,5 +35,5 @@ public:
 	}
 
 private:
-	BRICK_BEHAVIOR	behavior;
+	BRICK_BEHAVIOR behavior;
 };
