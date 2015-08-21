@@ -19,7 +19,7 @@
 #include "WICTextureLoader.h"
 #include "..\Common\DirectXHelper.h"	// For ThrowIfFailed and ReadDataAsync
 
-using namespace SimpleSample;
+using namespace MindBuster;
 using namespace DirectX;
 using namespace Windows::Foundation;
 

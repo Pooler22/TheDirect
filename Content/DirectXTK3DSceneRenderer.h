@@ -41,7 +41,7 @@
 #include "Level.h"
 
 
-namespace SimpleSample
+namespace MindBuster
 {
 	class DirectXTK3DSceneRenderer
 	{

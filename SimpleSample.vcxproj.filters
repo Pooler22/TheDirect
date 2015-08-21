@@ -52,7 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="SimpleSampleMain.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="Common\DeviceResources.cpp">
       <Filter>Common</Filter>
@@ -72,9 +71,9 @@
     <ClCompile Include="Content\SampleVirtualControllerRenderer.cpp">
       <Filter>Content\Renderers</Filter>
     </ClCompile>
+    <ClCompile Include="MindBusterMain.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SimpleSampleMain.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Common\DeviceResources.h">
       <Filter>Common</Filter>
@@ -145,6 +144,7 @@
     <ClInclude Include="Skill.h">
       <Filter>Content\GameElements</Filter>
     </ClInclude>
+    <ClInclude Include="MindBusterMain.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

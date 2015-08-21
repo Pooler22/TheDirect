@@ -14,12 +14,12 @@
 //--------------------------------------------------------------------------------------
 
 #include "pch.h"
-#include "SimpleSampleMain.h"
+#include "MindBusterMain.h"
 
 #include <DirectXColors.h>			// For named colors	
 #include "Common\DirectXHelper.h"	// For ThrowIfFailed
 
-using namespace SimpleSample;
+using namespace MindBuster;
 
 //Added for Input and Overlay
 using namespace Windows::Foundation;

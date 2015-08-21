@@ -24,7 +24,7 @@
 #include "Content\SampleVirtualControllerRenderer.h"
 
 // Renders Direct2D and 3D content on the screen.
-namespace SimpleSample
+namespace MindBuster
 {
 	class SimpleSampleMain : public DX::IDeviceNotify
 	{

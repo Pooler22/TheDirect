@@ -10,7 +10,7 @@
 
 using namespace DirectX;
 
-using namespace SimpleSample;
+using namespace MindBuster;
 
 
 #pragma region InputManagerClass
