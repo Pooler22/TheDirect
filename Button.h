@@ -11,14 +11,14 @@ class Button
 public:
 	Button::Button() {};
 
-	Button(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY) :
+	Button(ID3D11ShaderResourceView* spriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY) :
 		framesOfAnimation(4), 
 		framesToBeShownPerSecond(4)
 	{
 		float rotation = 0.0f;
 		this->scale.x = scaleX;
 		this->scale.y = scaleY;
-		texture = buttonSpriteSheet;
+		texture = spriteSheet;
 		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scaleX, scaleY, 0.0f));
 		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
 
