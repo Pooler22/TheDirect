@@ -142,14 +142,14 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
 		2,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
 		2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,2,
-		2,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
 		2,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
 		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
 		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		2,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
 		2,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2
 	};
 
@@ -158,19 +158,20 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	std::shared_ptr<int> tab2a;
 	tab2a.reset(tab2);
 
+
 	std::shared_ptr<std::vector<DirectX::XMINT4>> enemyStartPositionL1;
 	enemyStartPositionL1.reset(new std::vector<DirectX::XMINT4>());
 	enemyStartPositionL1->push_back(DirectX::XMINT4(1, 2, 1, 10));
-	enemyStartPositionL1->push_back(DirectX::XMINT4(5, 7, 1, 12));
+	//enemyStartPositionL1->push_back(DirectX::XMINT4(5, 7, 1, 12));
 	screenManager->addLevel(L"1", L"2", DirectX::XMINT2(x1, y1), tab1a, XMINT2(3,15), enemyStartPositionL1);
 	
 	std::shared_ptr<std::vector<DirectX::XMINT4>> enemyStartPositionL2;
 	enemyStartPositionL2.reset(new std::vector<DirectX::XMINT4>());
 	enemyStartPositionL2->push_back(DirectX::XMINT4(10, 5, 1,3));
-	enemyStartPositionL2->push_back(DirectX::XMINT4(5, 7, 1,4));
+	//enemyStartPositionL2->push_back(DirectX::XMINT4(5, 7, 1,4));
 	screenManager->addLevel(L"2", L"1", DirectX::XMINT2(x1, y1), tab2a, XMINT2(3, 15), enemyStartPositionL2);
 
-	screenManager->loadLevel(L"1");
+	screenManager->loadLevel(L"2");
 
 	//Gamepad
 	//GamePad.reset(new GamePad);

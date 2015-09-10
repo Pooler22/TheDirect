@@ -6,61 +6,59 @@
 #include <DirectXMath.h>
 #include <DirectXTK\Inc\SimpleMath.h>
 
-class Button
+class DrawableObject
 {
 public:
-	Button::Button() {};
+	DrawableObject() {};
 
-	Button(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY) :
+	DrawableObject(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn,
+		float scaleX, float scaleY, float rotation = 0.0f) :
 		framesOfAnimation(4), 
 		framesToBeShownPerSecond(4)
 	{
-		float rotation = 0.0f;
 		this->scale.x = scaleX;
 		this->scale.y = scaleY;
 		texture = buttonSpriteSheet;
-		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scaleX, scaleY, 0.0f));
-		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
+		laodAnimation(scaleX, scaleY);
 
-		position.x = positionIn.x;
-		position.y = positionIn.y;
+		position = positionIn;
 		dimensions.x = animation->getFrameWidth();
 		dimensions.y = animation->getFrameHeight();
 		updateBoundingRect();
 	}
 
-	void Button::setPosition(DirectX::XMFLOAT2 positionIn)
+	void setPosition(DirectX::XMFLOAT2 positionIn)
 	{
 		position = positionIn;
 		updateBoundingRect();
 	}
 
-	DirectX::XMFLOAT2 Button::getPosition()
+	DirectX::XMFLOAT2 getPosition()
 	{
 		return position;
 	}
 
-	DirectX::XMFLOAT2 Button::getDimension()
+	DirectX::XMFLOAT2 getDimension()
 	{
 		return dimensions;
 	}
 
-	virtual void Button::Update(float elapsed)
+	virtual void Update(float elapsed)
 	{
 		animation->Update(elapsed);
 	}
 
-	void Button::Draw(DirectX::SpriteBatch* batch)
+	void Draw(DirectX::SpriteBatch* batch)
 	{
 		animation->Draw(batch, position);
 	}
 
-	Windows::Foundation::Rect Button::getBoundingRectangle()
+	Windows::Foundation::Rect getBoundingRectangle()
 	{
 		return boundingRectangle;
 	}
 
-	void Button::resize(float scaleX, float scaleY)
+	void resize(float scaleX, float scaleY)
 	{
 		float tmpScaleX = scaleX / this->scale.x;
 		float tmpScaleY = scaleY / this->scale.y;
@@ -70,12 +68,17 @@ public:
 		this->position.y *= tmpScaleY;
 		this->scale.x = scaleX;
 		this->scale.y = scaleY;
-		this->animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), 0.0f, scaleX, scaleY, 0.0f));
-		this->animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
+		laodAnimation(scaleX, scaleY);
 		updateBoundingRect();
 	}
 
-	virtual void Button::updateBoundingRect()
+	void laodAnimation(float scaleX, float scaleY, float rotation = 0)
+	{
+		animation.reset(new AnimatedTexture(DirectX::XMFLOAT2(0.f, 0.f), rotation, scaleX, scaleY, 0.0f));
+		animation->Load(texture.Get(), framesOfAnimation, framesToBeShownPerSecond);
+	}
+
+	virtual void updateBoundingRect()
 	{
 		//TODO: updating when rotate
 		boundingRectangle.X = position.x;

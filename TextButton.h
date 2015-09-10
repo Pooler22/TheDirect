@@ -6,13 +6,13 @@
 #include <DirectXMath.h>
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
-#include "Button.h"
+#include "DrawableObject.h"
 
-class TextButton : public Button
+class TextButton : public DrawableObject
 {
 public:
 	TextButton(ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<DirectX::SpriteFont> spriteFont, std::wstring inString, std::wstring inId, XMFLOAT2 inPosition, float scaleX, float scaleY) :
-		Button(buttonSpriteSheet,  inPosition, scaleX, scaleY)
+		DrawableObject(buttonSpriteSheet,  inPosition, scaleX, scaleY)
 	{
 		this->id = inId;
 		this->string = inString;

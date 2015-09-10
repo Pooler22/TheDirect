@@ -95,9 +95,6 @@
     <ClInclude Include="Brick.h">
       <Filter>Content\GameElements</Filter>
     </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Content\GameElements</Filter>
-    </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>Content\GameElements</Filter>
     </ClInclude>
@@ -145,6 +142,9 @@
       <Filter>Content\GameElements</Filter>
     </ClInclude>
     <ClInclude Include="MindBusterMain.h" />
+    <ClInclude Include="DrawableObject.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

@@ -7,11 +7,11 @@
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
 
-class Person : public Button
+class Person : public DrawableObject
 {
 public:
 	Person::Person(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY) :
-		Button(buttonSpriteSheet, positionIn, scaleX, scaleY)
+		DrawableObject(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
 		this->startPosition = positionIn;
 		this->direction = blockLeft = blockRight = blockTop = blockButtom = stand = false;
@@ -139,6 +139,20 @@ public:
 		}
 	}
 
+	void colisionShot(Windows::Foundation::Rect rect)
+	{
+		if (boundingRectangle.Right > rect.Left &&
+			boundingRectangle.Left < rect.Right &&
+			boundingRectangle.Bottom >= rect.Top &&
+			boundingRectangle.Top < rect.Top)
+		{
+			position.y = rect.Y - dimensions.y;
+			updateBoundingRect();
+			stand = true;
+		}
+
+	}
+
 	void  Person::setStartPosition()
 	{
 		position = startPosition;
@@ -165,7 +179,7 @@ public:
 
 	void resize(float scaleX, float scaleY)
 	{
-		Button::resize(scaleX, scaleY);
+		DrawableObject::resize(scaleX, scaleY);
 		float tmpScaleX = scaleX / this->scale.x;
 		float tmpScaleY = scaleY / this->scale.y;
 		//this->position.x *= tmpScaleX;

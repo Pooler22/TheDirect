@@ -6,7 +6,7 @@
 #include <DirectXMath.h>
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
-#include "Button.h"
+#include "DrawableObject.h"
 #include <iostream>
 
 enum BRICK_BEHAVIOR
@@ -15,11 +15,11 @@ enum BRICK_BEHAVIOR
 	BRICK_BEHAVIOR_BLOCK
 };
 
-class Brick : public Button
+class Brick : public DrawableObject
 {
 public:
 	Brick::Brick(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, XMFLOAT2 sizeIn, BRICK_BEHAVIOR behaviorIn) :
-		Button(buttonSpriteSheet, positionIn, scaleX, scaleY)
+		DrawableObject(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
 		this->behavior = behaviorIn;
 	}

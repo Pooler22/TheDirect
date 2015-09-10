@@ -7,7 +7,7 @@
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
 #include "Person.h"
-#include "Button.h"
+#include "DrawableObject.h"
 
 class Enemy : public Person
 {
@@ -19,7 +19,7 @@ public:
 		this->point = point;
 	}
 
-	void Update(float elapsed) override
+	void Enemy::Update(float elapsed)
 	{
 		if (blockRight || blockLeft)
 			moveDirection = -moveDirection;

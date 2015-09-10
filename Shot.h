@@ -7,7 +7,7 @@
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
 #include "Person.h"
-#include "Button.h"
+#include "DrawableObject.h"
 #include "Skill.h"
 
 class Shot : public Person
@@ -34,7 +34,7 @@ public:
 		updateBoundingRect();
 		animation->Update(elapsed);
 		//left = right = stand = blockRight = blockTop = blockRight = blockLeft = false;
-		Button::Update(elapsed);
+		DrawableObject::Update(elapsed);
 	}
 
 	bool getDirection()

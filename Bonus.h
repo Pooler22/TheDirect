@@ -7,7 +7,7 @@
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
 #include "Person.h"
-#include "Button.h"
+#include "DrawableObject.h"
 #include "Skill.h"
 
 class Bonus : public Person

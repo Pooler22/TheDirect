@@ -23,7 +23,7 @@ public:
 		this->textSprite = textSprite;
 		this->screens = std::vector<std::shared_ptr<Screen>>();
 		this->game.reset(new Game(screenWidth, screenHeight, scaleX, scaleY, textSprite));
-		this->background2.reset(new Button(backgorund, DirectX::XMFLOAT2A(0, 0),scaleX, scaleY));
+		this->background2.reset(new DrawableObject(backgorund, DirectX::XMFLOAT2A(0, 0),scaleX, scaleY));
 	}
 
 	void addScreen(Screen* screen)
@@ -161,5 +161,5 @@ public:
 	std::wstring								nameCurrentScreen;
 	std::unique_ptr<Game>						game;
 	std::vector<std::shared_ptr<Screen>>		screens;
-	std::unique_ptr<Button>						background2;
+	std::unique_ptr<DrawableObject>				background2;
 };

@@ -9,7 +9,7 @@
 #include "SpriteFont.h"
 #include "Map.h"
 #include "Person.h"
-#include "Button.h"
+#include "DrawableObject.h"
 #include "Enemy.h"
 #include "Player.h"
 #include "Bonus.h"
@@ -76,6 +76,14 @@ public:
 	{
 		this->player->reset();
 		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
+		{
+			it->reset();
+		}
+		for (std::vector<Bonus>::iterator it = bonus->begin(); it != bonus->end(); ++it)
+		{
+			it->reset();
+		}
+		for (std::vector<Shot>::iterator it = shots->begin(); it != shots->end(); ++it)
 		{
 			it->reset();
 		}
@@ -152,7 +160,7 @@ public:
 		{
 			it->correctPersonPosition(screenWidth, screenHeight);
 			it->Update(elapsed);
-			player->colision(it->getBoundingRectangle());
+			player->colisionShot(it->getBoundingRectangle());
 		}
 
 		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end();)
