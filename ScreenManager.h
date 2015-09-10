@@ -23,7 +23,7 @@ public:
 		this->textSprite = textSprite;
 		this->screens = std::vector<std::shared_ptr<Screen>>();
 		this->game.reset(new Game(screenWidth, screenHeight, scaleX, scaleY, textSprite));
-		this->background2.reset(new DrawableObject(backgorund, DirectX::XMFLOAT2A(0, 0),scaleX, scaleY));
+		this->background.reset(new DrawableObject(backgorund, DirectX::XMFLOAT2A(0, 0),scaleX, scaleY));
 	}
 
 	void addScreen(Screen* screen)
@@ -67,6 +67,7 @@ public:
 	{
 		game->addEnemyTexture(buttonSpriteSheet);
 	}
+
 	void addBonusTexture(ID3D11ShaderResourceView* buttonSpriteSheet)
 	{
 		game->addBonusTexture(buttonSpriteSheet);
@@ -79,7 +80,7 @@ public:
 
 	void Update(float elapsed)
 	{
-		background2->Update(elapsed);
+		background->Update(elapsed);
 		if (nameCurrentScreen.compare(L"Play") == 0)
 			game->Update(elapsed);
 		for (auto &screen : this->screens)
@@ -91,7 +92,7 @@ public:
 
 	void Draw(DirectX::SpriteBatch* batch)
 	{
-		background2->Draw(batch);
+		background->Draw(batch);
 		if (nameCurrentScreen.compare(L"Play") == 0)
 			game->Draw(batch);
 		for (auto &screen : this->screens)
@@ -132,7 +133,7 @@ public:
 
 	void resize(float scaleX, float scaleY)
 	{
-		background2->resize(scaleX, scaleY);
+		background->resize(scaleX, scaleY);
 		game->resize(scaleX, scaleY);
 		for (auto &screen : this->screens)
 		{
@@ -161,5 +162,5 @@ public:
 	std::wstring								nameCurrentScreen;
 	std::unique_ptr<Game>						game;
 	std::vector<std::shared_ptr<Screen>>		screens;
-	std::unique_ptr<DrawableObject>				background2;
+	std::unique_ptr<DrawableObject>				background;
 };

@@ -12,7 +12,8 @@
 class Enemy : public InteractiveGameObject
 {
 public:
-	Enemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, int moveDirectionIn, int point) :
+	Enemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, 
+		float scaleX, float scaleY, int moveDirectionIn, int point) :
 		InteractiveGameObject(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
 		this->moveDirection = moveDirectionIn;
@@ -21,15 +22,8 @@ public:
 
 	void Enemy::Update(float elapsed)
 	{
-		if (blockRight || blockLeft)
-			moveDirection = -moveDirection;
-		move(moveDirection, 0);
+		enemyAI();
 		InteractiveGameObject::Update(elapsed);
-	}
-
-	void reset()
-	{
-		InteractiveGameObject::reset();
 	}
 
 	void setMoveDirection(int moveDirection)
@@ -53,6 +47,14 @@ public:
 	}
 
 private:
+
+	void enemyAI()
+	{
+		if (blockRight || blockLeft)
+			moveDirection = -moveDirection;
+		move(moveDirection, 0);
+	}
+
 	int	moveDirection;
 	int	point;
 };

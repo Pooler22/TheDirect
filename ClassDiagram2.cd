@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DX::DeviceResources" Collapsed="true">
+    <Position X="18.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>igAQBAAAIACAkRFAJAKJOAKQ0JAgEALQBAUAAIyAKAg=</HashCode>
+      <FileName>Common\DeviceResources.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DX::StepTimer" Collapsed="true">
+    <Position X="14.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACQEQAAAAQEQAABQEAIAIAAIAABQCAAgCAwBQJAAwAA=</HashCode>
+      <FileName>Common\StepTimer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MindBuster::InputManager" Collapsed="true">
+    <Position X="16.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwgGQAASABEGRIACQQIBIMAUAABwEEAiJCAcAAgEIE=</HashCode>
+      <FileName>Common\InputManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MindBuster::Overlay" Collapsed="true">
+    <Position X="1.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAACEAAAAAAAAAAAAABAABAAAAAAABA=</HashCode>
+      <FileName>Common\OverlayManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MindBuster::OverlayManager" Collapsed="true">
+    <Position X="21.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAACAAAAAAAAAAAAAABAABIAgAAAAhA=</HashCode>
+      <FileName>Common\OverlayManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MindBuster::DirectXTK3DSceneRenderer" Collapsed="true">
+    <Position X="21.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAQQAAIAAAMAACQgIAAAAiAACQCAREApAABEUAABA=</HashCode>
+      <FileName>Content\DirectXTK3DSceneRenderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MindBuster::SampleDebugTextRenderer" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAAAAAAAVAAgACgAAAAEAAABBBACCAABAARCAAABA=</HashCode>
+      <FileName>Content\SampleDebugTextRenderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MindBuster::SampleVirtualControllerRenderer" Collapsed="true">
+    <Position X="2.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CEYAAAAAAAFAAAACAAAAAAAAAAAAAAAACBAAAAAAQBA=</HashCode>
+      <FileName>Content\SampleVirtualControllerRenderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MindBuster::App" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAEAAwQAQgAAAEAAAAAAgAEAABIBIACEAgoAAo=</HashCode>
+      <FileName>App.h</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="MindBuster::SimpleSampleMain" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="20" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAQQAAFAAAAgEAAAAAgAERAABAAAAwAEUQ=</HashCode>
+      <FileName>MindBusterMain.h</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Bonus" Collapsed="true">
+    <Position X="10" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAKAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Bonus.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Brick" Collapsed="true">
+    <Position X="3.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAAAAAAABAAoAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Brick.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Enemy" Collapsed="true">
+    <Position X="5.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAQCAgCEAAAAAAAAgAAAAACAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Enemy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Level" Collapsed="true">
+    <Position X="18.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAEAACEABAAAAAAAQAAAAABAQAAEAABDYAAGAAIAABA=</HashCode>
+      <FileName>Level.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Skill" Collapsed="true">
+    <Position X="21.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAEAAACAAIAAAAAAAEAAAQAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Skill.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player" Collapsed="true">
+    <Position X="7.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAABAMADAAAgAAAAAIAAAAAAAQCACBAQAQAQABAIA=</HashCode>
+      <FileName>Player.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shot" Collapsed="true">
+    <Position X="12.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAgAAAAAIAAAAAAAAAAAAAAYAYABAAAAAAAAAAA=</HashCode>
+      <FileName>Shot.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextButton" Collapsed="true">
+    <Position X="1" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgABAAAAKABAAgAAACAAAABAAAQAAACIgAAAAIAAAgA=</HashCode>
+      <FileName>TextButton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AnimatedTexture" Collapsed="true">
+    <Position X="14.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQhgAAAhgiABkBAAAAAAAAAAABAKAEBoAAgAAEAgAA=</HashCode>
+      <FileName>Content\AnimatedTexture.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ScrollingBackground" Collapsed="true">
+    <Position X="18.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQBiAAAgAABAghAAAhAAAACAAAIAAAAAQAAAAkAAAA=</HashCode>
+      <FileName>Content\ScrollingBackground.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DrawableObject" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQIAAABAAAAgAACgAAIIACAAAQAgAAAYAAABAAAAA=</HashCode>
+      <FileName>DrawableObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Game" Collapsed="true">
+    <Position X="14.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EARAUIEgAABAQwQAAAQiAAiCAAkCAACJBQEFQECAIIA=</HashCode>
+      <FileName>Game.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Map" Collapsed="true">
+    <Position X="20" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EQQAAAAEIBAAAwgAQIBAAAAIAQAAACACAQAAAACAAAA=</HashCode>
+      <FileName>Map.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InteractiveGameObject" Collapsed="true">
+    <Position X="8.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAwKCAhEAAAAIhKAIQAAAAAAAAAYAQABAyhgAAAAgAA=</HashCode>
+      <FileName>InteractiveGameObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Screen" Collapsed="true">
+    <Position X="14.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAggAJCABAABCAAAEAABAhQAEAAAAAAA=</HashCode>
+      <FileName>Screen.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ScreenManager" Collapsed="true">
+    <Position X="16.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQACEAAABAQggAAAQgAABKAAAAgABIBQEEQECAAIg=</HashCode>
+      <FileName>ScreenManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Direct3DApplicationSource" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="20" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>App.h</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="ToDo" Collapsed="true">
+    <Position X="16.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ToDo.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="MindBuster::XInputControllerAction" Collapsed="true">
+    <Position X="20" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Common\InputManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="MindBuster::PointerControllerAction" Collapsed="true">
+    <Position X="16.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEBAAAAAAIEAAAAAAAAAAAAAAAACAAAAgAAAIAgA=</HashCode>
+      <FileName>Common\InputManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="MindBuster::PlayerInputData" Collapsed="true">
+    <Position X="14.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAQgAAAAAAAADABAACAAABIAAAAAAAAYAg=</HashCode>
+      <FileName>Common\InputManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="MindBuster::TouchControlRegion" Collapsed="true">
+    <Position X="18.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIgAQAAAAAAgAAAEAgAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\InputManager.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="DX::IDeviceNotify" Collapsed="true">
+    <Position X="14.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAgAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Common\DeviceResources.h</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="MindBuster::PLAYER_ACTION_TYPES" Collapsed="true">
+    <Position X="20" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQAAAACIAAEAAAgAAQgAQAgCAABCSCBEAAgQEABAAA=</HashCode>
+      <FileName>Common\InputManager.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MindBuster::INPUT_EVENT_TYPE" Collapsed="true">
+    <Position X="18.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAABAAAAAAAAAAAASAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Common\InputManager.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MindBuster::INPUT_DEVICE_TYPES" Collapsed="true">
+    <Position X="16.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAAABAAAAAAAAAgAAAAAAAAACQAAAAAAIAAAA=</HashCode>
+      <FileName>Common\InputManager.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MindBuster::PLAYER_ID" Collapsed="true">
+    <Position X="21.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAgAABAAAAAAQAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>Common\InputManager.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MindBuster::TOUCH_CONTROL_REGION_TYPES" Collapsed="true">
+    <Position X="14.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABQAAAAAAIAAAAEIAAAAAAAAAAA=</HashCode>
+      <FileName>Common\InputManager.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="BRICK_BEHAVIOR" Collapsed="true">
+    <Position X="14.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Brick.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

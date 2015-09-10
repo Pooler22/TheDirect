@@ -190,7 +190,7 @@
     <None Include="Assets\ui\button.xcf">
       <Filter>Assets\ui</Filter>
     </None>
-    <None Include="ClassDiagram.cd">
+    <None Include="ClassDiagram2.cd">
       <Filter>ClassDiagram</Filter>
     </None>
   </ItemGroup>

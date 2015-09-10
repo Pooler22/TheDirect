@@ -14,26 +14,19 @@ public:
 		DrawableObject(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
 		this->startPosition = positionIn;
-		this->direction = blockLeft = blockRight = blockTop = blockButtom = stand = false;
-		this->speed = 8;
-		x = 1;
-		y = 1;
-		force = 8;
-		left = right = jumpFlag = blockTop = blockRight = blockLeft = false;
+		direction = blockLeft = blockRight = blockTop = blockButtom = stand = 
+			left = right = jumpFlag = blockTop = blockRight = blockLeft = false;
+		this->speed = force = 8;
+		x = y = 1;
 	}
 
 	void InteractiveGameObject::Draw(DirectX::SpriteBatch* batch)
 	{
 		updateBoundingRect();
 		if (direction)
-		{
 			animation->Draw(batch, position, DirectX::SpriteEffects::SpriteEffects_FlipHorizontally);
-		}
 		else
-		{
 			animation->Draw(batch, position);
-		}
-
 	}
 
 	void  Update(float elapsed)
@@ -150,19 +143,23 @@ public:
 			updateBoundingRect();
 			stand = true;
 		}
-
 	}
 
-	void  InteractiveGameObject::setStartPosition()
+	void  InteractiveGameObject::moveToStartPosition()
 	{
 		position = startPosition;
 		updateBoundingRect();
 	}
 
-	void setStartPositionExt(DirectX::XMINT2 position)
+	void setStartPosition(DirectX::XMINT2 position)
 	{
-		this->position = this->startPosition = DirectX::XMFLOAT2(position.x, position.y);
-		setStartPosition();
+		this->startPosition = DirectX::XMFLOAT2(position.x, position.y);
+	}
+
+	void setAndMoveToStartPosition(DirectX::XMINT2 position)
+	{
+		setStartPosition(position);
+		moveToStartPosition();
 	}
 
 	void jump()
@@ -205,5 +202,4 @@ public:
 	bool blockButtom;
 	int	speed;
 	DirectX::XMFLOAT2	startPosition;
-
 };

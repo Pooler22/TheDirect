@@ -61,7 +61,7 @@ public:
 			{
 				nextLevelName = it->getNext();
 				this->map->setMapLevel(it->getDimension().x, it->getDimension().y, it->getTab(), this->screenWidth, this->screenHeight, scaleX, scaleY, spriteFontIn);
-				this->player->setStartPositionExt(DirectX::XMINT2(it->getPlayerStartPosition().x * (screenWidth / map->getSzie().x), it->getPlayerStartPosition().y * (screenHeight / map->getSzie().y)));
+				this->player->setAndMoveToStartPosition(DirectX::XMINT2(it->getPlayerStartPosition().x * (screenWidth / map->getSzie().x), it->getPlayerStartPosition().y * (screenHeight / map->getSzie().y)));
 
 				for (std::vector<DirectX::XMINT4>::iterator it1 = it->getVectorEnemyStartPosition().get()->begin(); it1 != it->getVectorEnemyStartPosition().get()->end(); ++it1)
 				{
@@ -227,10 +227,9 @@ public:
 		this->scaleX = scaleX;
 		this->scaleY = scaleY;
 		this->map->resize(scaleX, scaleY);
-		this->screenWidth*= scaleX;
+		this->screenWidth *= scaleX;
 		this->screenHeight *= scaleY;
 
-		
 		this->player->resize(scaleX, scaleY);
 		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
 		{
@@ -304,7 +303,7 @@ public:
 	std::unique_ptr<std::vector<Level>>		levels;
 	std::shared_ptr<std::vector<Shot>>		shots;
 	
-	std::shared_ptr<SpriteFont>				spriteFontIn;
+	std::shared_ptr<SpriteFont>															spriteFontIn;
 	std::shared_ptr<std::vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>>		textureVector;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>									playerSpriteSheetIn;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>									brickSpriteSheet;

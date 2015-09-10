@@ -61,9 +61,7 @@ public:
 		for (auto &button : this->buttons)
 		{
 			if (button->isOver(Windows::Foundation::Rect(x, y, 1, 1)))
-			{
 				return button->getId();
-			}
 		}
 		return L"false";
 	}

@@ -24,24 +24,12 @@ public:
 		skill->shotSpeed = 12;
 	}
 
-	void  Update(float elapsed)
-	{
-		InteractiveGameObject::Update(elapsed);
-	}
-	
-	void  Draw(DirectX::SpriteBatch* batch)
-	{
-		InteractiveGameObject::Draw(batch);
-	}
-
 	void  Player::die()
 	{
-		skill->life -= 1;
-		if (skill->life == 0)
-		{
+		skill->life--;
+		if (skill->life <= 0)
 			this->over = true;
-		}
-		setStartPosition();
+		moveToStartPosition();
 	}
 
 	bool Player::gameOver()
@@ -84,16 +72,7 @@ public:
 
 	void addBonus(std::shared_ptr<Skill> bonus)
 	{
-		skill->life += bonus->life;
-		skill->point += bonus->point;
-		skill->shotDistance += bonus->shotDistance;
-		skill->shotSpeed += bonus->shotSpeed;
-		skill->speedMove += bonus->speedMove;
-	}
-
-	void resize(float scaleX, float scaleY)
-	{
-		InteractiveGameObject::resize(scaleX, scaleY);
+		skill->operator+=(*bonus);
 	}
 
 public:

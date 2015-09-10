@@ -24,12 +24,6 @@ public:
 		updateBoundingRect();
 	}
 
-	void centerHorizontally()
-	{
-		position.x -= dimensions.x / 2.;
-		position.y -= dimensions.y / 2.;
-	}
-
 	bool isOver(Windows::Foundation::Rect rect)
 	{
 		if (this->boundingRectangle.IntersectsWith(rect))
@@ -71,6 +65,12 @@ public:
 	}
 
 private:
+	void centerHorizontally()
+	{
+		position.x -= dimensions.x / 2.;
+		position.y -= dimensions.y / 2.;
+	}
+
 	std::wstring							id;
 	std::wstring							string;
 	DirectX::XMVECTOR						color;

@@ -86,10 +86,13 @@ public:
 
 	void reset()
 	{
+		for (auto &brick : bricks)
+		{
+			brick.reset();
+		}
 		bricks.clear();
 	}
 
-	float																				standingPlatformHeight;
 	XMFLOAT2																			size;
 	std::wstring																		scoreText;
 	std::shared_ptr<int>																numberTestureVector;

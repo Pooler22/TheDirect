@@ -357,7 +357,7 @@
     <None Include="Assets\person\player\player_move.xcf" />
     <None Include="Assets\person\player\player_stand.xcf" />
     <None Include="Assets\ui\button.xcf" />
-    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="SimpleSample_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

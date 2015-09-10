@@ -23,6 +23,16 @@ public:
 		this->shotSpeed = shotSpeed;
 	}
 
+	Skill& operator+= (Skill& second)
+	{
+		this->life += second.life;
+		this->point += second.point;
+		this->shotDistance += second.shotDistance;
+		this->shotSpeed += second.shotSpeed;
+		this->speedMove += second.speedMove;
+		return *this;
+	}
+
 	int life;
 	int speedMove;
 	int point;
