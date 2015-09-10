@@ -49,6 +49,9 @@
     <Filter Include="Assets\bubble">
       <UniqueIdentifier>{71eedb67-e793-4767-87da-4ef1f461566a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ClassDiagram">
+      <UniqueIdentifier>{8239bb3e-2b5b-48ac-9e9a-0c94ff19095c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -186,6 +189,9 @@
     </None>
     <None Include="Assets\ui\button.xcf">
       <Filter>Assets\ui</Filter>
+    </None>
+    <None Include="ClassDiagram.cd">
+      <Filter>ClassDiagram</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
