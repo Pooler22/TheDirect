@@ -67,6 +67,10 @@ public:
 	{
 		game->addEnemyTexture(buttonSpriteSheet);
 	}
+	void addBonusTexture(ID3D11ShaderResourceView* buttonSpriteSheet)
+	{
+		game->addBonusTexture(buttonSpriteSheet);
+	}
 
 	void addBonusTexture(ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<Skill> bonus)
 	{

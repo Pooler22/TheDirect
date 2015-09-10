@@ -87,15 +87,17 @@ public:
 
 	void loadNextLevel()
 	{
+		map.reset(new Map());
+		
+		for (std::vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>::iterator it = textureVector.get()->begin(); it != textureVector.get()->end(); ++it)
+			map->addBrickTexture(it->Get());
+
 		this->player->reset();
+		
 		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
 		{
 			it->reset();
 		}
-		map.reset(new Map());
-
-		for (std::vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>::iterator it = textureVector.get()->begin(); it != textureVector.get()->end(); ++it)
-			map->addBrickTexture(it->Get());
 
 		loadLevel(nextLevelName);
 	}
@@ -108,6 +110,11 @@ public:
 	void Game::addEnemyTexture(ID3D11ShaderResourceView* buttonSpriteSheet)
 	{
 		this->enemySpriteSheet = buttonSpriteSheet;
+	}
+
+	void Game::addBonusTexture(ID3D11ShaderResourceView* bonusSpriteSheet)
+	{
+		this->bonusSpriteSheet = bonusSpriteSheet;
 	}
 
 	void Game::addBonusTexture(ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<Skill> bonus)
@@ -152,7 +159,10 @@ public:
 		{
 			if (shotColision(it->getBoundingRectangle(), it->getPoint()))
 			{
+				std::shared_ptr<Skill> skill = std::shared_ptr<Skill>(new Skill(0, 0, 10, 0, 0));
+				this->bonus->push_back(Bonus(bonusSpriteSheet.Get(), it->getPosition(), scaleX, scaleY, skill));
 				it = enemies->erase(it);
+				updateScore();
 			}
 			else
 			{
@@ -195,6 +205,7 @@ public:
 			{
 				this->player->addBonus(it->getBonus());
 				it = bonus->erase(it);
+				updateScore();
 			}
 			else
 			{
@@ -208,19 +219,20 @@ public:
 		this->scaleX = scaleX;
 		this->scaleY = scaleY;
 		this->map->resize(scaleX, scaleY);
+		this->screenWidth*= scaleX;
+		this->screenHeight *= scaleY;
+
+		
 		this->player->resize(scaleX, scaleY);
 		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
 		{
 			it->resize(scaleX, scaleY);
 		}
-		for (std::vector<Bonus>::iterator it = bonus->begin(); it != bonus->end(); ++it)
+		for (std::vector<Shot>::iterator it = shots->begin(); it != shots->end(); ++it)
 		{
 			it->resize(scaleX, scaleY);
 		}
-		this->screenWidth*= scaleX;
-		this->screenHeight *= scaleY;
-
-		for (std::vector<Shot>::iterator it = shots->begin(); it != shots->end(); ++it)
+		for (std::vector<Bonus>::iterator it = bonus->begin(); it != bonus->end(); ++it)
 		{
 			it->resize(scaleX, scaleY);
 		}
@@ -259,10 +271,10 @@ public:
 		return player->getScore();
 	}
 
-	void Game::addBrickTexture(ID3D11ShaderResourceView* buttonSpriteSheet)
+	void Game::addBrickTexture(ID3D11ShaderResourceView* brickSpriteSheet)
 	{
-		this->map->addBrickTexture(buttonSpriteSheet);
-		this->textureVector->push_back(buttonSpriteSheet);
+		this->map->addBrickTexture(brickSpriteSheet);
+		this->textureVector->push_back(brickSpriteSheet);
 	}
 
 	void fire()
@@ -289,4 +301,6 @@ public:
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>									playerSpriteSheetIn;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>									brickSpriteSheet;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>									enemySpriteSheet;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>									bonusSpriteSheet;
+
 };

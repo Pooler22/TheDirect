@@ -104,6 +104,11 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		);
 	screenManager->addEnemyTexture(m_texture.Get());
 
+	DX::ThrowIfFailed(
+		CreateWICTextureFromFile(device, L"assets\\person\\bonus\\bonus.png", nullptr, m_texture.ReleaseAndGetAddressOf())
+		);
+	screenManager->addBonusTexture(m_texture.Get());
+
 	int x1 = 32;
 	int y1 = 18;
 
@@ -201,8 +206,8 @@ void DirectXTK3DSceneRenderer::CreateAudioResources()
     m_effect1 = m_soundEffect->CreateInstance();
     m_effect2 = m_waveBank->CreateInstance(10);
 
-	//m_effect1->Play(true);
-	//m_effect2->Play();
+	m_effect1->Play(true);
+	m_effect2->Play();
 }
 
 // Updates the scene to be displayed.

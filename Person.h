@@ -137,9 +137,7 @@ public:
 			blockLeft = true;
 			direction = false;
 		}
-
 	}
-
 
 	void  Person::setStartPosition()
 	{
@@ -167,13 +165,13 @@ public:
 
 	void resize(float scaleX, float scaleY)
 	{
+		Button::resize(scaleX, scaleY);
 		float tmpScaleX = scaleX / this->scale.x;
 		float tmpScaleY = scaleY / this->scale.y;
-		this->position.x *= tmpScaleX;
-		this->position.y *= tmpScaleY;
+		//this->position.x *= tmpScaleX;
+		//this->position.y *= tmpScaleY;
 		this->startPosition.x *= tmpScaleX;
 		this->startPosition.y *= tmpScaleY;
-		Button::resize(scaleX, scaleY);
 		updateBoundingRect();
 	}
 
