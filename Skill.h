@@ -6,7 +6,7 @@
 #include <DirectXMath.h>
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
-#include "Person.h"
+#include "InteractiveGameObject.h"
 #include "DrawableObject.h"
 
 class Skill

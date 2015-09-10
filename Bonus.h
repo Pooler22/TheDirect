@@ -6,15 +6,15 @@
 #include <DirectXMath.h>
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
-#include "Person.h"
+#include "InteractiveGameObject.h"
 #include "DrawableObject.h"
 #include "Skill.h"
 
-class Bonus : public Person
+class Bonus : public InteractiveGameObject
 {
 public:
 	Bonus::Bonus(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, std::shared_ptr<Skill> bonus) :
-		Person(buttonSpriteSheet, positionIn, scaleX, scaleY)
+		InteractiveGameObject(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
 		this->bonus = bonus;
 	}

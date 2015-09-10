@@ -11,7 +11,8 @@
 class TextButton : public DrawableObject
 {
 public:
-	TextButton(ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<DirectX::SpriteFont> spriteFont, std::wstring inString, std::wstring inId, XMFLOAT2 inPosition, float scaleX, float scaleY) :
+	TextButton(ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<DirectX::SpriteFont> spriteFont, 
+		std::wstring inString, std::wstring inId, XMFLOAT2 inPosition, float scaleX, float scaleY) :
 		DrawableObject(buttonSpriteSheet,  inPosition, scaleX, scaleY)
 	{
 		this->id = inId;
@@ -45,7 +46,7 @@ public:
 
 	void Draw(DirectX::SpriteBatch* batch)
 	{
-		animation->Draw(batch, position);
+		DrawableObject::Draw(batch);
 		m_font->DrawString(batch, string.c_str(), XMFLOAT2(position.x + 16 * scale.x, position.y + 4 * scale.y), color);
 	}
 

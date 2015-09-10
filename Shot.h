@@ -6,15 +6,15 @@
 #include <DirectXMath.h>
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
-#include "Person.h"
+#include "InteractiveGameObject.h"
 #include "DrawableObject.h"
 #include "Skill.h"
 
-class Shot : public Person
+class Shot : public InteractiveGameObject
 {
 public:
 	Shot::Shot(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, bool direction, int speed) :
-		Person(buttonSpriteSheet, positionIn, scaleX, scaleY)
+		InteractiveGameObject(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
 		this->speed = 6;
 		this->direction = direction;

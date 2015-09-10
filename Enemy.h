@@ -6,14 +6,14 @@
 #include <DirectXMath.h>
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
-#include "Person.h"
+#include "InteractiveGameObject.h"
 #include "DrawableObject.h"
 
-class Enemy : public Person
+class Enemy : public InteractiveGameObject
 {
 public:
 	Enemy(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, int moveDirectionIn, int point) :
-		Person(buttonSpriteSheet, positionIn, scaleX, scaleY)
+		InteractiveGameObject(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
 		this->moveDirection = moveDirectionIn;
 		this->point = point;
@@ -24,12 +24,12 @@ public:
 		if (blockRight || blockLeft)
 			moveDirection = -moveDirection;
 		move(moveDirection, 0);
-		Person::Update(elapsed);
+		InteractiveGameObject::Update(elapsed);
 	}
 
 	void reset()
 	{
-		Person::reset();
+		InteractiveGameObject::reset();
 	}
 
 	void setMoveDirection(int moveDirection)

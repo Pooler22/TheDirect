@@ -7,10 +7,10 @@
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
 
-class Person : public DrawableObject
+class InteractiveGameObject : public DrawableObject
 {
 public:
-	Person::Person(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY) :
+	InteractiveGameObject::InteractiveGameObject(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY) :
 		DrawableObject(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
 		this->startPosition = positionIn;
@@ -22,7 +22,7 @@ public:
 		left = right = jumpFlag = blockTop = blockRight = blockLeft = false;
 	}
 
-	void Person::Draw(DirectX::SpriteBatch* batch)
+	void InteractiveGameObject::Draw(DirectX::SpriteBatch* batch)
 	{
 		updateBoundingRect();
 		if (direction)
@@ -153,7 +153,7 @@ public:
 
 	}
 
-	void  Person::setStartPosition()
+	void  InteractiveGameObject::setStartPosition()
 	{
 		position = startPosition;
 		updateBoundingRect();

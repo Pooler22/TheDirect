@@ -18,7 +18,8 @@ enum BRICK_BEHAVIOR
 class Brick : public DrawableObject
 {
 public:
-	Brick::Brick(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, XMFLOAT2 sizeIn, BRICK_BEHAVIOR behaviorIn) :
+	Brick::Brick(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, 
+		float scaleX, float scaleY, XMFLOAT2 sizeIn, BRICK_BEHAVIOR behaviorIn) :
 		DrawableObject(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
 		this->behavior = behaviorIn;

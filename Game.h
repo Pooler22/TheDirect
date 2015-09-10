@@ -8,7 +8,7 @@
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
 #include "Map.h"
-#include "Person.h"
+#include "InteractiveGameObject.h"
 #include "DrawableObject.h"
 #include "Enemy.h"
 #include "Player.h"

@@ -107,9 +107,6 @@
     <ClInclude Include="Map.h">
       <Filter>Content\GameElements</Filter>
     </ClInclude>
-    <ClInclude Include="Person.h">
-      <Filter>Content\GameElements</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Content\GameElements</Filter>
     </ClInclude>
@@ -146,6 +143,9 @@
     </ClInclude>
     <ClInclude Include="MindBusterMain.h" />
     <ClInclude Include="DrawableObject.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="InteractiveGameObject.h">
       <Filter>Content\GameElements</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,16 +6,16 @@
 #include <DirectXMath.h>
 #include <DirectXTK\Inc\SimpleMath.h>
 #include "SpriteFont.h"
-#include "Person.h"
+#include "InteractiveGameObject.h"
 #include "DrawableObject.h"
 #include "Skill.h"
 #include "Shot.h"
 
-class Player : public Person
+class Player : public InteractiveGameObject
 {
 public:
 	Player::Player(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, ID3D11ShaderResourceView* shotSpriteSheet) :
-		Person(buttonSpriteSheet, positionIn, scaleX, scaleY)
+		InteractiveGameObject(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
 		this->shotSpriteSheet = shotSpriteSheet;
 		lastGoodPosition = positionIn;
@@ -26,12 +26,12 @@ public:
 
 	void  Update(float elapsed)
 	{
-		Person::Update(elapsed);
+		InteractiveGameObject::Update(elapsed);
 	}
 	
 	void  Draw(DirectX::SpriteBatch* batch)
 	{
-		Person::Draw(batch);
+		InteractiveGameObject::Draw(batch);
 	}
 
 	void  Player::die()
@@ -78,7 +78,7 @@ public:
 	void reset()
 	{
 		//skill.reset(new Skill(startSkill.get));
-		Person::reset();
+		InteractiveGameObject::reset();
 		updateBoundingRect();
 	}
 
@@ -93,7 +93,7 @@ public:
 
 	void resize(float scaleX, float scaleY)
 	{
-		Person::resize(scaleX, scaleY);
+		InteractiveGameObject::resize(scaleX, scaleY);
 	}
 
 public:

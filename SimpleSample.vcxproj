@@ -298,7 +298,7 @@
     <ClInclude Include="DrawableObject.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Map.h" />
-    <ClInclude Include="Person.h" />
+    <ClInclude Include="InteractiveGameObject.h" />
     <ClInclude Include="Screen.h" />
     <ClInclude Include="ScreenManager.h" />
     <ClInclude Include="MindBusterMain.h" />
