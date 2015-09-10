@@ -177,13 +177,13 @@ public:
 	void resize(float scaleX, float scaleY)
 	{
 		DrawableObject::resize(scaleX, scaleY);
-		float tmpScaleX = scaleX / this->scale.x;
-		float tmpScaleY = scaleY / this->scale.y;
+		//float tmpScaleX = scaleX / this->scale.x;
+		//float tmpScaleY = scaleY / this->scale.y;
 		//this->position.x *= tmpScaleX;
 		//this->position.y *= tmpScaleY;
-		this->startPosition.x *= tmpScaleX;
-		this->startPosition.y *= tmpScaleY;
-		updateBoundingRect();
+		//this->startPosition.x *= tmpScaleX;
+		//this->startPosition.y *= tmpScaleY;
+		//updateBoundingRect();
 	}
 
 public:

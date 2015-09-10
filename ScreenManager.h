@@ -131,10 +131,10 @@ public:
 		}
 	}
 
-	void resize(float scaleX, float scaleY)
+	void resize(float screenWidth, float screenHeight, float scaleX, float scaleY)
 	{
 		background->resize(scaleX, scaleY);
-		game->resize(scaleX, scaleY);
+		game->resize(screenWidth, screenHeight, scaleX, scaleY);
 		for (auto &screen : this->screens)
 		{
 			screen->resize(scaleX, scaleY);

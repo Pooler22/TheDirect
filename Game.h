@@ -222,13 +222,13 @@ public:
 		}
 	}
 	
-	void resize(float scaleX, float scaleY)
+	void resize(float screenWidth, float screenHeight, float scaleX, float scaleY)
 	{
+		this->screenWidth = screenWidth;
+		this->screenHeight = screenHeight;
 		this->scaleX = scaleX;
 		this->scaleY = scaleY;
 		this->map->resize(scaleX, scaleY);
-		this->screenWidth *= scaleX;
-		this->screenHeight *= scaleY;
 
 		this->player->resize(scaleX, scaleY);
 		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
@@ -289,8 +289,8 @@ public:
 		shots->push_back(Shot(player->shotSpriteSheet, player->getPosition(), this->scaleX, this->scaleY, player->direction, player->skill->shotSpeed));
 	}
 
-	int										screenWidth;
-	int										screenHeight;
+	float									screenWidth;
+	float									screenHeight;
 	float									scaleX;
 	float									scaleY;
 	std::wstring							nextLevelName;
