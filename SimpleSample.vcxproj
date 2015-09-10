@@ -46,8 +46,8 @@
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>8.1</ApplicationTypeRevision>
-    <WindowsTargetPlatformVersion>10.0.10075.0</WindowsTargetPlatformVersion>
-    <WindowsTargetPlatformMinVersion>10.0.10075.0</WindowsTargetPlatformMinVersion>
+    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.10240.0</WindowsTargetPlatformMinVersion>
     <ProjectName>MindBuster</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

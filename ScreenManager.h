@@ -23,7 +23,7 @@ public:
 		this->textSprite = textSprite;
 		this->screens = std::vector<std::shared_ptr<Screen>>();
 		this->game.reset(new Game(screenWidth, screenHeight, scaleX, scaleY, textSprite));
-		this->background.reset(new ScrollingBackground(backgorund, screenWidth, screenHeight));
+		this->background2.reset(new Button(backgorund, DirectX::XMFLOAT2A(0, 0),scaleX, scaleY));
 	}
 
 	void addScreen(Screen* screen)
@@ -75,7 +75,7 @@ public:
 
 	void Update(float elapsed)
 	{
-		background->Update(elapsed);
+		background2->Update(elapsed);
 		if (nameCurrentScreen.compare(L"Play") == 0)
 			game->Update(elapsed);
 		for (auto &screen : this->screens)
@@ -87,7 +87,7 @@ public:
 
 	void Draw(DirectX::SpriteBatch* batch)
 	{
-		background->Draw(batch);
+		background2->Draw(batch);
 		if (nameCurrentScreen.compare(L"Play") == 0)
 			game->Draw(batch);
 		for (auto &screen : this->screens)
@@ -128,7 +128,7 @@ public:
 
 	void resize(float scaleX, float scaleY)
 	{
-		background->resize(scaleX, scaleY);
+		background2->resize(scaleX, scaleY);
 		game->resize(scaleX, scaleY);
 		for (auto &screen : this->screens)
 		{
@@ -157,5 +157,5 @@ public:
 	std::wstring								nameCurrentScreen;
 	std::unique_ptr<Game>						game;
 	std::vector<std::shared_ptr<Screen>>		screens;
-	std::unique_ptr<ScrollingBackground>		background;
+	std::unique_ptr<Button>						background2;
 };

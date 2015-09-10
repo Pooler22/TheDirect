@@ -87,7 +87,6 @@ namespace MindBuster
 		std::unique_ptr<ScreenManager>											screenManager;
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>                        m_texture;
 		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>                        m_texture2;
-		std::shared_ptr<Level>													level;
 		//std::unique_ptr<GamePad>												GamePad;
 	};
 }

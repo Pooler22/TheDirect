@@ -33,7 +33,6 @@ public:
 		this->spriteFontIn = spriteFontIn;
 	};
 
-
 	bool shotColision(Windows::Foundation::Rect rect, int point)
 	{
 		for (std::vector<Shot>::iterator it = shots->begin(); it != shots->end(); ++it)
@@ -82,7 +81,8 @@ public:
 		}
 		map->reset();
 		shots->clear();
-		loadLevel(currentLevelName);
+		
+		(currentLevelName);
 	}
 
 	void loadNextLevel()
@@ -97,7 +97,7 @@ public:
 		for (std::vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>::iterator it = textureVector.get()->begin(); it != textureVector.get()->end(); ++it)
 			map->addBrickTexture(it->Get());
 
-		loadLevel(currentLevelName);
+		loadLevel(nextLevelName);
 	}
 
 	void Game::addPlayerTexture(ID3D11ShaderResourceView* buttonSpriteSheet, ID3D11ShaderResourceView* shotSpriteSheet)

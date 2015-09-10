@@ -111,11 +111,12 @@ public:
 
 	void resize(float scaleX, float scaleY)
 	{
-		//to do: resize
+		//TO DO: 
 	}
 
 private:
 
+	DirectX::XMFLOAT2									scale;
     int                                                 mScreenHeight;
 	int													mScreenWidth;
     int                                                 mTextureWidth;

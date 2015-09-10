@@ -1,19 +1,4 @@
-﻿//--------------------------------------------------------------------------------------
-// File: DirectXTK3DSceneRenderer.cpp
-//
-// This is a simple Windows Store app for Windows 8.1 showing use of DirectXTK
-//
-// http://go.microsoft.com/fwlink/?LinkId=248929
-//
-// THIS CODE AND INFORMATION IS PROVIDED "AS IS" WITHOUT WARRANTY OF
-// ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
-// THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
-// PARTICULAR PURPOSE.
-//
-// Copyright (c) Microsoft Corporation. All rights reserved.
-//--------------------------------------------------------------------------------------
-
-#include "pch.h"
+﻿#include "pch.h"
 #include "DirectXTK3DSceneRenderer.h"
 #include "DDSTextureLoader.h"
 #include "WICTextureLoader.h"
@@ -37,7 +22,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	// Create DirectXTK objects
 	auto device = m_deviceResources->GetD3DDevice();
 	auto context = m_deviceResources->GetD3DDeviceContext();
-	auto windowSize = m_deviceResources->GetOutputSize(); // physical screen resolution
+	//auto windowSize = m_deviceResources->GetOutputSize(); // physical screen resolution
 	logicalSize = m_deviceResources->GetLogicalSize(); //DPI dependent resolution
 
 	m_sprites.reset(new SpriteBatch(context));
@@ -71,8 +56,8 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	XMFLOAT2 position1[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
 	screenManager->addScreen(L"Options", 3, name1, id1, position1);
 
-	std::wstring name2[] = { L"Offline",L"Online",L"Back" };
-	std::wstring id2[] = { L"OfflineLevel",L"OnlineLevel",L"BackLevel" };
+	std::wstring name2[] = { L"Level 1",L"Level 2",L"Back" };
+	std::wstring id2[] = { L"Level1",L"Level2",L"BackLevel" };
 	XMFLOAT2 position2[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
 	screenManager->addScreen(L"Level", 3, name2, id2, position2);
 
@@ -122,7 +107,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	int x1 = 32;
 	int y1 = 18;
 
-	int tab2[] = {
+	int tab1[] = {
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -142,7 +127,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 	};
-	int tab1[] = {
+	int tab2[] = {
 		1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,
 		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
 		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
@@ -242,7 +227,6 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 			if (m_audioEvent >= 11)
 				m_audioEvent = 0;
 		}
-
 	}
 
 	if (!m_audEngine->IsCriticalError() && m_audEngine->Update())
@@ -398,11 +382,11 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 					{
 						screenManager->setName(L"Main");
 					}
-					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"OfflineLevel"))
+					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"Level1"))
 					{
 						screenManager->setName(L"Play");
 					}
-					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"OnlineLevel"))
+					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"Level2"))
 					{
 						screenManager->setName(L"Play");
 					}
@@ -555,8 +539,8 @@ void DirectXTK3DSceneRenderer::Render()
 	ID3D11RenderTargetView *const targets[1] = { m_deviceResources->GetBackBufferRenderTargetView() };
 	context->OMSetRenderTargets(1, targets, m_deviceResources->GetDepthStencilView());
 
-	D3D11_TEXTURE2D_DESC pDesc;
-	Microsoft::WRL::ComPtr<ID3D11Resource> res;
+	//D3D11_TEXTURE2D_DESC pDesc;
+	//Microsoft::WRL::ComPtr<ID3D11Resource> res;
 	
 	// get texture size 
 	//1.) -----------------
@@ -573,7 +557,7 @@ void DirectXTK3DSceneRenderer::Render()
 	//auto height = pDesc.Height; //texture height
 	//auto width = pDesc.Width; //texture width
 
-	auto windowSize = m_deviceResources->GetOutputSize(); // physical screen resolution
+	//auto windowSize = m_deviceResources->GetOutputSize(); // physical screen resolution
 	auto logicalSize = m_deviceResources->GetLogicalSize(); //DPI dependent resolution
 
 	if ((this->logicalSize.Width != logicalSize.Width) || (this->logicalSize.Height != logicalSize.Height))
