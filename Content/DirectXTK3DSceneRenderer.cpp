@@ -56,8 +56,8 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	XMFLOAT2 position1[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
 	screenManager->addScreen(L"Options", 3, name1, id1, position1);
 
-	std::wstring name2[] = { L"Level 1",L"Level 2",L"Back" };
-	std::wstring id2[] = { L"Level1",L"Level2",L"BackLevel" };
+	std::wstring name2[] = { L"Singleplayer",L"Multiplayer",L"Back" };
+	std::wstring id2[] = { L"SingleplayerLevel",L"MultiplayerLevel",L"BackLevel" };
 	XMFLOAT2 position2[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
 	screenManager->addScreen(L"Level", 3, name2, id2, position2);
 
@@ -118,6 +118,58 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 
 	std::vector<int> tab1 = {
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,
+		1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,
+		1,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1
+	};
+	std::shared_ptr<std::vector<DirectX::XMINT4>> enemyStartPositionL1;
+	enemyStartPositionL1.reset(new std::vector<DirectX::XMINT4>());
+	enemyStartPositionL1->push_back(DirectX::XMINT4(1, 7, 1, 10));
+	enemyStartPositionL1->push_back(DirectX::XMINT4(29, 7, 1, 10));
+	screenManager->addLevel(L"1", L"2", DirectX::XMINT2(x1, y1), tab1, XMINT2(2, 17), enemyStartPositionL1);
+
+	std::vector<int> tab2 = {
+		1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,0,0,0,0,0,0,2,
+		2,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		2,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,2,
+		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+		2,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2
+	};
+	std::shared_ptr<std::vector<DirectX::XMINT4>> enemyStartPositionL2;
+	enemyStartPositionL2.reset(new std::vector<DirectX::XMINT4>());
+	enemyStartPositionL2->push_back(DirectX::XMINT4(15, 3, 1, 10));
+	enemyStartPositionL2->push_back(DirectX::XMINT4(15, 7, -1, 10));
+	enemyStartPositionL2->push_back(DirectX::XMINT4(15, 11, 1, 10));
+	screenManager->addLevel(L"2", L"3", DirectX::XMINT2(x1, y1), tab2, XMINT2(3, 15), enemyStartPositionL2);
+
+	std::vector<int> tab3 = {
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -125,7 +177,8 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,
+		1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -136,47 +189,43 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 	};
+	std::shared_ptr<std::vector<DirectX::XMINT4>> enemyStartPositionL3;
+	enemyStartPositionL3.reset(new std::vector<DirectX::XMINT4>());
+	enemyStartPositionL3->push_back(DirectX::XMINT4(10, 6, 1, 10));
+	enemyStartPositionL3->push_back(DirectX::XMINT4(21, 6, -1, 10));
+	enemyStartPositionL3->push_back(DirectX::XMINT4(5, 6, 1, 10));
+	enemyStartPositionL3->push_back(DirectX::XMINT4(26, 6, -1, 10));
+	enemyStartPositionL3->push_back(DirectX::XMINT4(7, 6, 1, 10));
+	enemyStartPositionL3->push_back(DirectX::XMINT4(24, 6, -1, 10));
+	screenManager->addLevel(L"3", L"1", DirectX::XMINT2(x1, y1), tab3, XMINT2(2, 17), enemyStartPositionL3);
 
-	std::vector<int> tab2 = {
-		1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,
-		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,4,0,0,0,4,0,0,0,0,0,0,2,
-		2,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,2,
-		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,
-		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
-		2,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,2
+	std::vector<int> tabSecret = {
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,1,
+		1,0,0,0,1,1,1,0,1,0,0,0,1,1,0,0,1,1,0,0,1,0,1,0,1,0,0,0,0,0,0,1,
+		1,0,0,0,0,1,0,0,1,1,1,0,1,0,1,0,1,0,1,0,1,1,0,0,0,1,0,0,0,0,0,1,
+		1,0,0,0,0,1,0,0,1,0,1,0,1,1,1,0,1,0,1,0,1,1,0,0,0,0,1,0,0,0,0,1,
+		1,0,0,0,0,1,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,1,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0,1,0,1,1,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,0,0,1,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,1,1,1,0,1,0,0,0,1,1,1,0,1,0,0,0,1,0,1,0,1,0,1,0,0,0,0,1,
+		1,0,0,0,1,0,1,0,1,0,0,0,1,0,1,0,1,0,0,0,1,0,1,0,1,0,1,0,0,0,0,1,
+		1,0,0,0,1,1,1,0,1,0,0,0,1,1,1,0,1,0,0,0,0,1,0,0,1,0,1,0,0,0,0,1,
+		1,0,0,0,1,0,0,0,1,0,0,0,1,0,1,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,1,0,0,0,1,1,1,0,1,0,1,0,1,1,1,0,0,1,0,0,1,0,1,0,0,0,0,1
 	};
+	std::shared_ptr<std::vector<DirectX::XMINT4>> enemyStartPositionLSecret;
+	enemyStartPositionLSecret.reset(new std::vector<DirectX::XMINT4>());
+	enemyStartPositionLSecret->push_back(DirectX::XMINT4(2, 3, -1, 10));
+
+	screenManager->addLevel(L"Secret", L"1", DirectX::XMINT2(x1, y1), tabSecret, XMINT2(10, 2), enemyStartPositionLSecret);
+
 	
-	//std::shared_ptr<int> tab1a;
-	//tab1a.reset(tab1);
-	//std::shared_ptr<int> tab2a;
-	//tab2a.reset(tab2);
-
-
-	std::shared_ptr<std::vector<DirectX::XMINT4>> enemyStartPositionL1;
-	enemyStartPositionL1.reset(new std::vector<DirectX::XMINT4>());
-	enemyStartPositionL1->push_back(DirectX::XMINT4(1, 2, 1, 10));
-	enemyStartPositionL1->push_back(DirectX::XMINT4(5, 7, 1, 12));
-	screenManager->addLevel(L"1", L"2", DirectX::XMINT2(x1, y1), tab1, XMINT2(3,15), enemyStartPositionL1);
-	
-	std::shared_ptr<std::vector<DirectX::XMINT4>> enemyStartPositionL2;
-	enemyStartPositionL2.reset(new std::vector<DirectX::XMINT4>());
-	enemyStartPositionL2->push_back(DirectX::XMINT4(10, 5, 1,3));
-	enemyStartPositionL2->push_back(DirectX::XMINT4(5, 7, 1,4));
-	screenManager->addLevel(L"2", L"1", DirectX::XMINT2(x1, y1), tab2, XMINT2(3, 15), enemyStartPositionL2);
-
-	screenManager->loadLevel(L"2");
 
 	//Gamepad
 	//GamePad.reset(new GamePad);
@@ -393,12 +442,14 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 					{
 						screenManager->setName(L"Main");
 					}
-					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"Level1"))
+					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"SingleplayerLevel"))
 					{
+						screenManager->loadLevel(L"1");
 						screenManager->setName(L"Play");
 					}
-					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"Level2"))
+					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"MultiplayerLevel"))
 					{
+						screenManager->loadLevel(L"1");
 						screenManager->setName(L"Play");
 					}
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"BackLevel"))
@@ -420,7 +471,8 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 					}
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"DescriptionAuthor"))
 					{
-						//TO DO: ?
+						screenManager->loadLevel(L"Secret");
+						screenManager->setName(L"Play");
 					}
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"BackAuthor"))
 					{
