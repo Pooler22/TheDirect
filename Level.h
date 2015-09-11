@@ -10,7 +10,7 @@
 class Level
 {
 public:
-	Level(std::wstring name, std::wstring nextName, DirectX::XMINT2 dimension, std::shared_ptr<int> tab, 
+	Level(std::wstring name, std::wstring nextName, DirectX::XMINT2 dimension, std::vector<int> tab,
 		DirectX::XMINT2 playerStartPosition, std::shared_ptr<std::vector<DirectX::XMINT4>> vectorEnemyStartPosition)
 	{
 		this->name = name;
@@ -42,12 +42,12 @@ public:
 		return this->nextLevelName;
 	}
 
-	void setTab(std::shared_ptr<int>  tab)
+	void setTab(std::vector<int>  tab)
 	{
 		this->tab = tab;
 	}
 
-	std::shared_ptr<int> getTab()
+	std::vector<int> getTab()
 	{
 		return this->tab;
 	}
@@ -87,6 +87,6 @@ private:
 	DirectX::XMINT2			playerStartPosition;
 	std::wstring			name;
 	std::wstring			nextLevelName;
-	std::shared_ptr<int>	tab;
+	std::vector<int>	tab;
 	std::shared_ptr<std::vector<DirectX::XMINT4>> vectorEnemyStartPosition;
 };

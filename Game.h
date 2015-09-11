@@ -47,7 +47,7 @@ public:
 		return false;
 	}
 
-	void Game::addLevel(std::wstring name, std::wstring next, DirectX::XMINT2 dimension, std::shared_ptr<int>  tab, DirectX::XMINT2 playerStartPosition, std::shared_ptr<std::vector<DirectX::XMINT4>> vectorEnemyStartPosition)
+	void Game::addLevel(std::wstring name, std::wstring next, DirectX::XMINT2 dimension, std::vector<int>  tab, DirectX::XMINT2 playerStartPosition, std::shared_ptr<std::vector<DirectX::XMINT4>> vectorEnemyStartPosition)
 	{
 		this->levels->push_back(Level(name,next, dimension, tab, playerStartPosition, vectorEnemyStartPosition));
 	}
@@ -56,10 +56,9 @@ public:
 	{
 		currentLevelName = name;
 		for (std::vector<Level>::iterator it = levels->begin(); it != levels->end(); ++it)
-		{
-			if (name.compare(it->getName()) == 0)
+		{			if (name.compare(it->getName()) == 0)
 			{
-				nextLevelName = it->getNext();
+				this->nextLevelName = it->getNext();
 				this->map->setMapLevel(it->getDimension().x, it->getDimension().y, it->getTab(), this->screenWidth, this->screenHeight, scaleX, scaleY, spriteFontIn);
 				this->player->setAndMoveToStartPosition(DirectX::XMINT2(it->getPlayerStartPosition().x * (screenWidth / map->getSzie().x), it->getPlayerStartPosition().y * (screenHeight / map->getSzie().y)));
 
@@ -74,39 +73,14 @@ public:
 
 	void resetLevel()
 	{
-		this->player->reset();
-		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
-		{
-			it->reset();
-		}
-		for (std::vector<Bonus>::iterator it = bonus->begin(); it != bonus->end(); ++it)
-		{
-			it->reset();
-		}
-		for (std::vector<Shot>::iterator it = shots->begin(); it != shots->end(); ++it)
-		{
-			it->reset();
-		}
 		map->reset();
 		shots->clear();
-		
-		(currentLevelName);
+		bonus->clear();
 	}
 
 	void loadNextLevel()
 	{
-		map.reset(new Map());
-		
-		for (std::vector<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>::iterator it = textureVector.get()->begin(); it != textureVector.get()->end(); ++it)
-			map->addBrickTexture(it->Get());
-
-		this->player->reset();
-		
-		for (std::vector<Enemy>::iterator it = enemies->begin(); it != enemies->end(); ++it)
-		{
-			it->reset();
-		}
-
+		resetLevel();
 		loadLevel(nextLevelName);
 	}
 

@@ -38,7 +38,7 @@ public:
 		this->screens.push_back(std::shared_ptr<Screen>(screen));
 	}
 
-	void addLevel(std::wstring name, std::wstring next, DirectX::XMINT2 dimension, std::shared_ptr<int> tab, DirectX::XMINT2 playerStartPosition,std::shared_ptr<std::vector<DirectX::XMINT4>> vectorEnemyStartPosition)
+	void addLevel(std::wstring name, std::wstring next, DirectX::XMINT2 dimension, std::vector<int> tab, DirectX::XMINT2 playerStartPosition,std::shared_ptr<std::vector<DirectX::XMINT4>> vectorEnemyStartPosition)
 	{
 		this->game->addLevel(name, next, dimension, tab, playerStartPosition, vectorEnemyStartPosition);
 	}
