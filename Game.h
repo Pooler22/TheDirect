@@ -85,9 +85,9 @@ public:
 		loadLevel(nextLevelName);
 	}
 
-	void Game::addPlayerTexture(ID3D11ShaderResourceView* buttonSpriteSheet, ID3D11ShaderResourceView* shotSpriteSheet)
+	void Game::addPlayerTexture(ID3D11ShaderResourceView* buttonSpriteSheet, ID3D11ShaderResourceView* shotSpriteSheet, ID3D11ShaderResourceView* jumpSpriteSheet)
 	{
-		this->player = std::unique_ptr<Player>(new Player(buttonSpriteSheet, DirectX::XMFLOAT2(0,0), scaleX, scaleY, shotSpriteSheet));
+		this->player = std::unique_ptr<Player>(new Player(buttonSpriteSheet, DirectX::XMFLOAT2(0,0), scaleX, scaleY, shotSpriteSheet, jumpSpriteSheet));
 	}
 
 	void Game::addEnemyTexture(ID3D11ShaderResourceView* buttonSpriteSheet)

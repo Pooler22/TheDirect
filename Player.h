@@ -14,14 +14,23 @@
 class Player : public InteractiveGameObject
 {
 public:
-	Player::Player(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, ID3D11ShaderResourceView* shotSpriteSheet) :
+	Player::Player(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, 
+		ID3D11ShaderResourceView* shotSpriteSheet, ID3D11ShaderResourceView* jumpSpriteSheet) :
 		InteractiveGameObject(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
+		this->normalSpriteSheet = buttonSpriteSheet;
+		this->jumpSpriteSheet = jumpSpriteSheet;
 		this->shotSpriteSheet = shotSpriteSheet;
 		lastGoodPosition = positionIn;
 		skill.reset(new Skill(3, 1, 0, 5, 1));
 		over = blockLeft = blockRight = blockTop = blockButtom = stand = false;
 		skill->shotSpeed = 12;
+	}
+
+	void changeSpriteSheet(ID3D11ShaderResourceView* shotSpriteSheet)
+	{
+		texture = shotSpriteSheet;
+		laodAnimation(scale.x, scale.y);
 	}
 
 	void  Player::die()
@@ -53,6 +62,19 @@ public:
 		this->skill->life = life;
 	}
 
+	void Update(float elapsed)
+	{
+		InteractiveGameObject::Update(elapsed);
+		if(jumpFlag)
+		{
+			changeSpriteSheet(jumpSpriteSheet.Get());
+		}
+		else 
+		{
+			changeSpriteSheet(normalSpriteSheet.Get());
+		}
+	}
+
 	int getScore()
 	{
 		return this->score;
@@ -80,6 +102,8 @@ public:
 	int													score;
 	DirectX::XMFLOAT2									lastGoodPosition;
 	std::unique_ptr<Skill>								skill;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	normalSpriteSheet;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	bubbleTexture;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	jumpSpriteSheet;
 	ID3D11ShaderResourceView*							shotSpriteSheet;
 };

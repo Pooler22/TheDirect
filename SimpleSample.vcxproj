@@ -269,6 +269,7 @@
     <Image Include="Assets\person\bonus\bonus.png" />
     <Image Include="Assets\person\enemy\enemy.png" />
     <Image Include="Assets\person\player\player.png" />
+    <Image Include="Assets\person\player\player_jump.png" />
     <Image Include="Assets\SmallLogo.scale-100.png" />
     <Image Include="Assets\SplashScreen.scale-100.png">
       <DeploymentContent>true</DeploymentContent>
@@ -357,6 +358,7 @@
     <None Include="Assets\person\enemy\enemy_move.xcf" />
     <None Include="Assets\person\enemy\enemy_stand.xcf" />
     <None Include="Assets\person\player\bubble.xcf" />
+    <None Include="Assets\person\player\player_jump.xcf" />
     <None Include="Assets\person\player\player_move.xcf" />
     <None Include="Assets\person\player\player_stand.xcf" />
     <None Include="Assets\ui\button.xcf" />

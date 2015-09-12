@@ -97,7 +97,10 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	DX::ThrowIfFailed(
 		CreateWICTextureFromFile(device, L"assets\\person\\player\\player.png", nullptr, m_texture.ReleaseAndGetAddressOf())
 		);
-	screenManager->addPlayerTexture(m_texture.Get(), m_texture2.Get());
+	DX::ThrowIfFailed(
+		CreateWICTextureFromFile(device, L"assets\\person\\player\\player_jump.png", nullptr, m_texture3.ReleaseAndGetAddressOf())
+		);
+	screenManager->addPlayerTexture(m_texture.Get(), m_texture2.Get(), m_texture3.Get());
 
 	DX::ThrowIfFailed(
 		CreateWICTextureFromFile(device, L"assets\\person\\enemy\\enemy.png", nullptr, m_texture.ReleaseAndGetAddressOf())
@@ -114,7 +117,6 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 
 	int x1 = 32;
 	int y1 = 18;
-
 
 	std::vector<int> tab1 = {
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,

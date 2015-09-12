@@ -194,6 +194,9 @@
       <Filter>ClassDiagram</Filter>
     </None>
     <None Include="MindBuster_TemporaryKey.pfx" />
+    <None Include="Assets\person\player\player_jump.xcf">
+      <Filter>Assets\person\player</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\brick\brick.png">
@@ -231,6 +234,9 @@
     </Image>
     <Image Include="Assets\bubble\bubble.png">
       <Filter>Assets\bubble</Filter>
+    </Image>
+    <Image Include="Assets\person\player\player_jump.png">
+      <Filter>Assets\person\player</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>

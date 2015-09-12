@@ -58,9 +58,9 @@ public:
 		this->game->addBrickTexture(spriteSheet);
 	}
 
-	void addPlayerTexture(ID3D11ShaderResourceView* buttonSpriteSheet, ID3D11ShaderResourceView* shotSpriteSheet)
+	void addPlayerTexture(ID3D11ShaderResourceView* buttonSpriteSheet, ID3D11ShaderResourceView* shotSpriteSheet, ID3D11ShaderResourceView* jumpSpriteSheet)
 	{
-		game->addPlayerTexture(buttonSpriteSheet, shotSpriteSheet);
+		game->addPlayerTexture(buttonSpriteSheet, shotSpriteSheet, jumpSpriteSheet);
 	}
 
 	void addEnemyTexture(ID3D11ShaderResourceView* buttonSpriteSheet)
