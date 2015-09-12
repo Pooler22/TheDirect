@@ -12,7 +12,7 @@
 class ScreenManager
 {
 public:
-	ScreenManager(std::wstring nameIn, float screenWidth, float screenHeight, float scaleX, float scaleY, ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<SpriteFont> textSprite, ID3D11ShaderResourceView* backgorund)
+	ScreenManager(std::wstring nameIn, int screenWidth, int screenHeight, float scaleX, float scaleY, ID3D11ShaderResourceView* buttonSpriteSheet, std::shared_ptr<SpriteFont> textSprite, ID3D11ShaderResourceView* backgorund)
 	{
 		this->scaleX = scaleX;
 		this->scaleY = scaleY;
@@ -161,8 +161,8 @@ public:
 public:
 	float										scaleX;
 	float										scaleY;
-	float										screenWidth;
-	float										screenHeight;
+	int										screenWidth;
+	int										screenHeight;
 	ID3D11ShaderResourceView*					buttonSpriteSheet;
 	std::shared_ptr<SpriteFont>					textSprite;
 

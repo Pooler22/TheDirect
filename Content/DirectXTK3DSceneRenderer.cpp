@@ -31,11 +31,11 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	flagFromPressToRelasedClick = true;
 	m_playMusic = false;
 
-	scaleX = (float)logicalSize.Width / (32.0 * 25.0);
-	scaleY = (float) logicalSize.Height / (19.0 * 25.0);
-	centerPosition.x = logicalSize.Width / 2.0;
-	centerPosition.y = logicalSize.Height / 2.0;
-	float oneUnitHeight = logicalSize.Height / 6.0;
+	scaleX = (float)(logicalSize.Width / (32.0 * 25.0));
+	scaleY = (float)(logicalSize.Height / (19.0 * 25.0));
+	centerPosition.x = (float)(logicalSize.Width / 2.0);
+	centerPosition.y = (float)(logicalSize.Height / 2.0);
+	float oneUnitHeight = (float)(logicalSize.Height / 6.0);
 
 	DX::ThrowIfFailed(
 		CreateWICTextureFromFile(device, L"assets\\ui\\button.png", nullptr, m_texture.ReleaseAndGetAddressOf())
@@ -189,7 +189,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
-		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+		1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 	};
 	std::shared_ptr<std::vector<DirectX::XMINT4>> enemyStartPositionL3;
 	enemyStartPositionL3.reset(new std::vector<DirectX::XMINT4>());

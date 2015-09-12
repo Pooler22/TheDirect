@@ -67,8 +67,8 @@ public:
 private:
 	void centerHorizontally()
 	{
-		position.x -= dimensions.x / 2.;
-		position.y -= dimensions.y / 2.;
+		position.x -= (float) (dimensions.x / 2.);
+		position.y -= (float) (dimensions.y / 2.);
 	}
 
 	std::wstring							id;

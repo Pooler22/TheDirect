@@ -38,7 +38,7 @@ public:
 			position.x -= (speed * scale.x);
 		if (jumpFlag)
 		{
-			position.y -= (force / 2.0) * scale.y;
+			position.y -= float((force / 2.0) * scale.y);
 			force--;
 			stand = false;
 			if (force == 8)
@@ -81,17 +81,17 @@ public:
 	{
 		if (position.y > screenHeight)
 		{
-			position.y = 0.0 - dimensions.y;
+			position.y = -dimensions.y;
 		}
-		else if (position.y < 0.0 - dimensions.y)
+		else if (position.y < -dimensions.y)
 		{
 			position.y = screenHeight;
 		}
 		if (getPosition().x > screenWidth)
 		{
-			position.x = 0.0 - dimensions.x;
+			position.x =  -dimensions.x;
 		}
-		else if (getPosition().x < 0.0 - dimensions.x)
+		else if (getPosition().x < -dimensions.x)
 		{
 			position.x = screenWidth;
 		}
