@@ -65,13 +65,18 @@ public:
 	void Update(float elapsed)
 	{
 		InteractiveGameObject::Update(elapsed);
-		if(jumpFlag)
+		if (jumpFlagTMP != jumpFlag)
 		{
-			changeSpriteSheet(jumpSpriteSheet.Get());
-		}
-		else 
-		{
-			changeSpriteSheet(normalSpriteSheet.Get());
+			if(jumpFlag)
+			{
+				changeSpriteSheet(jumpSpriteSheet.Get());
+				jumpFlagTMP = jumpFlag;
+			}
+			else 
+			{
+				changeSpriteSheet(normalSpriteSheet.Get());
+				jumpFlagTMP = jumpFlag;
+			}
 		}
 	}
 
@@ -98,6 +103,7 @@ public:
 	}
 
 public:
+	bool												jumpFlagTMP;
 	bool												over;
 	int													score;
 	DirectX::XMFLOAT2									lastGoodPosition;

@@ -64,7 +64,8 @@ public:
 
 				for (std::vector<DirectX::XMINT4>::iterator it1 = it->getVectorEnemyStartPosition().get()->begin(); it1 != it->getVectorEnemyStartPosition().get()->end(); ++it1)
 				{
-					this->enemies->push_back(Enemy(enemySpriteSheet.Get(),DirectX::XMFLOAT2(it1->x * (screenWidth / map->getSzie().x), it1->y * (screenHeight / map->getSzie().y)), scaleX, scaleY, it1->z, it1->w));
+					this->enemies->push_back(Enemy(enemySpriteSheet.Get(),DirectX::XMFLOAT2(it1->x * (screenWidth / map->getSzie().x), it1->y * 
+						(screenHeight / map->getSzie().y)), scaleX, scaleY, it1->z, it1->w));
 				}
 				break;
 			}
