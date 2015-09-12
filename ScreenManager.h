@@ -140,6 +140,13 @@ public:
 			screen->resize(scaleX, scaleY);
 		}
 	}
+
+	void resetLevel()
+	{
+		game->resetLevel();
+		game->player->setScore(0);
+		game->player->setLife(3);
+	}
 	
 	bool gameOver()
 	{

@@ -38,7 +38,7 @@ public:
 			position.x -= (speed * scale.x);
 		if (jumpFlag)
 		{
-			position.y += (0 * speed * scale.y) - force * scale.y;
+			position.y -= (force / 2.0) * scale.y;
 			force--;
 			stand = false;
 			if (force == 8)

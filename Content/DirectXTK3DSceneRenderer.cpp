@@ -56,15 +56,15 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	XMFLOAT2 position1[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
 	screenManager->addScreen(L"Options", 3, name1, id1, position1);
 
-	std::wstring name2[] = { L"Singleplayer",L"Multiplayer",L"Back" };
-	std::wstring id2[] = { L"SingleplayerLevel",L"MultiplayerLevel",L"BackLevel" };
-	XMFLOAT2 position2[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y), XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
-	screenManager->addScreen(L"Level", 3, name2, id2, position2);
+	std::wstring name2[] = { L"Single",L"Back" };
+	std::wstring id2[] = { L"SingleplayerLevel",L"BackLevel" };
+	XMFLOAT2 position2[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y)};
+	screenManager->addScreen(L"Level", 2, name2, id2, position2);
 
-	std::wstring name4[] = { L"Return", L"Restart Level", L"Main menu" };
-	std::wstring id4[] = { L"ReturnPause",L"RestartPause",L"ExitPause" };
-	XMFLOAT2 position4[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y),XMFLOAT2(centerPosition.x, centerPosition.y + oneUnitHeight) };
-	screenManager->addScreen(L"Pause", 3, name4, id4, position4);
+	std::wstring name4[] = { L"Return", L"Main menu" };
+	std::wstring id4[] = { L"ReturnPause",L"ExitPause" };
+	XMFLOAT2 position4[] = { XMFLOAT2(centerPosition.x, centerPosition.y - oneUnitHeight), XMFLOAT2(centerPosition.x, centerPosition.y)};
+	screenManager->addScreen(L"Pause", 2, name4, id4, position4);
 
 	std::wstring name5[] = { L"Pawel Rutkowski",L"Back" };
 	std::wstring id5[] = { L"DescriptionAuthor",L"BackAuthor" };
@@ -197,7 +197,37 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	enemyStartPositionL3->push_back(DirectX::XMINT4(26, 6, -1, 10));
 	enemyStartPositionL3->push_back(DirectX::XMINT4(7, 6, 1, 10));
 	enemyStartPositionL3->push_back(DirectX::XMINT4(24, 6, -1, 10));
-	screenManager->addLevel(L"3", L"1", DirectX::XMINT2(x1, y1), tab3, XMINT2(2, 17), enemyStartPositionL3);
+	screenManager->addLevel(L"3", L"4", DirectX::XMINT2(x1, y1), tab3, XMINT2(2, 17), enemyStartPositionL3);
+
+	std::vector<int> tab4 = {
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,
+		1,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
+		1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+	};
+	std::shared_ptr<std::vector<DirectX::XMINT4>> enemyStartPositionL4;
+	enemyStartPositionL4.reset(new std::vector<DirectX::XMINT4>());
+	enemyStartPositionL4->push_back(DirectX::XMINT4(1, 0, 1, 10));
+	enemyStartPositionL4->push_back(DirectX::XMINT4(2, 2, 1, 10));
+	enemyStartPositionL4->push_back(DirectX::XMINT4(29, 0, -1, 10));
+	enemyStartPositionL4->push_back(DirectX::XMINT4(27, 2, -1, 10));
+	enemyStartPositionL4->push_back(DirectX::XMINT4(10, 8, 1, 10));
+	enemyStartPositionL4->push_back(DirectX::XMINT4(21, 8, -1, 10));
+	screenManager->addLevel(L"4", L"1", DirectX::XMINT2(x1, y1), tab4, XMINT2(2, 17), enemyStartPositionL4);
 
 	std::vector<int> tabSecret = {
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -304,7 +334,7 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 	}
 	if (screenManager->gameOver())
 	{
-		screenManager->setString(L"GameOver", L"ScoreGameOver", std::to_wstring(screenManager->game->getScore()));
+		screenManager->setString(L"GameOver", L"ScoreGameOver", L"Score: "  + std::to_wstring(screenManager->game->getScore()));
 		screenManager->setName(L"GameOver");
 	}
 	
@@ -444,11 +474,7 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 					}
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"SingleplayerLevel"))
 					{
-						screenManager->loadLevel(L"1");
-						screenManager->setName(L"Play");
-					}
-					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"MultiplayerLevel"))
-					{
+						screenManager->resetLevel();
 						screenManager->loadLevel(L"1");
 						screenManager->setName(L"Play");
 					}
@@ -467,10 +493,11 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"ExitPause"))
 					{
 						screenManager->setName(L"Main");
-						//screenManager->resetLevel();
+						screenManager->resetLevel();
 					}
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"DescriptionAuthor"))
 					{
+						screenManager->resetLevel();
 						screenManager->loadLevel(L"Secret");
 						screenManager->setName(L"Play");
 					}
@@ -481,7 +508,7 @@ void DirectXTK3DSceneRenderer::Update(DX::StepTimer const& timer, std::vector<Pl
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"ContinueGameOver"))
 					{
 						screenManager->setName(L"Main");
-						//screenManager->resetLevel();
+						screenManager->resetLevel();
 					}
 					else if (screenManager->isClicked(playerAction.PointerRawX, playerAction.PointerRawY) == (L"RestartPause"))
 					{

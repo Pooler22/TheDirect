@@ -76,6 +76,7 @@ public:
 		map->reset();
 		shots->clear();
 		bonus->clear();
+		enemies->clear();
 	}
 
 	void loadNextLevel()

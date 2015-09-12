@@ -35,7 +35,6 @@ public:
 
 		updateBoundingRect();
 		animation->Update(elapsed);
-		//left = right = stand = blockRight = blockTop = blockRight = blockLeft = false;
 		DrawableObject::Update(elapsed);
 	}
 
