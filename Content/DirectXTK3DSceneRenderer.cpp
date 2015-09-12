@@ -35,7 +35,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	scaleY = (float) logicalSize.Height / (19.0 * 25.0);
 	centerPosition.x = logicalSize.Width / 2.0;
 	centerPosition.y = logicalSize.Height / 2.0;
-	float oneUnitHeight = logicalSize.Height / 8.0;
+	float oneUnitHeight = logicalSize.Height / 6.0;
 
 	DX::ThrowIfFailed(
 		CreateWICTextureFromFile(device, L"assets\\ui\\button.png", nullptr, m_texture.ReleaseAndGetAddressOf())

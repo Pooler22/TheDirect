@@ -118,7 +118,7 @@
     <Position X="12.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAgAAAAAIAAAAAAAAAAAAAAYAYABAAAAAAAAAAA=</HashCode>
-      <FileName>Shot.h</FileName>
+      <FileName>Shoot.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TextButton" Collapsed="true">

@@ -10,18 +10,20 @@
 #include "DrawableObject.h"
 #include "Skill.h"
 
-class Shot : public InteractiveGameObject
+class Shoot : public InteractiveGameObject
 {
 public:
-	Shot::Shot(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, bool direction, int speed) :
+	Shoot::Shoot(ID3D11ShaderResourceView* buttonSpriteSheet, DirectX::XMFLOAT2 positionIn, float scaleX, float scaleY, bool direction, int speed) :
 		InteractiveGameObject(buttonSpriteSheet, positionIn, scaleX, scaleY)
 	{
 		this->speed = 6;
 		this->direction = direction;
+		timeLife = 200;
 	}
 
 	void Update(float elapsed)
 	{
+		timeLife--;
 		if (blockLeft || blockRight)
 		{
 			position.y -= (speed * scale.y);
@@ -57,7 +59,18 @@ public:
 		this->speed = speed;
 	}
 
+	int getTimeLife()
+	{
+		return this->timeLife;
+	}
+
+	void setTimeLife(int timeLife)
+	{
+		this->timeLife = timeLife;
+	}
+
 private:
+	int timeLife;
 	bool direction;
 	int	speed;
 };

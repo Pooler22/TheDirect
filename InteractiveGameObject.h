@@ -16,7 +16,8 @@ public:
 		this->startPosition = positionIn;
 		direction = blockLeft = blockRight = blockTop = blockButtom = stand = 
 			left = right = jumpFlag = blockTop = blockRight = blockLeft = false;
-		this->speed = force = 8;
+		this->speed = 7;
+		force = 8;
 		x = y = 1;
 	}
 

@@ -9,7 +9,7 @@
 #include "InteractiveGameObject.h"
 #include "DrawableObject.h"
 #include "Skill.h"
-#include "Shot.h"
+#include "Shoot.h"
 
 class Player : public InteractiveGameObject
 {

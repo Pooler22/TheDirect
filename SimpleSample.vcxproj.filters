@@ -131,9 +131,6 @@
     <ClInclude Include="Content\SampleVirtualControllerRenderer.h">
       <Filter>Content\Renderers</Filter>
     </ClInclude>
-    <ClInclude Include="Shot.h">
-      <Filter>Content\GameElements</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h" />
     <ClInclude Include="Level.h">
       <Filter>Content\GameElements</Filter>
@@ -146,6 +143,9 @@
       <Filter>Content\GameElements</Filter>
     </ClInclude>
     <ClInclude Include="InteractiveGameObject.h">
+      <Filter>Content\GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Shoot.h">
       <Filter>Content\GameElements</Filter>
     </ClInclude>
   </ItemGroup>
@@ -193,6 +193,7 @@
     <None Include="ClassDiagram2.cd">
       <Filter>ClassDiagram</Filter>
     </None>
+    <None Include="MindBuster_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\brick\brick.png">

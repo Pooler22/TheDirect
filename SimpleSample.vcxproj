@@ -134,8 +134,11 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <PackageCertificateKeyFile>SimpleSample_TemporaryKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>5F10594B5805646313C966DD31C750A03B2870F8</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>MindBuster_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>8EB052CCCBB8C8B91BC3141E7A2051C6776B355E</PackageCertificateThumbprint>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
+    <AppxBundlePlatforms>x64</AppxBundlePlatforms>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <Link>
@@ -285,7 +288,7 @@
     <ClInclude Include="Skill.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Shot.h" />
+    <ClInclude Include="Shoot.h" />
     <ClInclude Include="TextButton.h" />
     <ClInclude Include="Common\DeviceResources.h" />
     <ClInclude Include="Common\InputManager.h" />
@@ -358,6 +361,7 @@
     <None Include="Assets\person\player\player_stand.xcf" />
     <None Include="Assets\ui\button.xcf" />
     <None Include="ClassDiagram2.cd" />
+    <None Include="MindBuster_TemporaryKey.pfx" />
     <None Include="SimpleSample_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
