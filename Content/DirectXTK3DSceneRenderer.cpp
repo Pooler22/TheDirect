@@ -142,7 +142,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	enemyStartPositionL1.reset(new std::vector<DirectX::XMINT4>());
 	enemyStartPositionL1->push_back(DirectX::XMINT4(1, 7, 1, 10));
 	enemyStartPositionL1->push_back(DirectX::XMINT4(29, 7, 1, 10));
-	screenManager->addLevel(L"11", L"2", DirectX::XMINT2(x1, y1), tab1, XMINT2(2, 17), enemyStartPositionL1);
+	screenManager->addLevel(L"1", L"2", DirectX::XMINT2(x1, y1), tab1, XMINT2(2, 17), enemyStartPositionL1);
 
 	std::vector<int> tab2 = {
 		1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,
@@ -429,7 +429,7 @@ void DirectXTK3DSceneRenderer::CreateDeviceDependentResources()
 	enemyStartPositionL10->push_back(DirectX::XMINT4(18, 1, 1, 10));
 	enemyStartPositionL10->push_back(DirectX::XMINT4(19, 1, -1, 10));
 
-	screenManager->addLevel(L"1", L"1", DirectX::XMINT2(x1, y1), tab10, XMINT2(3, 15), enemyStartPositionL10); // column // row
+	screenManager->addLevel(L"10", L"1", DirectX::XMINT2(x1, y1), tab10, XMINT2(3, 15), enemyStartPositionL10); // column // row
 
 	std::vector<int> tabSecret = {
 		1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
@@ -493,8 +493,8 @@ void DirectXTK3DSceneRenderer::CreateAudioResources()
     m_effect1 = m_soundEffect->CreateInstance();
     m_effect2 = m_waveBank->CreateInstance(10);
 
-	//m_effect1->Play(true);
-	//m_effect2->Play();
+	m_effect1->Play(true);
+	m_effect2->Play();
 }
 
 // Updates the scene to be displayed.
